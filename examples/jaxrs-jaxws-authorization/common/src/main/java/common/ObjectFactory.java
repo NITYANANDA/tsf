@@ -41,7 +41,7 @@ public class ObjectFactory {
      * {@link UserImpl }{@code >}
      */
     @XmlElementDecl(namespace = "http://hello.com", name = "User")
-    public JAXBElement<UserImpl> createPerson(UserImpl value) {
+    public JAXBElement<UserImpl> createUserImpl(UserImpl value) {
         return new JAXBElement<UserImpl>(_UserImpl_QNAME, UserImpl.class, null, value);
     }
     
@@ -50,7 +50,7 @@ public class ObjectFactory {
      * {@link IntegerUserMap }{@code >}
      */
     @XmlElementDecl(namespace = "http://hello.com", name = "IntegerUserMap")
-    public JAXBElement<IntegerUserMap> createPerson(IntegerUserMap value) {
+    public JAXBElement<IntegerUserMap> createIntegerUserMap(IntegerUserMap value) {
         return new JAXBElement<IntegerUserMap>(_IntegerUserMap_QNAME, IntegerUserMap.class, null, value);
     }
 

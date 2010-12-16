@@ -29,7 +29,7 @@ public class JAXRSSimpleAuthorizingInterceptor extends SimpleAuthorizingIntercep
             return;
         }
 
-        // Unfortunately : this method is currently has a private scope
+        // Unfortunately, this method currently has a private scope
         // in the superclass
         Method method = getTargetMethod(message);
 
