@@ -69,8 +69,8 @@ public class MembershipServiceImpl implements MembershipService {
         System.out.println("----invoking deleteMember for id = " + id);
         Person p = members.get(id);
         if (p == null) {
-            // will return HTTP 404 "not found" code
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            // alternative to throwing WebApplicationException()
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
         members.remove(id);
         return Response.status(Response.Status.GONE).build();

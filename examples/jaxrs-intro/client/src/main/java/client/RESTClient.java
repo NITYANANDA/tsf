@@ -46,8 +46,7 @@ public final class RESTClient {
         newMember.setAge(30);
         resp = wc.reset().post(newMember);
 
-        // POSTS (creates) are expected to return 201 status if successful
-        if (resp.getStatus() != 201) {
+        if (resp.getStatus() != Response.Status.CREATED.getStatusCode()) {
             throw new RuntimeException("Could not add new member.");
         }
 
@@ -65,7 +64,7 @@ public final class RESTClient {
 
         if (maxID > -1) {
             System.out.println("Removing member with ID of " + maxID);
-            // resp.getStatus() returns 410 returned on successful DELETE, 404 if item not found
+            // resp.getStatus() returns 410 returned on successful DELETE, 404 if item not found           
             resp = wc.path(new Integer(maxID).toString()).delete();
         }
 
