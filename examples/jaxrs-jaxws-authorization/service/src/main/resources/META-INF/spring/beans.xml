@@ -51,7 +51,11 @@
 
      <bean id="hello-world-bean" class="service.HelloWorldImpl"/>
      
-     <bean id="securityContextInterceptor" class="service.BasicAuthJaasLoginInterceptor"/>
+     <bean id="securityContextInterceptor" 
+           class="org.apache.cxf.interceptor.security.JAASLoginInterceptor">
+           <property name="contextName" value="karaf"/>
+           <property name="rolePrefix" value="ROLE_"/>
+     </bean>
      
      <bean id="authorizationInterceptor" 
           class="org.apache.cxf.interceptor.security.SimpleAuthorizingInterceptor">
@@ -59,7 +63,7 @@
      </bean>
 
      <bean id="authorizationFilter" 
-          class="service.JAXRSAuthorizationFilter">
+          class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
          <property name="methodRolesMap" ref="rolesMap"/>
      </bean>
 

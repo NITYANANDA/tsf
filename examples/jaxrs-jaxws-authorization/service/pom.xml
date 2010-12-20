@@ -65,6 +65,7 @@
                    org.apache.cxf.jaxrs.model,
                    org.apache.cxf.jaxrs.utils,
                    org.apache.cxf.jaxrs.provider,
+                   org.apache.cxf.jaxrs.security,
                    org.apache.cxf.jaxws,
                    org.apache.cxf.jaxws.context,
                    org.apache.cxf.headers,

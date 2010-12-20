@@ -53,7 +53,7 @@
      </bean>
 
      <bean id="authorizationFilter" 
-          class="service.JAXRSAuthorizationFilter">
+          class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
          <property name="methodRolesMap" ref="rolesMap"/>
      </bean>
 
