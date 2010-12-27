@@ -41,11 +41,11 @@ public class PersonInfoStorage {
         return id;
     }
 
-    public Collection<Person> getAll() {
+    public List<Person> getAll() {
         return new ArrayList<Person>(persons.values());
     }
 
-    public Collection<Person> getPersons(int start, int count) {
+    public List<Person> getPersons(int start, int count) {
         List<Person> pList = new ArrayList<Person>(persons.values());
 
         if (start < 0 || count < -1) {

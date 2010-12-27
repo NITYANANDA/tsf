@@ -6,6 +6,7 @@ package client;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.ResponseReader;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 import common.Person;
@@ -22,9 +24,8 @@ import common.PersonCollection;
 import common.PersonService;
 
 /**
- * Example showing the interaction between HTTP-centric and proxy based RESTful
- * clients and JAX-RS server providing multiple services (PersonService and
- * SearchService)
+ * Example showing the interaction between HTTP-centric and proxy based RESTful clients and JAX-RS server
+ * providing multiple services (PersonService and SearchService)
  */
 public final class RESTClient {
 
@@ -53,11 +54,10 @@ public final class RESTClient {
     }
 
     /**
-     * PersonService provides information about all the persons it knows about,
-     * about individual persons and their relatives : - ancestors - parents,
-     * grandparents, etc - descendants - children, etc - partners Additionally
-     * it can help with adding the information about new children to existing
-     * persons and update the age of the current Person
+     * PersonService provides information about all the persons it knows about, about individual persons and
+     * their relatives : - ancestors - parents, grandparents, etc - descendants - children, etc - partners
+     * Additionally it can help with adding the information about new children to existing persons and update
+     * the age of the current Person
      */
     public void usePersonService() throws Exception {
 
@@ -181,11 +181,10 @@ public final class RESTClient {
     }
 
     /**
-     * SearchService is a simple service which shares the information about
-     * Persons with the PersonService. It lets users search for individual
-     * people by specifying one or more names as query parameters. The
-     * interaction with this service also verifies that the JAX-RS server is
-     * capable of supporting multiple root resource classes
+     * SearchService is a simple service which shares the information about Persons with the PersonService. It
+     * lets users search for individual people by specifying one or more names as query parameters. The
+     * interaction with this service also verifies that the JAX-RS server is capable of supporting multiple
+     * root resource classes
      */
     private void useSearchService() throws Exception {
 
@@ -203,28 +202,32 @@ public final class RESTClient {
     }
 
     /**
-     * This function uses a proxy which is capable transforming typed
-     * invocations into proper HTTP calls which will be understood by RESTful
-     * services. This works for subresources as well. Interfaces and concrete
-     * classes can be proxified, in the latter case a CGLIB runtime dependency
-     * is needed. CXF JAX-RS proxies can be configured the same way as
-     * HTTP-centric WebClients and response status and headers can also be
-     * checked. HTTP response errors can be converted into typed exceptions.
+     * This function uses a proxy which is capable of transforming typed invocations into proper HTTP calls
+     * which will be understood by RESTful services. This works for subresources as well. Interfaces and
+     * concrete classes can be proxified, in the latter case a CGLIB runtime dependency is needed. CXF JAX-RS
+     * proxies can be configured the same way as HTTP-centric WebClients and response status and headers can
+     * also be checked. HTTP response errors can be converted into typed exceptions.
      */
     public void useSimpleProxy() {
-
         System.out.println("Using a simple JAX-RS proxy to get all the persons...");
+        ResponseReader reader = new ResponseReader();
+        reader.setEntityClass(PersonCollection.class);
 
         String webAppAddress = "http://localhost:" + port + "/services/personservice";
-        PersonService proxy = JAXRSClientFactory.create(webAppAddress, PersonService.class);
+        PersonService proxy = JAXRSClientFactory.create(webAppAddress, PersonService.class,
+                                                        Collections.singletonList(reader));
 
         // getPersons(a, b): a is zero-based start index, b is number of records
         // to return (-1 for all)
-        Collection<Person> persons = proxy.getPersons(0, -1);
-        for (Iterator<Person> it = persons.iterator(); it.hasNext();) {
-            Person person = it.next();
-            System.out.println("ID " + person.getId() + " : " + person.getName() + ", age : "
-                               + person.getAge());
+        Response resp = proxy.getPersons(0, -1);
+        if (resp.getStatus() == 200) {
+            PersonCollection personColl = (PersonCollection)resp.getEntity();
+            List<Person> persons = personColl.getList();
+            for (Iterator<Person> it = persons.iterator(); it.hasNext();) {
+                Person person = it.next();
+                System.out.println("ID " + person.getId() + " : " + person.getName() + ", age : "
+                                   + person.getAge());
+            }
         }
     }
 
@@ -240,7 +243,10 @@ public final class RESTClient {
         // default (0, -1) returns everything
         // wc.query("start", "0");
         // wc.query("size", "2");
-        List<Person> persons = new ArrayList<Person>(wc.getCollection(Person.class));
+        PersonCollection collection = wc.get(PersonCollection.class);
+        // Can call wc.getResponse() to see response codes
+        List<Person> persons = collection.getList();
+        System.out.println("Size: " + persons.size());
         for (Person person : persons) {
             System.out.println("ID " + person.getId() + " : " + person.getName() + ", age : "
                                + person.getAge());

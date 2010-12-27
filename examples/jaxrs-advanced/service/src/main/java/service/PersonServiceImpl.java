@@ -5,14 +5,18 @@ package service;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import common.Person;
 import common.PersonService;
+import common.PersonCollection;
 
 /**
  * JAX-RS PersonService root resource
@@ -22,8 +26,7 @@ public class PersonServiceImpl implements PersonService {
     private PersonInfoStorage storage;
 
     /**
-     * Thread-safe JAX-RS UriInfo proxy providing the information about the
-     * current request URI, etc
+     * Thread-safe JAX-RS UriInfo proxy providing the information about the current request URI, etc
      */
     @Context
     private UriInfo uriInfo;
@@ -41,8 +44,17 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Collection<Person> getPersons(Integer start, Integer size) {
-        return storage.getPersons(start, size);
+    public Response getPersons(Integer start, Integer size) {
+        List<Person> collPer = storage.getPersons(start, size);
+        PersonCollection perColl = new PersonCollection();
+        perColl.setList(collPer);
+        ResponseBuilder rb;
+        if (collPer.size() == 0) {
+            rb = Response.noContent();
+        } else {
+            rb = Response.ok(perColl);
+        }
+        return rb.build();
     }
 
     @Override
