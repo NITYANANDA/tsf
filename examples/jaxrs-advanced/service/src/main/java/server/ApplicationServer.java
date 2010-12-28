@@ -7,6 +7,15 @@ import javax.ws.rs.ext.RuntimeDelegate;
 
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 
+/* 
+ * This class is currently activated only if you use the mvn test -Pserver command
+ * from the service folder (see this example's README.txt file).  It shows manual 
+ * configuration of root resources, providers, etc. via the PersonApplication class.
+ * 
+ * For OSGi deployment the resources/META-INF/spring/beans.xml file is read and
+ * configuration is performed from that file, and for standalone Tomcat or
+ * embedded Jetty the beans.xml defined in the WAR submodule is used instead.
+ */
 public class ApplicationServer {
 
     protected ApplicationServer() throws Exception {

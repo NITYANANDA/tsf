@@ -16,6 +16,11 @@ import service.PersonInfoStorage;
 import service.PersonServiceImpl;
 import service.SearchService;
 
+/*
+ * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 
+ * runtime about the resources and providers it is supposed to deploy.  See the 
+ * ApplicationServer class for more information.  
+ */
 @ApplicationPath("/personservice")
 public class PersonApplication extends Application {
     @Override
