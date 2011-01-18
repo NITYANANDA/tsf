@@ -17,8 +17,30 @@
      <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
 
      <!-- JAX-RS endpoint -->
-     <jaxrs:server id="xopAttachmentService" 
-                   address="/attachments"
-                   serviceClass="service.XopAttachmentServiceImpl"/>
+     <jaxrs:server id="attachmentService" 
+                   address="/attachments">
+         <jaxrs:serviceBeans>
+             <bean class="service.XopAttachmentServiceImpl"/>
+             <bean class="service.MultipartsServiceImpl"/>
+         </jaxrs:serviceBeans>
+         <jaxrs:providers>
+           <ref bean="jsonProvider"/>
+         </jaxrs:providers>          
+     </jaxrs:server>              
+                   
+     <!-- 
+        default Jettison-based JSON provider is configured to 
+        drop namespace prefixes during the serialization and append namespaces
+        during the deserialization
+     -->   
+     
+     <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider">
+         <property name="ignoreNamespaces" value="true"/>
+         <property name="inTransformElements">
+            <map>
+              <entry key="Book" value="{http://books}Book"/>
+            </map>
+         </property>
+     </bean>
 </beans>
 

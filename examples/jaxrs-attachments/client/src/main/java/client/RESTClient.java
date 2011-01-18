@@ -7,12 +7,16 @@ import java.awt.Image;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.imageio.ImageIO;
 import javax.mail.util.ByteArrayDataSource;
 
+import common.Book;
+import common.MultipartsService;
 import common.XopAttachmentService;
 import common.XopBean;
 
@@ -20,6 +24,9 @@ import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import org.apache.cxf.jaxrs.provider.JSONProvider;
 
 /**
  * Example showing the interaction between HTTP-centric and proxy based RESTful clients and JAX-RS server
@@ -89,6 +96,55 @@ public final class RESTClient {
         verifyXopResponse(xop, xopResponse);
     }
     
+    public void useAttachmentServiceWithWebClient() throws Exception {
+
+        final String serviceURI = "http://localhost:" + port + "/services/attachments/multipart";
+        
+        
+        JSONProvider provider = new JSONProvider();
+        provider.setIgnoreNamespaces(true);
+        provider.setInTransformElements(
+            Collections.singletonMap("Book", "{http://books}Book"));
+        
+        WebClient client = WebClient.create(serviceURI,
+                                     Collections.singletonList(provider));
+        
+        client.type("multipart/mixed").accept("multipart/mixed");
+        
+        MultipartBody body = createMultipartBody();
+        
+        System.out.println();
+        System.out.println("Posting Book attachments with a WebClient");
+        
+        MultipartBody bodyResponse = client.post(body, MultipartBody.class);
+        
+        verifyMultipartResponse(bodyResponse);
+    }
+    
+    public void useAttachmentServiceWithProxy() throws Exception {
+
+        final String serviceURI = "http://localhost:" + port + "/services/attachments";
+        
+        
+        JSONProvider provider = new JSONProvider();
+        provider.setIgnoreNamespaces(true);
+        provider.setInTransformElements(
+            Collections.singletonMap("Book", "{http://books}Book"));
+        
+        MultipartsService client = JAXRSClientFactory.create(serviceURI,
+                                     MultipartsService.class,                                    
+                                     Collections.singletonList(provider));
+        
+        MultipartBody body = createMultipartBody();
+        
+        System.out.println();
+        System.out.println("Posting Book attachments with a proxy");
+        
+        MultipartBody bodyResponse = client.echoAttachment(body);
+        
+        verifyMultipartResponse(bodyResponse);
+    }
+    
     private void verifyXopResponse(XopBean xopOriginal, XopBean xopResponse) {
         if (!Arrays.equals(xopResponse.getBytes(), xopOriginal.getBytes())) {
             throw new RuntimeException("Received XOP attachment is corrupted");
@@ -124,15 +180,41 @@ public final class RESTClient {
         return ImageIO.read(getClass().getResource(name));
     }
 
+    private MultipartBody createMultipartBody() throws Exception  {
+        List<Attachment> atts = new LinkedList<Attachment>();
+        atts.add(new Attachment("book1", "application/xml", new Book("JAXB", 1L)));
+        atts.add(new Attachment("book2", "application/json", new Book("JSON", 2L)));
+        return new MultipartBody(atts, true);  
+
+    }
+    
+    private void verifyMultipartResponse(MultipartBody bodyResponse) {
+        Book jaxbBook = bodyResponse.getAttachmentObject("book1", Book.class);
+        Book jsonBook = bodyResponse.getAttachmentObject("book2", Book.class);
+        if ("JAXB".equals(jaxbBook.getName()) && 1L == jaxbBook.getId()
+            && "JSON".equals(jsonBook.getName()) && 2L == jsonBook.getId()) {
+            System.out.println();
+            System.out.println("Book attachments have been successfully received");
+        } else {
+            throw new RuntimeException("Received Book attachment is corrupted");
+        }
+    }
+    
     public static void main(String[] args) throws Exception {
 
         RESTClient client = new RESTClient();
 
-        // uses CXF JAX-RS WebClient
+        // Post XOP with CXF JAX-RS WebClient
         client.useXopAttachmentServiceWithWebClient();
         
-        // uses CXF JAX-RS Proxy
+        // Post XOP with CXF JAX-RS Proxy
         client.useXopAttachmentServiceWithProxy();
+        
+        // Post Book attachments in XML and JSON formats with CXF JAX-RS WebClient
+        client.useAttachmentServiceWithWebClient();
+        
+        // Post Book attachments in XML and JSON formats with CXF JAX-RS Proxy
+        client.useAttachmentServiceWithProxy();
     }
 
     private static int getPort() {

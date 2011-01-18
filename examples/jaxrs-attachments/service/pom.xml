@@ -61,6 +61,7 @@
                    org.apache.cxf.jaxrs,
                    org.apache.cxf.jaxrs.utils,
                    org.apache.cxf.jaxrs.provider,
+                   org.apache.cxf.jaxrs.ext.multipart,
                    org.apache.cxf.headers,
                    org.apache.cxf.phase,
 		   org.apache.cxf.resource,
