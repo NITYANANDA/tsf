@@ -47,6 +47,7 @@
 		   javax.ws.rs,
                    javax.ws.rs.ext,
                    javax.ws.rs.core,
+                   javax.activation,
  		   META-INF.cxf,
 		   META-INF.cxf.osgi,
                    org.apache.cxf.binding,
