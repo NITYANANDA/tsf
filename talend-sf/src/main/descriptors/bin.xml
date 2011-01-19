@@ -15,8 +15,8 @@
             <directory>target/dependencies/cxf/apache-cxf-${cxf.version}</directory>
             <outputDirectory>/</outputDirectory>
             <excludes>
-                <!--exclude>LICENSE</exclude>
-                <exclude>NOTICE</exclude-->
+                <exclude>LICENSE</exclude>
+                <exclude>NOTICE</exclude>
                 <exclude>README</exclude>
                 <exclude>bin/*.bat</exclude>
                 <exclude>release_notes.txt</exclude>
@@ -91,6 +91,17 @@
             <outputDirectory>/</outputDirectory>
             <includes>
                 <include>README</include>
+                <include>NOTICE</include>
+                <!--include>RELEASE*</include-->
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>target/maven-shared-archive-resources/META-INF</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>LICENSE</include>
                 <!--include>RELEASE*</include-->
             </includes>
             <lineEnding>unix</lineEnding>

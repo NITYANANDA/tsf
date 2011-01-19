@@ -18,6 +18,7 @@
     </parent>
     <properties>
         <cxf.version>2.3.3-SNAPSHOT</cxf.version>
+        <cxf.build-utils.version>2.3.1</cxf.build-utils.version>
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.osgi.version>1.2.0</spring.osgi.version>
         <activemq.version>5.4.2</activemq.version>
@@ -1008,6 +1009,35 @@
                             </descriptors>
                             <appendAssemblyId>true</appendAssemblyId>
                             <tarLongFileMode>gnu</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-remote-resources-plugin</artifactId>
+                <version>1.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.cxf.build-utils</groupId>
+                        <artifactId>cxf-buildtools</artifactId>
+                        <version>${cxf.build-utils.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <resourceBundles>
+                                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
+                            </resourceBundles>
+                            <supplementalModels>
+                                <supplementalModel>notice-supplements.xml</supplementalModel>
+                            </supplementalModels>
+                            <properties>
+                                <projectName>Apache CXF</projectName>
+                            </properties>
                         </configuration>
                     </execution>
                 </executions>
