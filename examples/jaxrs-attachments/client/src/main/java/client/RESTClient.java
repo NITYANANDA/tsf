@@ -184,15 +184,25 @@ public final class RESTClient {
         List<Attachment> atts = new LinkedList<Attachment>();
         atts.add(new Attachment("book1", "application/xml", new Book("JAXB", 1L)));
         atts.add(new Attachment("book2", "application/json", new Book("JSON", 2L)));
+        
+        atts.add(new Attachment("image", "application/octet-stream",
+                                getClass().getResourceAsStream("/java.jpg")));
+        
         return new MultipartBody(atts, true);  
 
     }
     
-    private void verifyMultipartResponse(MultipartBody bodyResponse) {
+    private void verifyMultipartResponse(MultipartBody bodyResponse) throws Exception {
         Book jaxbBook = bodyResponse.getAttachmentObject("book1", Book.class);
         Book jsonBook = bodyResponse.getAttachmentObject("book2", Book.class);
+        
+        byte[] receivedImageBytes = bodyResponse.getAttachmentObject("image", byte[].class);
+        InputStream is = getClass().getResourceAsStream("/java.jpg");
+        byte[] imageBytes = IOUtils.readBytesFromStream(is); 
+        
         if ("JAXB".equals(jaxbBook.getName()) && 1L == jaxbBook.getId()
-            && "JSON".equals(jsonBook.getName()) && 2L == jsonBook.getId()) {
+            && "JSON".equals(jsonBook.getName()) && 2L == jsonBook.getId()
+            && Arrays.equals(imageBytes, receivedImageBytes)) {
             System.out.println();
             System.out.println("Book attachments have been successfully received");
         } else {
