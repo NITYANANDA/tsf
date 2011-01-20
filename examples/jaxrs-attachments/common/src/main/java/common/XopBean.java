@@ -27,6 +27,10 @@ import javax.xml.bind.annotation.XmlMimeType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+/*
+ * Sample bean which will be represented on the wire according 
+ * to the <a href="http://www.w3.org/TR/xop10/">XOP Specification</a>.
+ */
 @XmlRootElement(name = "xopBean", namespace = "http://xop/jaxrs")
 @XmlType(name = "XopBean", propOrder = {
         "name",
