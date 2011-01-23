@@ -17,8 +17,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 	<jaxws:endpoint id="GreeterService"
 	                implementor="demo.interceptors.server.GreeterImpl"
-	                address="/InterceptorExample"
-	                transportId="http://schemas.xmlsoap.org/wsdl/http/"/>
+	                address="/InterceptorExample"/>
 
 </beans>
 
