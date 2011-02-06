@@ -20,6 +20,7 @@
         <module>jaxrs-jaxws-description-first</module>
         <module>jaxrs-jaxws-authorization</module>
         <module>jaxrs-jms-http</module>
+        <module>jaxrs-attachments</module>
         <module>interceptors</module>
     </modules>
 

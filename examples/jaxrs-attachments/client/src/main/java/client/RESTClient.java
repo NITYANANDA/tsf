@@ -58,6 +58,16 @@ public final class RESTClient {
         this.port = port;
     }
 
+    /**
+     * Writes and reads the XOP attachment using a CXF JAX-RS WebClient.
+     * Note that WebClient is created with the help of JAXRSClientFactoryBean.
+     * JAXRSClientFactoryBean can be used when neither of the WebClient factory 
+     * methods is appropriate. For example, in this case, an "mtom-enabled" 
+     * property is set on the factory bean first.
+     * 
+     * 
+     * @throws Exception
+     */
     public void useXopAttachmentServiceWithWebClient() throws Exception {
 
         final String serviceURI = "http://localhost:" + port + "/services/attachments/xop";
@@ -79,6 +89,13 @@ public final class RESTClient {
         verifyXopResponse(xop, xopResponse);
     }
     
+    /**
+     * Writes and reads the XOP attachment using a CXF JAX-RS Proxy
+     * The proxy automatically sets the "mtom-enabled" property by checking
+     * the CXF EndpointProperty set on the XopAttachment interface.
+     * 
+     * @throws Exception
+     */
     public void useXopAttachmentServiceWithProxy() throws Exception {
 
         final String serviceURI = "http://localhost:" + port + "/services/attachments";
@@ -96,6 +113,15 @@ public final class RESTClient {
         verifyXopResponse(xop, xopResponse);
     }
     
+    /**
+     * Writes and reads the multipart/mixed attachments using a CXF JAX-RS WebClient
+     * Note that a custom JAXB-driven JSONProvider is registered to simpify dealing 
+     * with one of the parts in the JSON format: it is configured to drop namespace 
+     * prefixes on the write and add a namespace to the incoming payload so that it
+     * can be read into the namespace-qualified JAXB Book bean.
+     *  
+     * @throws Exception
+     */
     public void useAttachmentServiceWithWebClient() throws Exception {
 
         final String serviceURI = "http://localhost:" + port + "/services/attachments/multipart";
@@ -120,7 +146,16 @@ public final class RESTClient {
         
         verifyMultipartResponse(bodyResponse);
     }
-    
+
+    /**
+     * Writes and reads the multipart/mixed attachments using a CXF JAX-RS Proxy
+     * Note that a custom JAXB-driven JSONProvider is registered to simpify dealing 
+     * with one of the parts in the JSON format: it is configured to drop namespace 
+     * prefixes on the write and add a namespace to the incoming payload so that it
+     * can be read into the namespace-qualified JAXB Book bean.
+     * 
+     * @throws Exception
+     */
     public void useAttachmentServiceWithProxy() throws Exception {
 
         final String serviceURI = "http://localhost:" + port + "/services/attachments";
@@ -144,15 +179,13 @@ public final class RESTClient {
         
         verifyMultipartResponse(bodyResponse);
     }
-    
-    private void verifyXopResponse(XopBean xopOriginal, XopBean xopResponse) {
-        if (!Arrays.equals(xopResponse.getBytes(), xopOriginal.getBytes())) {
-            throw new RuntimeException("Received XOP attachment is corrupted");
-        }
-        System.out.println();
-        System.out.println("XOP attachment has been successfully received");
-    }
-    
+
+    /**
+     * Creates a XopBean. The image on the disk is included as a byte array, 
+     * a DataHandler and java.awt.Image
+     * @return the bean
+     * @throws Exception
+     */
     private XopBean createXopBean() throws Exception  {
         XopBean xop = new XopBean();
         xop.setName("xopName");
@@ -176,10 +209,35 @@ public final class RESTClient {
         return xop;
     }
     
+    /**
+     * Verifies that the received image is identical to the original one. 
+     * @param xopOriginal
+     * @param xopResponse
+     */
+    private void verifyXopResponse(XopBean xopOriginal, XopBean xopResponse) {
+        if (!Arrays.equals(xopResponse.getBytes(), xopOriginal.getBytes())) {
+            throw new RuntimeException("Received XOP attachment is corrupted");
+        }
+        System.out.println();
+        System.out.println("XOP attachment has been successfully received");
+    }
+    
     private Image getImage(String name) throws Exception {
         return ImageIO.read(getClass().getResource(name));
     }
 
+    /**
+     * Creates MultipartBody. It contains 3 parts, "book1", "book2" and "image". 
+     * These individual parts have their Content-Type set to application/xml,
+     * application/json and application/octet-stream
+     *   
+     * MultipartBody will use the Content-Type value of the individual
+     * part to write its data by delegating to a matching JAX-RS MessageBodyWriter
+     * provider
+     * 
+     * @return
+     * @throws Exception
+     */
     private MultipartBody createMultipartBody() throws Exception  {
         List<Attachment> atts = new LinkedList<Attachment>();
         atts.add(new Attachment("book1", "application/xml", new Book("JAXB", 1L)));

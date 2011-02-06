@@ -7,10 +7,13 @@ import common.XopAttachmentService;
 import common.XopBean;
 
 /**
- * JAX-RS AttachmentService root resource
+ * JAX-RS XopAttachmentService root resource
  */
 public class XopAttachmentServiceImpl implements XopAttachmentService {
 
+    /**
+     * {@inheritDoc}
+     */
     public XopBean echoXopAttachment(XopBean xop) {
         return xop;
     }

@@ -14,7 +14,7 @@
 
     <properties>
         <activemq.version>5.4.2</activemq.version>
-        <cxf.version>2.3.3-SNAPSHOT</cxf.version>
+        <cxf.version>2.3.2</cxf.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
