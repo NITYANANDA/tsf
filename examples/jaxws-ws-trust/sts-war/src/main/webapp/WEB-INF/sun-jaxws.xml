@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+    <endpoint implementation="com.sun.xml.ws.mex.server.MEXEndpoint" 
+       name="MEXEndpoint" 
+       url-pattern="/DoubleItSTSService/mex"/>
+
+    <endpoint
+       name="DoubleItSTS Implementation"
+       implementation="sts.DoubleItSTS"
+       wsdl="WEB-INF/wsdl/DoubleItSTSService.wsdl"
+       port="{http://tempuri.org/}IDoubleItSTSService_Port"
+       url-pattern="/DoubleItSTSService"/>    
+       
+     <endpoint
+       name="DoubleItSTS X509 Implementation"
+       implementation="sts.DoubleItSTS"
+       wsdl="WEB-INF/wsdl/DoubleItSTSService.wsdl"
+       port="{http://tempuri.org/}IDoubleItSTSServiceX509_Port"
+       url-pattern="/DoubleItSTSServiceX509"/>    
+             
+</endpoints>
+
