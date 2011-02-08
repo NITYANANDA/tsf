@@ -99,7 +99,6 @@
                   <sp:RequireServerEntropy />
                </wsp:Policy>
             </sp:Trust13>
-
             <wsam:Addressing wsp:Optional="false">
                <wsp:Policy>
                   <wsam:AnonymousResponses />
@@ -157,7 +156,6 @@
                   <sp:RequireServerEntropy />
                </wsp:Policy>
             </sp:Trust13>
-            
             <wsam:Addressing wsp:Optional="false">
                <wsp:Policy>
                   <wsam:AnonymousResponses />

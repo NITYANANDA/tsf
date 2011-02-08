@@ -16,9 +16,9 @@ the WSP and the STS by following this section: http://www.jroller.com/gmazza/ent
 (sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl)
 are hardcoded to /tsfexampledir/jaxws-ws-trust/sts-war/stsstore.jks, where tsfexampledir is 
 a symbolic link to whereever you installed the TSF examples. For Linux, you can create a symbolic link 
-from the root / as follows:
+FROM THE ROOT DIRECTORY ("/") as follows:
 
-sudo ln -s /path/to/tsf/examples tsfexampledir
+user@machine:/$ sudo ln -s /path/to/tsf/examples tsfexampledir
 
 If you don't wish to use symbolic links, or for Windows, you will need to update the keystore and 
 truststore location information in the STS WSDL.  Just search on stsstore.jks in the WSDL 

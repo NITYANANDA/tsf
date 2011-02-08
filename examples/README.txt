@@ -17,6 +17,10 @@ but they are also all setup to be run in the Talend Service Factory CE
 OSGi container that can be obtained from:
 http://www.talend.com/download.php#SF
 
+jaxws-ws-trust: demonstrates having a SOAP client use CXF's stsclient 
+to make a call to a Metro Secure Token Service (STS) and subsequently 
+using the SAML token received to make a web service call to a CXF
+web service provider.
 
 jaxws-jms-spec: demonstrates using JAX-WS clients and servers to
 talk SOAP over JMS, but using the SOAP/JMS Specification for 
@@ -52,4 +56,5 @@ corresponding endpoints.
 
 jaxrs-jms-http: demonstrates how a JAX-RS HTTP server can be enhanced
 to receive JMS messages.
+
 
