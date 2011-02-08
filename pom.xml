@@ -1,16 +1,201 @@
-<!--
-    Copyright (C) 2010 Talend Inc. - www.talend.com
--->
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.talend.sf</groupId>
     <artifactId>tsf-parent</artifactId>
-    <version>1.0</version>
-    <name>Talend Service Factory</name>
+    <version>2.3.2.0-SNAPSHOT</version>
+    <name>TSF</name>
+    <description>
+        Talend Service Factory (TSF) uses the industry leading open source
+        Apache CXF implementation of JAX-WS to help you service enable your
+        existing applications and interfaces.  The CXF lightweight, modular
+        architecture is based on Spring, so it will work with your application
+        regardless of the platform on which it is running.  It will run on
+        stand-alone JVM applications, as part of a servlet container such as
+        Tomcat, within a JEE server, or in an OSGi container such as Equinox.
+    </description>
     <url>http://talend.com</url>
-
     <packaging>pom</packaging>
+    <inceptionYear>2010</inceptionYear>
+
+    <organization>
+        <name>Talend</name>
+        <url>http://www.talend.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>jbonofre</id>
+            <name>Jean-Baptiste Onofré</name>
+            <email>jbonofre@apache.org</email>
+            <timezone>GMT+1</timezone>
+        </developer>
+    </developers>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <issueManagement>
+        <system>Jira</system>
+        <url>https://jira.sopera.de/browse/SF</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:Talend/tsf.git</connection>
+        <developerConnection>scm:git:git@github.com:Talend/tsf.git</developerConnection>
+        <url>https://github.com/Talend/tsf</url>
+    </scm>
+
+    <!-- TODO <ciManagement/> -->
+
+    <properties>
+        <cxf.version>2.3.2</cxf.version>
+        <cxf.build-utils.version>2.3.1</cxf.build-utils.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.osgi.version>1.2.1</spring.osgi.version>
+        <activemq.version>5.4.2</activemq.version>
+
+        <!-- OSGi (Karaf, Felix, Aries) -->
+        <aries.version>0.2-incubating</aries.version>
+        <!--felix.fileinstall.version>3.0.2</felix.fileinstall.version>
+        <felix.prefs.version>1.0.4</felix.prefs.version-->
+        <karaf.version>2.1.3</karaf.version>
+        <karaf.osgi.version>2.1.3</karaf.osgi.version>
+        <osgi.compendium.version>4.2.0</osgi.compendium.version>
+        <osgi.core.version>4.2.0</osgi.core.version>
+
+        <!-- Geronimo -->
+        <geronimo-annotation.version>1.1.1</geronimo-annotation.version>
+        <geronimo-connector.version>2.1.3</geronimo-connector.version>
+        <geronimo-el.version>1.0.1</geronimo-el.version>
+        <geronimo-j2ee-connector.version>2.0.0</geronimo-j2ee-connector.version>
+        <geronimo-j2ee-management.version>1.0.1</geronimo-j2ee-management.version>
+        <geronimo-jaxws.version>1.0</geronimo-jaxws.version>
+        <geronimo-jms.version>1.1.1</geronimo-jms.version>
+        <geronimo-jpa.version>1.1</geronimo-jpa.version>
+        <geronimo-jsp.version>1.0.1</geronimo-jsp.version>
+        <geronimo-jta.version>1.1.1</geronimo-jta.version>
+        <geronimo-saaj.version>1.1</geronimo-saaj.version>
+        <geronimo-servlet.version>1.2</geronimo-servlet.version>
+        <geronimo-ws-metadata.version>1.1.3</geronimo-ws-metadata.version>
+        <geronimo-transaction.version>1.1.1</geronimo-transaction.version>
+
+        <!-- ServiceMix Bundles -->
+        <ant.bundle.version>1.7.0_4</ant.bundle.version>
+        <antlr2.bundle.version>2.7.7_3</antlr2.bundle.version>
+        <antlr.bundle.version>3.0.1_4</antlr.bundle.version>
+        <antlr-runtime.bundle.version>3.0.1_2</antlr-runtime.bundle.version>
+        <aopalliance.bundle.version>1.0_4</aopalliance.bundle.version>
+        <asm.bundle.version>3.3_1</asm.bundle.version>
+        <bcel.bundle.version>5.2_3</bcel.bundle.version>
+        <cglib.bundle.version>2.2_1</cglib.bundle.version>
+        <commons-beanutils.bundle.version>1.8.2_1</commons-beanutils.bundle.version>
+        <commons-codec.bundle.version>1.3_3</commons-codec.bundle.version>
+        <commons-collections.bundle.version>3.2.1_1</commons-collections.bundle.version>
+        <commons-csv.bundle.version>1.0-r706899_4</commons-csv.bundle.version>
+        <commons-httpclient.bundle.version>3.1_5</commons-httpclient.bundle.version>
+        <commons-io.bundle.version>1.4_1</commons-io.bundle.version>
+        <commons-lang.bundle.version>2.4_4</commons-lang.bundle.version>
+        <commons-net.bundle.version>1.4.1_4</commons-net.bundle.version>
+        <commons-pool.bundle.version>1.5.4_2</commons-pool.bundle.version>
+        <commons-vfs.bundle.version>1.0_5</commons-vfs.bundle.version>
+        <dom4j.bundle.version>1.6.1_3</dom4j.bundle.version>
+        <dozer.bundle.version>5.2.0_2</dozer.bundle.version>
+        <fastinfoset.bundle.version>1.2.7_3</fastinfoset.bundle.version>
+        <flatpack.bundle.version>3.1.1_4</flatpack.bundle.version>
+        <freemarker.bundle.version>2.3.15_4</freemarker.bundle.version>
+        <groovy.bundle.version>1.5.6_4</groovy.bundle.version>
+        <hapi.bundle.version>0.5.1_4</hapi.bundle.version>
+        <ibatis-sqlmap.bundle.version>2.3.4.726_3</ibatis-sqlmap.bundle.version>
+        <irclib.bundle.version>1.10_3</irclib.bundle.version>
+        <isorelax.bundle.version>20050913_3</isorelax.bundle.version>
+        <jasypt.bundle.version>1.6_1</jasypt.bundle.version>
+        <jaxb-impl.bundle.version>2.1.13_1</jaxb-impl.bundle.version>
+        <jaxb-xjc.bundle.version>2.1.13_1</jaxb-xjc.bundle.version>
+        <jaxb-impl.version>2.1.13</jaxb-impl.version>
+        <jaxb-xjc.version>2.1.13</jaxb-xjc.version>
+        <jaxen.bundle.version>1.1.1_1</jaxen.bundle.version>
+        <jcr-api.bundle.version>1.0_3</jcr-api.bundle.version>
+        <jdt-core.bundle.version>3.2.3_4</jdt-core.bundle.version>
+        <jdom.bundle.version>1.1_3</jdom.bundle.version>
+        <jetty.version>7.2.2.v20101205</jetty.version>
+        <jexcelapi.bundle.version>2.4.2_3</jexcelapi.bundle.version>
+        <jing.bundle.version>20030619_3</jing.bundle.version>
+        <jruby.bundle.version>1.1.2_3</jruby.bundle.version>
+        <joda-time.bundle.version>1.5.2_3</joda-time.bundle.version>
+        <josql.bundle.version>1.5_4</josql.bundle.version>
+        <jsch.bundle.version>0.1.31_4</jsch.bundle.version>
+        <jsmpp.bundle.version>2.0_3</jsmpp.bundle.version>
+        <juel.bundle.version>2.1.0_3</juel.bundle.version>
+        <junit.bundle.version>4.7_2</junit.bundle.version>
+        <mina.bundle.version>1.1.7_4</mina.bundle.version>
+        <mvel.bundle.version>1.3.12_2</mvel.bundle.version>
+        <neethi.bundle.version>2.0.4_3</neethi.bundle.version>
+        <ognl.bundle.version>2.7.3_4</ognl.bundle.version>
+        <openjpa.bundle.version>2.0.0_1</openjpa.bundle.version>
+        <opensaml.bundle.version>1.1_5</opensaml.bundle.version>
+        <oscache.bundle.version>2.4_4</oscache.bundle.version>
+        <oscore.bundle.version>2.2.4_4</oscore.bundle.version>
+        <osworkflow.bundle.version>2.7.0_4</osworkflow.bundle.version>
+        <oro.bundle.version>2.0.8_4</oro.bundle.version>
+        <propertyset.bundle.version>1.3_4</propertyset.bundle.version>
+        <protobuf-java.bundle.version>2.3.0_1</protobuf-java.bundle.version>
+        <qpid.bundle.version>0.5.0_3</qpid.bundle.version>
+        <quartz.bundle.version>1.6.6_2</quartz.bundle.version>
+        <rhino.bundle.version>1.7R2_1</rhino.bundle.version>
+        <saaj-impl.bundle.version>1.3.2_2</saaj-impl.bundle.version>
+        <saxon.bundle.version>9.1.0.8_1</saxon.bundle.version>
+        <serp.bundle.version>1.13.1_3</serp.bundle.version>
+        <smack.bundle.version>3.1.0_2</smack.bundle.version>
+        <snmp4j.bundle.version>1.8.1_4</snmp4j.bundle.version>
+        <stringtemplate.bundle.version>3.2_4</stringtemplate.bundle.version>
+        <tagsoup.bundle.version>1.2_4</tagsoup.bundle.version>
+        <velocity.bundle.version>1.6.2_4</velocity.bundle.version>
+        <werken-xpath.bundle.version>0.9.4_4</werken-xpath.bundle.version>
+        <wsdl4j.bundle.version>1.6.2_3</wsdl4j.bundle.version>
+        <xalan.bundle.version>2.7.1_3</xalan.bundle.version>
+        <xerces.bundle.version>2.9.1_4</xerces.bundle.version>
+        <xmlbeans.bundle.version>2.4.0_4</xmlbeans.bundle.version>
+        <xmlresolver.bundle.version>1.2_3</xmlresolver.bundle.version>
+        <xmlsec.bundle.version>1.4.4_1</xmlsec.bundle.version>
+        <xpp3.bundle.version>1.1.4c_4</xpp3.bundle.version>
+        <xstream.bundle.version>1.3_4</xstream.bundle.version>
+
+        <!-- ServiceMix Specs -->
+        <servicemix.specs.version>1.7.0</servicemix.specs.version>
+
+        <!-- Other Dependencies -->
+        <abdera.version>1.1</abdera.version>
+        <axiom.version>1.2.8</axiom.version>
+        <bouncycastle.version>140</bouncycastle.version>
+        <commons-dbcp.version>1.3</commons-dbcp.version>
+        <commons-jexl.version>2.0.1</commons-jexl.version>
+        <commons-jxpath.version>1.3</commons-jxpath.version>
+        <commons-logging.version>1.1.1</commons-logging.version>
+        <commons-management.version>1.0</commons-management.version>
+        <commons-net.version>2.0</commons-net.version>
+        <derby.version>10.5.3.0_1</derby.version>
+        <easymock.version>2.4</easymock.version>
+        <groovy.version>1.7.0</groovy.version>
+        <httpcomponents.version>4.0.1</httpcomponents.version>
+        <jackrabbit.version>1.5.3</jackrabbit.version>
+        <jaxp-ri.version>1.4.2</jaxp-ri.version>
+        <jaxws-api.version>2.1</jaxws-api.version>
+        <javax.mail.version>1.4.3</javax.mail.version>
+        <jettison.version>1.2</jettison.version>
+        <junit.version>4.7</junit.version>
+        <log4j.version>1.2.16</log4j.version>
+        <openjpa.version>2.0.0</openjpa.version>
+        <tranql.version>1.6</tranql.version>
+        <woodstox.version>4.0.8</woodstox.version>
+        <woodstox.stax2-api.version>3.0.2</woodstox.stax2-api.version>
+        <wss4j.version>1.5.11</wss4j.version>
+        <xbean.version>3.7</xbean.version>
+        <xmlschema.version>1.4.7</xmlschema.version>
+    </properties>
 
     <repositories>
           <repository>
@@ -38,9 +223,10 @@
          </pluginRepository>
      </pluginRepositories>
 
-    <inceptionYear>2010</inceptionYear>
+
 
     <modules>
+        <module>branding</module>
         <module>talend-sf</module>
     </modules>
 
