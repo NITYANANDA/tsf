@@ -139,23 +139,33 @@
    <wsp:Policy wsu:Id="IDoubleItSTSServiceX509_policy">
       <wsp:ExactlyOne>
          <wsp:All>
-            <sp:SymmetricBinding
+            <sp:AsymmetricBinding
                xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
                <wsp:Policy>
-                  <sp:ProtectionToken>
+                  <sp:InitiatorToken>
                      <wsp:Policy>
                         <sp:X509Token
                            sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
                            <wsp:Policy>
-                              <sp:RequireDerivedKeys />
                               <sp:WssX509V3Token10 />
                            </wsp:Policy>
                         </sp:X509Token>
                      </wsp:Policy>
-                  </sp:ProtectionToken>
+                  </sp:InitiatorToken>
+                  <sp:RecipientToken>
+                     <wsp:Policy>
+                        <sp:X509Token
+                           sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+                           <wsp:Policy>
+                              <sp:WssX509V3Token10 />
+                              <sp:RequireIssuerSerialReference />
+                           </wsp:Policy>
+                        </sp:X509Token>
+                     </wsp:Policy>
+                  </sp:RecipientToken>
                   <sp:AlgorithmSuite>
                      <wsp:Policy>
-                        <sp:Basic256 />
+                        <sp:TripleDesRsa15 />
                      </wsp:Policy>
                   </sp:AlgorithmSuite>
                   <sp:Layout>
@@ -167,7 +177,7 @@
                   <sp:EncryptSignature />
                   <sp:OnlySignEntireHeadersAndBody />
                </wsp:Policy>
-            </sp:SymmetricBinding>
+            </sp:AsymmetricBinding>
             <sp:Wss11
                xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
                <wsp:Policy>
