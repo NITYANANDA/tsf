@@ -16,8 +16,15 @@ public class UTCallbackHandler implements CallbackHandler {
         for (int i = 0; i < callbacks.length; i++) {
             if (callbacks[i] instanceof WSPasswordCallback) { // CXF
                 WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
-                pc.setPassword("clarinet");
+                if ("myclientkey".equals(pc.getIdentifier())) {
+                    pc.setPassword("ckpass");
+                    break;
+                } else {
+                    pc.setPassword("clarinet");
+                    break;
+                }
             }
         }
     }
 }
+

@@ -33,7 +33,6 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
                        <map>
                            <entry key="ws-security.username" value="alice"/>
                            <entry key="ws-security.callback-handler" value="client.UTCallbackHandler"/>
-                           <entry key="ws-security.signature.properties" value="clientKeystore.properties"/> 
                            <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/> 
                            <entry key="ws-security.encryption.username" value="mystskey"/>
                        </map>
@@ -55,6 +54,8 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
                    <property name="endpointName" value="{http://tempuri.org/}IDoubleItSTSServiceX509_Port"/>
                    <property name="properties">
                        <map>
+                           <entry key="ws-security.signature.username" value="myclientkey"/>
+                           <entry key="ws-security.callback-handler" value="client.UTCallbackHandler"/>
                            <entry key="ws-security.signature.properties" value="clientKeystore.properties"/> 
                            <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/> 
                            <entry key="ws-security.encryption.username" value="mystskey"/>
