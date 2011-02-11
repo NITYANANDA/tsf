@@ -38,7 +38,7 @@
    xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns:wsa10="http://www.w3.org/2005/08/addressing"
    xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:sc="http://schemas.sun.com/2006/03/wss/server"
    xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy">
-   <wsp:Policy wsu:Id="IDoubleItSTSService_policy">
+   <wsp:Policy wsu:Id="IDoubleItSTSServiceUT_policy">
       <wsp:ExactlyOne>
          <wsp:All>
             <sp:SymmetricBinding
@@ -113,7 +113,7 @@
                <tc:Issuer>DoubleItSTSIssuer</tc:Issuer>
                <tc:ServiceProviders>
                   <tc:ServiceProvider
-                     endpoint="http://localhost:8080/doubleit/services/doubleit">
+                     endpoint="http://localhost:8080/doubleit/services/doubleitUT">
                      <tc:CertAlias>myservicekey</tc:CertAlias>
                      <tc:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV1.1
                      </tc:TokenType>
@@ -289,9 +289,13 @@
       </wsp:ExactlyOne>
    </wsp:Policy>
    <wsdl:types>
-      <xsd:schema targetNamespace="http://tempuri.org/Imports">
-         <xsd:import schemaLocation="sts_schema.xsd"
-            namespace="http://schemas.message.com/Message" />
+      <xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.message.com/Message"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.message.com/Message">
+          <xsd:complexType name="MessageBody">
+              <xsd:sequence>
+                  <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any"/>
+              </xsd:sequence>
+          </xsd:complexType>
       </xsd:schema>
    </wsdl:types>
    <wsdl:message name="IDoubleItSTSService_IssueToken_InputMessage">
@@ -310,8 +314,8 @@
             message="tns:IDoubleItSTSService_IssueToken_OutputMessage" />
       </wsdl:operation>
    </wsdl:portType>
-   <wsdl:binding name="IDoubleItSTSService_Binding" type="tns:IDoubleItSTSService">
-      <wsp:PolicyReference URI="#IDoubleItSTSService_policy" />
+   <wsdl:binding name="IDoubleItSTSServiceUT_Binding" type="tns:IDoubleItSTSService">
+      <wsp:PolicyReference URI="#IDoubleItSTSServiceUT_policy" />
       <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
       <wsdl:operation name="IssueToken">
          <soap:operation
@@ -349,7 +353,7 @@
       </wsdl:operation>
    </wsdl:binding>
    <wsdl:service name="DoubleItSTSService">
-      <wsdl:port name="IDoubleItSTSService_Port" binding="tns:IDoubleItSTSService_Binding">
+      <wsdl:port name="IDoubleItSTSServiceUT_Port" binding="tns:IDoubleItSTSServiceUT_Binding">
          <soap:address location="http://localhost:8080/jaxws-sts/sts" />
          <jaxws:bindings>
             <jaxws:provider>true</jaxws:provider>

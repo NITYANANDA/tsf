@@ -13,7 +13,7 @@ import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
 
 @WebServiceProvider(serviceName = "DoubleItSTSService",
-    portName = "IDoubleItSTSService_Port",
+    portName = "IDoubleItSTSServiceUT_Port",
     targetNamespace = "http://tempuri.org/",
     wsdlLocation = "WEB-INF/wsdl/DoubleItSTS/DoubleItSTSService.wsdl")
 @ServiceMode(value = Mode.PAYLOAD)

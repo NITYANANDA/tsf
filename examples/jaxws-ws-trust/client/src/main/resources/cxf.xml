@@ -19,8 +19,9 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
    
    <!-- For both client entries, WSC->WSP security is the same, just WSC->STS confirmation method different -->
 
-   <jaxws:client name="{http://www.example.org/contract/DoubleIt}DoubleItPort" createdFromAPI="true">
+   <jaxws:client name="{http://www.example.org/contract/DoubleIt}DoubleItPortUT" createdFromAPI="true">
        <jaxws:properties>
+           <!-- We do not need these two values from > WSS4J 1.5.11 -->
            <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/>
            <entry key="ws-security.encryption.username" value="myservicekey"/>
            <entry key="ws-security.sts.client">
@@ -28,7 +29,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
                    <constructor-arg ref="cxf"/>
                    <property name="wsdlLocation" value="DoubleItSTSService.wsdl"/>
                    <property name="serviceName" value="{http://tempuri.org/}DoubleItSTSService"/>
-                   <property name="endpointName" value="{http://tempuri.org/}IDoubleItSTSService_Port"/>
+                   <property name="endpointName" value="{http://tempuri.org/}IDoubleItSTSServiceUT_Port"/>
                    <property name="properties">
                        <map>
                            <entry key="ws-security.username" value="alice"/>
@@ -44,6 +45,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
    
    <jaxws:client name="{http://www.example.org/contract/DoubleIt}DoubleItPortX509" createdFromAPI="true">
        <jaxws:properties>
+           <!-- We do not need these two values from > WSS4J 1.5.11 -->
            <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/>
            <entry key="ws-security.encryption.username" value="myservicekey"/>
            <entry key="ws-security.sts.client">

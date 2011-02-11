@@ -19,7 +19,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>com.mycompany.webservice.sts.DoubleItSTS</servlet-name>
-        <url-pattern>/DoubleItSTSService</url-pattern>
+        <url-pattern>/DoubleItSTSServiceUT</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>com.mycompany.webservice.sts.DoubleItSTS</servlet-name>
@@ -27,7 +27,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>com.sun.xml.ws.mex.server.MEXEndpoint</servlet-name>
-        <url-pattern>/DoubleItSTSService/mex</url-pattern>
+        <url-pattern>/DoubleItSTSServiceUT/mex</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

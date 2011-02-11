@@ -17,10 +17,10 @@
         http://cxf.apache.org/schemas/jaxws.xsd">
     
 
-   <jaxws:endpoint id="doubleit"
+   <jaxws:endpoint id="doubleitUT"
       implementor="service.DoubleItPortTypeImpl"
-      address="/doubleit" 
-      endpointName="DoubleItPort"
+      address="/doubleitUT" 
+      endpointName="DoubleItPortUT"
       wsdlLocation="WEB-INF/wsdl/DoubleIt.wsdl">
         
       <jaxws:properties>

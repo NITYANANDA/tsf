@@ -10,9 +10,9 @@ public class WSClient {
    public static void main(String[] args) {
       DoubleItService service = new DoubleItService();
 
-      // Default UsernameToken port
-      DoubleItPortType defaultPort = service.getDoubleItPort();
-      doubleIt(defaultPort, 10);
+      // UsernameToken port
+      DoubleItPortType utPort = service.getDoubleItPortUT();
+      doubleIt(utPort, 10);
       
       // X.509 port
       DoubleItPortType x509Port = service.getDoubleItPortX509();

@@ -63,9 +63,9 @@
       <!-- Both ports have same security rules, second port created to make it easier
            to configure client to use different STS authentication method
        -->
-      <wsdl:port name="DoubleItPort" binding="tns:DoubleItBinding">
+      <wsdl:port name="DoubleItPortUT" binding="tns:DoubleItBinding">
          <soap:address
-            location="http://localhost:8080/doubleit/services/doubleit"/>
+            location="http://localhost:8080/doubleit/services/doubleitUT"/>
       </wsdl:port>
       <wsdl:port name="DoubleItPortX509" binding="tns:DoubleItBinding">
          <soap:address
@@ -92,12 +92,12 @@
                               <sp:RequireInternalReference/>
                            </wsp:Policy>
                            <sp:Issuer>
-                              <wsaw:Address>http://localhost:8080/DoubleItSTS/DoubleItSTSService</wsaw:Address>
+                              <wsaw:Address>http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT</wsaw:Address>
                               <wsaw:Metadata>
                                  <wsx:Metadata>
                                     <wsx:MetadataSection>
                                        <wsx:MetadataReference>
-                                          <wsaw:Address>http://localhost:8080/DoubleItSTS/DoubleItSTSService/mex</wsaw:Address>
+                                          <wsaw:Address>http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT/mex</wsaw:Address>
                                        </wsx:MetadataReference>
                                     </wsx:MetadataSection>
                                  </wsx:Metadata>
