@@ -74,6 +74,9 @@ removed.
 Getting Started 
 ===============
 
+For information on running the Talend Service Factory OSGi container, 
+check the README file in the container folder just below this directory.
+
 If you need more help try talking to us on our forums: http://talendforge.org/forum
 
 You can find more information about Apache CXF at http://cxf.apache.org/
