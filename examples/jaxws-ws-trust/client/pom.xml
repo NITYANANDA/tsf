@@ -13,8 +13,8 @@
 
    <dependencies>
       <dependency>
-         <groupId>com.talend.sf.interop.wstrust-cxf</groupId>
-         <artifactId>wstrust-cxf-service-war</artifactId>
+         <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
+         <artifactId>jaxws-ws-trust-service-war</artifactId>
          <classifier>jaxws</classifier>
          <version>1.0-SNAPSHOT</version>
       </dependency>

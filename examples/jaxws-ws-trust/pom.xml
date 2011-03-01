@@ -10,8 +10,8 @@
    <packaging>pom</packaging>
 
    <modules>
-      <module>client</module>
-      <module>service-war</module>
+       <module>service-war</module>
+       <module>client</module>
    </modules>
 
    <build>
