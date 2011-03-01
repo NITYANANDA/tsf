@@ -25,5 +25,9 @@
         <module>jaxws-ws-trust</module>
     </modules>
 
+    <build>
+        <defaultGoal>install</defaultGoal>
+    </build>
+
 </project>
 
