@@ -5,6 +5,7 @@
 
     <formats>
         <format>zip</format>
+        <format>dir</format>
     </formats>
 
     <fileSets>
@@ -16,7 +17,7 @@
                 <exclude>LICENSE</exclude>
                 <exclude>NOTICE</exclude>
                 <exclude>README</exclude>
-                <exclude>bin/*.bat</exclude>
+                <exclude>bin/**</exclude>
                 <exclude>release_notes.txt</exclude>
                 <exclude>lib/endorsed/**</exclude>
                 <exclude>lib/jaxb-*.jar</exclude>
@@ -27,6 +28,19 @@
                 <exclude>lib/geronimo-ws-metadata**</exclude>
                 <exclude>lib/geronimo-jaxws**</exclude>
             </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/dependencies/cxf/apache-cxf-${cxf.version}/bin</directory>
+            <outputDirectory>/bin</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>*.bat</exclude>
+            </excludes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
             <directory>target/dependencies/cxf/apache-cxf-${cxf.version}/bin</directory>
@@ -51,18 +65,14 @@
                 <exclude>etc/users.properties</exclude>
                 <exclude>etc/org.apache.karaf.features.cfg</exclude>
                 <exclude>etc/org.ops4j.pax.logging.cfg</exclude>
-                <exclude>LICENSE</exclude>
-                <exclude>NOTICE</exclude>
-                <exclude>README</exclude>
                 <exclude>RELEASE-NOTES</exclude>
                 <exclude>karaf-manual*.html</exclude>
-                <exclude>karaf-manual*.pdf</exclude>
             </excludes>
         </fileSet>
 
         <!-- Copy over bin/* separately to get the correct file mode -->
         <fileSet>
-            <directory>target/dependencies/win/apache-karaf-${karaf.version}</directory>
+            <directory>target/dependencies/unix/apache-karaf-${karaf.version}</directory>
             <outputDirectory>/container</outputDirectory>
             <includes>
                 <include>bin/admin</include>
@@ -71,8 +81,21 @@
                 <include>bin/stop</include>
             </includes>
             <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
         </fileSet>
-
+        <!-- Copy over bin/* separately to get the correct file mode -->
+        <fileSet>
+            <directory>target/dependencies/win/apache-karaf-${karaf.version}</directory>
+            <outputDirectory>/container</outputDirectory>
+            <includes>
+                <include>bin/admin.bat</include>
+                <include>bin/karaf.bat</include>  <!-- we need this one in here for admin:create'd instances to work -->
+                <include>bin/start.bat</include>
+                <include>bin/stop.bat</include>
+            </includes>
+            <fileMode>0644</fileMode>
+            <lineEnding>dos</lineEnding>
+        </fileSet>
         <!-- Copy over jar files -->
         <fileSet>
             <directory>target/dependencies</directory>
@@ -87,7 +110,7 @@
             <directory>${basedir}</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>README</include>
+                <include>README.txt</include>
                 <include>NOTICE</include>
                 <!--include>RELEASE*</include-->
             </includes>
@@ -130,8 +153,15 @@
             <source>${basedir}/target/dependencies/win/apache-karaf-${karaf.version}/bin/karaf.bat</source>
             <outputDirectory>/container/bin/</outputDirectory>
             <destName>tsf.bat</destName>
-            <fileMode>0755</fileMode>
+            <fileMode>0644</fileMode>
             <lineEnding>dos</lineEnding>
+        </file>
+        <file>
+            <source>${basedir}/target/dependencies/unix/apache-karaf-${karaf.version}/bin/karaf</source>
+            <outputDirectory>/container/bin/</outputDirectory>
+            <destName>tsf</destName>
+            <fileMode>0744</fileMode>
+            <lineEnding>unix</lineEnding>
         </file>
         <file>
             <source>${basedir}/target/classes/features.xml</source>

@@ -34,6 +34,9 @@
             <includes>
                 <include>**/*</include>
             </includes>
+            <excludes>
+                <exclude>*.bat</exclude>
+            </excludes>
             <lineEnding>unix</lineEnding>
             <fileMode>0755</fileMode>
         </fileSet>
@@ -51,12 +54,8 @@
                 <exclude>etc/users.properties</exclude>
                 <exclude>etc/org.apache.karaf.features.cfg</exclude>
                 <exclude>etc/org.ops4j.pax.logging.cfg</exclude>
-                <exclude>LICENSE</exclude>
-                <exclude>NOTICE</exclude>
-                <exclude>README</exclude>
                 <exclude>RELEASE-NOTES</exclude>
                 <exclude>karaf-manual*.html</exclude>
-                <exclude>karaf-manual*.pdf</exclude>
             </excludes>
         </fileSet>
 
@@ -87,7 +86,7 @@
             <directory>${basedir}</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>README</include>
+                <include>README.txt</include>
                 <include>NOTICE</include>
                 <!--include>RELEASE*</include-->
             </includes>
