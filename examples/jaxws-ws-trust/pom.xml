@@ -37,7 +37,7 @@
    </build>
 
    <properties>
-      <cxf.version>2.3.2</cxf.version>
+      <cxf.version>2.3.3</cxf.version>
    </properties>
    <dependencies>
       <dependency>
