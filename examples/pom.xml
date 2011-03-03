@@ -21,6 +21,7 @@
         <module>jaxrs-jaxws-authorization</module>
         <module>jaxrs-jms-http</module>
         <module>jaxrs-attachments</module>
+        <module>jaxrs-jaxws-transformations</module>
         <module>interceptors</module>
         <module>jaxws-ws-trust</module>
     </modules>

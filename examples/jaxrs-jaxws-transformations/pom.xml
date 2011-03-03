@@ -1,15 +1,15 @@
 <!--
     Copyright (C) 2010 Talend Inc. - www.talend.com
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.talend.sf.examples.jaxrs-attachments-example</groupId>
-    <artifactId>jaxrs-attachments</artifactId>
+    <groupId>com.talend.sf.examples.jaxrs-jaxws-transformations</groupId>
+    <artifactId>jaxrs-jaxws-transformations-example</artifactId>
     <version>1.0</version>
-    <name>JAX-RS Attachments Example</name>
+    <name>JAX-RS JAX-WS Transformations Example</name>
     <packaging>pom</packaging>
 
     <properties>
@@ -23,6 +23,11 @@
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
             <version>${cxf.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
     </dependencies>
 
     <modules>
@@ -31,7 +36,6 @@
         <module>war</module>
         <module>client</module>
     </modules>
-
     <build>
         <defaultGoal>install</defaultGoal>
         <pluginManagement>
