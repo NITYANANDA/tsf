@@ -14,8 +14,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://cxf.apache.org/jaxrs
 http://cxf.apache.org/schemas/jaxrs.xsd">
     <import resource="classpath:META-INF/cxf/cxf.xml" />
-    <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
-    <import resource="classpath:META-INF/cxf/cxf-extension-jms.xml" />
     <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
 
     <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"

@@ -2,6 +2,7 @@
 <!--
     Copyright (C) 2010 Talend Inc. - www.talend.com
 -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
@@ -16,29 +17,86 @@
          http://cxf.apache.org/schemas/jaxws.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-jaxws.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
      <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
+
+     <!-- Old SOAP and REST endpoints -->
 
      <jaxrs:server address="/rest" 
                    modelRef="classpath:/model/CustomerService-jaxrs.xml">
        <jaxrs:serviceBeans>
-         <ref bean="customer-bean"/>
+         <ref bean="old-customer-bean"/>
        </jaxrs:serviceBeans>
        <jaxrs:providers>
          <ref bean="jaxb-provider"/>
-         <bean class="server.NoCustomerExceptionMapper"/>
        </jaxrs:providers>		   
      </jaxrs:server>
 
+     <jaxws:endpoint implementor="#old-customer-bean" address="/soap"/>      
+
+     <bean id="old-customer-bean" class="server.CustomerServiceImpl"/>
+     
+     <!-- New SOAP and REST endpoints -->
+
+     <jaxrs:server address="/new-rest" 
+                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
+       <jaxrs:serviceBeans>
+         <ref bean="new-customer-bean"/>
+       </jaxrs:serviceBeans>
+       <jaxrs:providers>
+         <ref bean="jaxb-provider"/>
+       </jaxrs:providers>		   
+     </jaxrs:server>
+
+     <jaxws:endpoint implementor="#new-customer-bean" address="/new-soap"/>      
+
+     <bean id="new-customer-bean" class="server.NewCustomerServiceImpl"/>
+     
+     <!-- new SOAP endpoint with the transformation -->
+     
+     <jaxws:endpoint 
+         implementor="#new-customer-bean" 
+         address="/soap-endpoint"
+         endpointName="s:CustomerServiceNewPort"
+         serviceName="s:CustomerService"
+         xmlns:s="http://customerservice.example.com/">
+         <jaxws:features>
+           <ref bean="transformFeatureRedirect" />
+         </jaxws:features>
+     </jaxws:endpoint>
+     
+     <!-- new JAX-RS endpoint with the transformation -->
+     <jaxrs:server address="/rest-endpoint" 
+                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
+       <jaxrs:serviceBeans>
+         <ref bean="new-customer-bean"/>
+       </jaxrs:serviceBeans>
+       <jaxrs:providers>
+         <ref bean="jaxb-provider"/>
+       </jaxrs:providers>
+       <jaxrs:features>
+           <ref bean="transformFeatureRedirect" />
+       </jaxrs:features>   		   
+     </jaxrs:server>
+
+     <bean id="transformFeatureRedirect" class="org.apache.cxf.feature.StaxTransformFeature">
+          <property name="contextPropertyName" value="http.service.redirection"/>
+          <property name="outTransformElements">
+            <map>
+              <entry key="{http://customer/v2}*" value="{http://customer/v1}*"/>
+            </map>
+          </property>
+          <property name="inTransformElements">
+            <map>
+              <entry key="{http://customer/v1}*" value="{http://customer/v2}*"/>
+           </map>
+         </property>  
+     </bean>
+     
+     <!-- JAXB provider reused by all JAX-RS endpoints -->
      <bean id="jaxb-provider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
         <property name="unmarshallAsJaxbElement" value="true"/>
         <property name="marshallAsJaxbElement" value="true"/>
      </bean>
-
-     <jaxws:endpoint implementor="#customer-bean" address="/soap"/>      
-
-     <bean id="customer-bean" class="server.CustomerServiceImpl"/>
+     
 </beans>
 

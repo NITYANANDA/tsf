@@ -16,9 +16,6 @@
          http://cxf.apache.org/schemas/jaxws.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-jaxws.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
      <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
      <!-- Old SOAP and REST endpoints -->
