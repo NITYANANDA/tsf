@@ -475,8 +475,8 @@
             <version>${mvel.bundle.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.neethi</artifactId>
+            <groupId>org.apache.neethi</groupId>
+            <artifactId>neethi</artifactId>
             <version>${neethi.bundle.version}</version>
         </dependency>
         <dependency>
@@ -607,8 +607,8 @@
             <version>${commons-jexl.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.ws.commons.schema</groupId>
-            <artifactId>XmlSchema</artifactId>
+            <groupId>org.apache.ws.xmlschema</groupId>
+            <artifactId>xmlschema-core</artifactId>
             <version>${xmlschema.version}</version>
         </dependency>
         <dependency>
