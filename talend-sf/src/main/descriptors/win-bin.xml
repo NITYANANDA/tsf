@@ -6,6 +6,7 @@
     <formats>
         <format>dir</format>
         <format>zip</format>
+        <format>dir</format>
     </formats>
 
     <fileSets>
@@ -17,7 +18,7 @@
                 <exclude>LICENSE</exclude>
                 <exclude>NOTICE</exclude>
                 <exclude>README</exclude>
-                <exclude>bin/*.bat</exclude>
+                <exclude>bin/*</exclude>
                 <exclude>release_notes.txt</exclude>
                 <exclude>lib/endorsed/**</exclude>
                 <exclude>lib/jaxb-*.jar</exclude>
@@ -28,6 +29,22 @@
                 <exclude>lib/geronimo-ws-metadata**</exclude>
                 <exclude>lib/geronimo-jaxws**</exclude>
             </excludes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/dependencies/cxf/apache-cxf-${cxf.version}/bin</directory>
+            <outputDirectory>/bin</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>*.bat</exclude>
+            </excludes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+            <directoryMode>755</directoryMode>
         </fileSet>
         <fileSet>
             <directory>target/dependencies/cxf/apache-cxf-${cxf.version}/bin</directory>
@@ -37,6 +54,7 @@
             </includes>
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
+            <directoryMode>755</directoryMode>
         </fileSet>
 
         <!-- Expanded Karaf Runtime -->
@@ -52,35 +70,50 @@
                 <exclude>etc/users.properties</exclude>
                 <exclude>etc/org.apache.karaf.features.cfg</exclude>
                 <exclude>etc/org.ops4j.pax.logging.cfg</exclude>
-                <exclude>LICENSE</exclude>
-                <exclude>NOTICE</exclude>
-                <exclude>README</exclude>
                 <exclude>RELEASE-NOTES</exclude>
                 <exclude>karaf-manual*.html</exclude>
-                <exclude>karaf-manual*.pdf</exclude>
             </excludes>
+            <fileMode>0644</fileMode>
+            <directoryMode>755</directoryMode>
         </fileSet>
 
         <!-- Copy over bin/* separately to get the correct file mode -->
         <fileSet>
-            <directory>target/dependencies/win/apache-karaf-${karaf.version}</directory>
-            <outputDirectory>/container</outputDirectory>
+            <directory>target/dependencies/unix/apache-karaf-${karaf.version}/bin</directory>
+            <outputDirectory>/container/bin</outputDirectory>
             <includes>
-                <include>bin/admin</include>
-                <include>bin/karaf</include>  <!-- we need this one in here for admin:create'd instances to work -->
-                <include>bin/start</include>
-                <include>bin/stop</include>
+                <include>admin</include>
+                <include>karaf</include>  <!-- we need this one in here for admin:create'd instances to work -->
+                <include>start</include>
+                <include>stop</include>
             </includes>
             <fileMode>0755</fileMode>
+            <directoryMode>755</directoryMode>
+            <lineEnding>unix</lineEnding>
         </fileSet>
-
+        <!-- Copy over bin/* separately to get the correct file mode -->
+        <fileSet>
+            <directory>target/dependencies/win/apache-karaf-${karaf.version}/bin</directory>
+            <outputDirectory>/container/bin</outputDirectory>
+            <includes>
+                <include>admin.bat</include>
+                <include>karaf.bat</include>  <!-- we need this one in here for admin:create'd instances to work -->
+                <include>start.bat</include>
+                <include>stop.bat</include>
+            </includes>
+            <fileMode>0644</fileMode>
+            <directoryMode>755</directoryMode>
+            <lineEnding>dos</lineEnding>
+        </fileSet>
         <!-- Copy over jar files -->
         <fileSet>
             <directory>target/dependencies</directory>
             <includes>
                 <include>tsf.jar</include>
             </includes>
-            <outputDirectory>/container/lib/</outputDirectory>
+            <outputDirectory>/container/lib</outputDirectory>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </fileSet>
 
         <!-- Copy license and other files from root -->
@@ -88,11 +121,12 @@
             <directory>${basedir}</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>README</include>
+                <include>README.txt</include>
                 <include>NOTICE</include>
                 <!--include>RELEASE*</include-->
             </includes>
             <lineEnding>dos</lineEnding>
+            <directoryMode>755</directoryMode>
             <fileMode>0644</fileMode>
         </fileSet>
 
@@ -104,35 +138,47 @@
                 <!--include>RELEASE*</include-->
             </includes>
             <lineEnding>dos</lineEnding>
+            <directoryMode>755</directoryMode>
             <fileMode>0644</fileMode>
         </fileSet>
 
         <fileSet>
             <directory>src/main/distribution/text</directory>
             <outputDirectory>/</outputDirectory>
+            <directoryMode>755</directoryMode>
             <fileMode>0644</fileMode>
         </fileSet>
 
         <fileSet>
             <directory>target/classes/etc</directory>
-            <outputDirectory>/container/etc/</outputDirectory>
+            <outputDirectory>/container/etc</outputDirectory>
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
+            <directoryMode>755</directoryMode>
         </fileSet>
 
         <fileSet>
             <directory>target/features-repo</directory>
             <outputDirectory>/container/system</outputDirectory>
+            <fileMode>0644</fileMode>
+            <directoryMode>755</directoryMode>
         </fileSet>
     </fileSets>
 
     <files>
         <file>
             <source>${basedir}/target/dependencies/win/apache-karaf-${karaf.version}/bin/karaf.bat</source>
-            <outputDirectory>/container/bin/</outputDirectory>
+            <outputDirectory>/container/bin</outputDirectory>
             <destName>tsf.bat</destName>
-            <fileMode>0755</fileMode>
+            <fileMode>0644</fileMode>
             <lineEnding>dos</lineEnding>
+        </file>
+        <file>
+            <source>${basedir}/target/dependencies/unix/apache-karaf-${karaf.version}/bin/karaf</source>
+            <outputDirectory>/container/bin</outputDirectory>
+            <destName>tsf</destName>
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
         </file>
         <file>
             <source>${basedir}/target/classes/features.xml</source>
@@ -149,7 +195,6 @@
             <lineEnding>dos</lineEnding>
         </file>
     </files>
-
     <dependencySets>
         <!--dependencySet>
             <outputDirectory>/system</outputDirectory>
@@ -168,6 +213,8 @@
                 <include>com.sun.xml.bind:jaxb-xjc</include>
                 <include>com.sun.xml.bind:jaxb-impl</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -177,6 +224,8 @@
             <includes>
                 <include>org.apache.felix:org.osgi.compendium</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -190,6 +239,8 @@
                 <include>org.springframework:spring-core</include>
                 <include>org.springframework:spring-tx</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -201,6 +252,8 @@
                 <include>org.springframework.osgi:spring-osgi-extender</include>
                 <include>org.springframework.osgi:spring-osgi-io</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -211,6 +264,8 @@
                 <include>org.apache.geronimo.specs:geronimo-servlet_2.5_spec</include>
                 <include>org.apache.geronimo.specs:geronimo-annotation_1.0_spec</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -227,6 +282,8 @@
                 <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-codec</include>
                 <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-httpclient</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
@@ -237,8 +294,10 @@
                 <include>org.apache.servicemix.specs:org.apache.servicemix.specs.jaxp-api-1.4</include>
                 <include>org.apache.servicemix.specs:org.apache.servicemix.specs.stax-api-1.0</include>
             </includes>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
         </dependencySet>
-
     </dependencySets>
+
 
 </assembly>

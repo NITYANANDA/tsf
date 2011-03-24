@@ -5,6 +5,7 @@ package server;
 
 import javax.ws.rs.ext.RuntimeDelegate;
 
+import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 
 /* 
@@ -18,13 +19,16 @@ import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
  */
 public class ApplicationServer {
 
+    private static Server server;
+    
     protected ApplicationServer() throws Exception {
         PersonApplication application = new PersonApplication();
         RuntimeDelegate delegate = RuntimeDelegate.getInstance();
 
         JAXRSServerFactoryBean bean = delegate.createEndpoint(application, JAXRSServerFactoryBean.class);
         bean.setAddress("http://localhost:8080/services" + bean.getAddress());
-        bean.create().start();
+        server = bean.create();
+        server.start();
     }
 
     public static void main(String args[]) throws Exception {
@@ -33,6 +37,8 @@ public class ApplicationServer {
 
         Thread.sleep(125 * 60 * 1000);
         System.out.println("Server exiting");
+        server.stop();
+        server.destroy();
         System.exit(0);
     }
 }
