@@ -22,6 +22,13 @@
         <bundle>mvn:org.springframework.osgi/spring-osgi-annotation/${spring.osgi.version}</bundle>
         <bundle>mvn:org.apache.karaf.deployer/org.apache.karaf.deployer.spring/${karaf.osgi.version}</bundle>
     </feature>
+    <feature name="wss4j" version="${wss4j.version}">
+        <bundle>mvn:joda-time/joda-time/${joda.time.version}</bundle>
+        <bundle>wrap:mvn:org.opensaml/xmltooling/${opensaml.xmltooling.version}</bundle>
+        <bundle>wrap:mvn:org.opensaml/openws/${opensamlws.version}</bundle>
+        <bundle>wrap:mvn:org.opensaml/opensaml/${opensaml.version}</bundle>
+        <bundle>mvn:org.apache.ws.security/wss4j/${wss4j.version}</bundle>
+    </feature>
 
     <feature name="cxf" version="${cxf.version}">
         <bundle start-level='10'>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.activation-api-1.1/${servicemix.specs.version}</bundle>
@@ -46,9 +53,9 @@
         <feature version="${karaf.version}">war</feature>
         <feature version="${spring.version}">spring</feature>
         <feature version="${spring.version}">spring-jms</feature>
+        <feature version="${wss4j.version}">wss4j</feature>
 
         <bundle>mvn:org.apache.neethi/neethi/${neethi.bundle.version}</bundle>
-        <bundle>mvn:org.apache.ws.security/wss4j/${wss4j.version}</bundle>
         <bundle>mvn:org.apache.ws.xmlschema/xmlschema-core/${xmlschema.version}</bundle>
 
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.asm/${asm.bundle.version}</bundle>
