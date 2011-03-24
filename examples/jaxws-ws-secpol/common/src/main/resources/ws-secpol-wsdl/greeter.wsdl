@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2010 Talend Inc. - www.talend.com
+-->
+<wsdl:definitions name="SecureGreeterService"
+  targetNamespace="http://talend.com/examples/secure-greeter" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://talend.com/examples/secure-greeter"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:x1="http://talend.com/examples/secure-greeter/types"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+    >
+    <wsdl:types>
+        <schema targetNamespace="http://talend.com/examples/secure-greeter/types"
+          xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+            <element name="sayHi">
+                <complexType />
+            </element>
+            <element name="sayHiResponse">
+                <complexType>
+                    <sequence>
+                        <element name="responseType" type="xsd:string" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="greetMe">
+                <complexType>
+                    <sequence>
+                        <element name="requestType" type="xsd:string" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="greetMeResponse">
+                <complexType>
+                    <sequence>
+                        <element name="responseType" type="xsd:string" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="greetMeOneWay">
+                <complexType>
+                    <sequence>
+                        <element name="requestType" type="xsd:string" />
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+
+
+    <wsdl:message name="sayHiRequest">
+        <wsdl:part element="x1:sayHi" name="in" />
+    </wsdl:message>
+    <wsdl:message name="sayHiResponse">
+        <wsdl:part element="x1:sayHiResponse" name="out" />
+    </wsdl:message>
+    <wsdl:message name="greetMeRequest">
+        <wsdl:part element="x1:greetMe" name="in" />
+    </wsdl:message>
+    <wsdl:message name="greetMeResponse">
+        <wsdl:part element="x1:greetMeResponse" name="out" />
+    </wsdl:message>
+    <wsdl:message name="greetMeOneWayRequest">
+        <wsdl:part element="x1:greetMeOneWay" name="in" />
+    </wsdl:message>
+
+    <wsdl:portType name="SecureGreeterPortType">
+        <wsdl:operation name="sayHi">
+            <wsdl:input message="tns:sayHiRequest" name="sayHiRequest" />
+            <wsdl:output message="tns:sayHiResponse" name="sayHiResponse" />
+        </wsdl:operation>
+
+        <wsdl:operation name="greetMe">
+            <wsdl:input message="tns:greetMeRequest" name="greetMeRequest" />
+            <wsdl:output message="tns:greetMeResponse" name="greetMeResponse" />
+        </wsdl:operation>
+
+        <wsdl:operation name="greetMeOneWay">
+            <wsdl:input message="tns:greetMeOneWayRequest" name="greetMeOneWayRequest" />
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="SecureGreeterPortBinding" type="tns:SecureGreeterPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsp:PolicyReference URI="#UXD_Service_policy" />
+
+        <wsdl:operation name="greetMe">
+            <soap:operation soapAction="test" style="document" />
+            <wsdl:input name="greetMeRequest">
+                <soap:body use="literal" />
+                <wsp:PolicyReference URI="#UXD_ServiceInput_policy" />
+            </wsdl:input>
+            <wsdl:output name="greetMeResponse">
+                <soap:body use="literal" />
+                <wsp:PolicyReference URI="#UXD_ServiceOutput_policy" />
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="sayHi">
+            <soap:operation soapAction="test" style="document" />
+            <wsdl:input name="sayHiRequest">
+                <soap:body use="literal" />
+                <wsp:PolicyReference URI="#UXD_ServiceInput_policy" />
+            </wsdl:input>
+            <wsdl:output name="sayHiResponse">
+                <soap:body use="literal" />
+                <wsp:PolicyReference URI="#UXD_ServiceOutput_policy" />
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="greetMeOneWay">
+            <soap:operation soapaction="test" style="document" />
+            <wsdl:input name="greetMeOneWayRequest">
+                <soap:body use="literal" />
+                <wsp:PolicyReference URI="#UXD_ServiceInput_policy" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="SecureGreeterService">
+        <wsdl:port binding="tns:SecureGreeterPortBinding" name="GreeterPort">
+            <soap:address location="http://localhost:9000/SecureGreeter" />
+        </wsdl:port>
+    </wsdl:service>
+
+
+    <wsp:Policy wsu:Id="UXD_Service_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SymmetricBinding
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token
+                                    sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireDerivedKeys />
+                                        <sp:RequireThumbprintReference />
+                                        <sp:WssX509V3Token10 />
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128 />
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax />
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp />
+                        <sp:OnlySignEntireHeadersAndBody />
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                            sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10 />
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportRefKeyIdentifier />
+                        <sp:MustSupportRefIssuerSerial />
+                        <sp:MustSupportRefThumbprint />
+                        <sp:MustSupportRefEncryptedKey />
+                    </wsp:Policy>
+                </sp:Wss11>
+                <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportIssuedTokens />
+                        <sp:RequireClientEntropy />
+                        <sp:RequireServerEntropy />
+                    </wsp:Policy>
+                </sp:Trust10>
+                <wsap:UsingAddressing />
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+
+    <wsp:Policy wsu:Id="UXD_ServiceInput_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body />
+                    <sp:Header Name="To"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="From"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="FaultTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="ReplyTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="MessageID"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="RelatesTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="Action"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                </sp:SignedParts>
+                <sp:EncryptedParts
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body />
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="UXD_ServiceOutput_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body />
+                    <sp:Header Name="To"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="From"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="FaultTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="ReplyTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="MessageID"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="RelatesTo"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                    <sp:Header Name="Action"
+                        Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+                </sp:SignedParts>
+                <sp:EncryptedParts
+                    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body />
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+
+</wsdl:definitions>
