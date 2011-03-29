@@ -3,6 +3,7 @@
  */
 package demo.interceptors.interceptor;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -165,6 +166,10 @@ public class DemoInterceptor implements PhaseInterceptor<Message> {
 
     public String getPhase() {
         return phase;
+    }
+
+    public Collection<PhaseInterceptor<? extends Message>> getAdditionalInterceptors() {
+        return null; 
     }
 
 }
