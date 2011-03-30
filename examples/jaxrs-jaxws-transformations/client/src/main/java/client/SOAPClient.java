@@ -5,7 +5,6 @@ package client;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -18,10 +17,6 @@ import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.transform.TransformInInterceptor;
 import org.apache.cxf.interceptor.transform.TransformOutInterceptor;
-import org.apache.cxf.jaxrs.client.ClientConfiguration;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 
 /**
  * Demonstrates how the forward and backward compatibility between
@@ -29,7 +24,7 @@ import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
  * of the CXF STAX Transform Feature
  */
 
-public class CustomerServiceClient {
+public class SOAPClient {
 
     private static final String PORT_PROPERTY = "http.port";
     private static final int DEFAULT_PORT_VALUE = 8080;
@@ -38,7 +33,7 @@ public class CustomerServiceClient {
     static {
         Properties props = new Properties();
         try {
-            props.load(CustomerServiceClient.class.getResourceAsStream("/client.properties"));
+            props.load(SOAPClient.class.getResourceAsStream("/client.properties"));
         } catch (Exception ex) {
             throw new RuntimeException("client.properties resource is not available");
         }
@@ -47,7 +42,7 @@ public class CustomerServiceClient {
 
     int port;
 
-    public CustomerServiceClient() {
+    public SOAPClient() {
         port = getPort();
     }
 
@@ -163,137 +158,6 @@ public class CustomerServiceClient {
         printOldCustomerDetails(customer);
     }
     
-    /**
-     * Old REST client uses old REST service 
-     */
-    public void useOldRESTService() throws Exception {
-        List<Object> providers = createJAXRSProviders();
-
-        com.example.customerservice.CustomerService customerService = JAXRSClientFactory
-            .createFromModel("http://localhost:" + port + "/services/direct/rest", 
-                             com.example.customerservice.CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", 
-                             providers, 
-                             null);
-
-        WebClient.getConfig(customerService).getHttpConduit().getClient().setReceiveTimeout(10000000);
-        System.out.println("Using old RESTful CustomerService with old client");
-
-        customer.v1.Customer customer = createOldCustomer("Smith Old REST");
-        customerService.updateCustomer(customer);
-
-        customer = customerService.getCustomerByName("Smith Old REST");
-        printOldCustomerDetails(customer);
-    }
-
-    /**
-     * New REST client uses new REST service 
-     */
-    public void useNewRESTService(String address) throws Exception {
-        List<Object> providers = createJAXRSProviders();
-
-        org.customer.service.CustomerService customerService = JAXRSClientFactory
-            .createFromModel(address, 
-                             org.customer.service.CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", 
-                             providers, 
-                             null);
-
-        System.out.println("Using new RESTful CustomerService with new client");
-
-        customer.v2.Customer customer = createNewCustomer("Smith New REST");
-        customerService.updateCustomer(customer);
-
-        customer = customerService.getCustomerByName("Smith New REST");
-        printNewCustomerDetails(customer);
-    }
-
-    /**
-     * New REST client uses old REST service 
-     */
-    public void useOldRESTServiceWithNewClient() throws Exception {
-        List<Object> providers = createJAXRSProviders();
-
-        org.customer.service.CustomerService customerService = JAXRSClientFactory
-            .createFromModel("http://localhost:" + port + "/services/direct/rest", 
-                             org.customer.service.CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", 
-                             providers, 
-                             null);
-        
-        WebClient.getConfig(customerService).getHttpConduit().getClient().setReceiveTimeout(10000000);
-        // The outgoing new Customer data needs to be transformed for 
-        // the old service to understand it and the response from the old service
-        // needs to be transformed for this new client to understand it.
-        ClientConfiguration config = WebClient.getConfig(customerService);
-        addTransformInterceptors(config.getInInterceptors(),
-                                 config.getOutInterceptors(),
-                                 true);
-        
-        
-        System.out.println("Using old RESTful CustomerService with new client");
-
-        customer.v2.Customer customer = createNewCustomer("Smith New to Old REST");
-        customerService.updateCustomer(customer);
-        customer = customerService.getCustomerByName("Smith New to Old REST");
-        printNewCustomerDetails(customer);
-    }
-    
-    /**
-     * Old REST client uses new REST service 
-     */
-    public void useNewRESTServiceWithOldClient() throws Exception {
-        List<Object> providers = createJAXRSProviders();
-
-        com.example.customerservice.CustomerService customerService = JAXRSClientFactory
-            .createFromModel("http://localhost:" + port + "/services/direct/new-rest", 
-                             com.example.customerservice.CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", 
-                             providers, 
-                             null);
-        
-        // The outgoing old Customer data needs to be transformed for 
-        // the new service to understand it and the response from the new service
-        // needs to be transformed for this old client to understand it.
-        ClientConfiguration config = WebClient.getConfig(customerService);
-        addTransformInterceptors(config.getInInterceptors(),
-                                 config.getOutInterceptors(),
-                                 false);
-        
-        
-        System.out.println("Using new RESTful CustomerService with old Client");
-
-        customer.v1.Customer customer = createOldCustomer("Smith Old to New REST");
-        customerService.updateCustomer(customer);
-
-        customer = customerService.getCustomerByName("Smith Old to New REST");
-        printOldCustomerDetails(customer);
-    }
-    
-    /**
-     * Old REST client uses new REST service with the 
-     * redirection to the new endpoint and transformation 
-     * on the server side 
-     */
-    public void useNewRESTServiceWithOldClientAndRedirection() throws Exception {
-        List<Object> providers = createJAXRSProviders();
-
-        com.example.customerservice.CustomerService customerService = JAXRSClientFactory
-            .createFromModel("http://localhost:" + port + "/services/old/rest-endpoint", 
-                             com.example.customerservice.CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", 
-                             providers, 
-                             null);
-
-        
-        System.out.println("Using new RESTful CustomerService with old client and the redirection");
-
-        customer.v1.Customer customer = createOldCustomer("Smith Old to New REST With Redirection");
-        customerService.updateCustomer(customer);
-
-        customer = customerService.getCustomerByName("Smith Old to New REST With Redirection");
-        printOldCustomerDetails(customer);
-    }
     
     /**
      * Prepares transformation interceptors for a client.
@@ -357,20 +221,6 @@ public class CustomerServiceClient {
     }
     
     /**
-     * Creates a custom JAX-RS JAXBElementProvider which can handle
-     * generated JAXB clasess with no XmlRootElement annotation
-     * @return providers
-     */
-    private List<Object> createJAXRSProviders() {
-        JAXBElementProvider provider = new JAXBElementProvider();
-        provider.setUnmarshallAsJaxbElement(true);
-        provider.setMarshallAsJaxbElement(true);
-        List<Object> providers = new ArrayList<Object>();
-        providers.add(provider);
-        return providers;
-    }
-    
-    /**
      * namespace: {http://customer}v1
      */
     private customer.v1.Customer createOldCustomer(String name) {
@@ -428,7 +278,7 @@ public class CustomerServiceClient {
     }
 
     public static void main(String args[]) throws Exception {
-        CustomerServiceClient client = new CustomerServiceClient();
+        SOAPClient client = new SOAPClient();
         
         // Scenario 1: 
         // - Old clients have become aware that the new endpoints have been deployed.
@@ -460,24 +310,6 @@ public class CustomerServiceClient {
         client.useNewSOAPServiceWithOldClient();
         System.out.println();
         
-        // JAX-RS: Scenario 1
-        System.out.println("JAX-RS:");
-        System.out.println();
-        
-        // Old Client uses Old Service
-        client.useOldRESTService();
-        System.out.println();
-        // New Client uses Old Service
-        client.useOldRESTServiceWithNewClient();
-        System.out.println();
-        // New Client uses New Service
-        client.useNewRESTService("http://localhost:" + CustomerServiceClient.getPort()
-                                         + "/services/direct/new-rest");
-        System.out.println();
-        // Old Client uses New Service
-        client.useNewRESTServiceWithOldClient();
-        System.out.println();
-        
         // Scenario 2:
         // Old clients are unaware of the fact that the old endpoint has been removed
         // and the new endpoint has been introduced.
@@ -502,18 +334,6 @@ public class CustomerServiceClient {
         // new and redirected old client requests
         client.useNewSOAPService(true);
         System.out.println();
-        
-        // JAX-RS: Scenario 2
-        System.out.println("JAX-RS:");
-        System.out.println();
-        
-        // Old Client uses New Service without being aware of it
-        client.useNewRESTServiceWithOldClientAndRedirection();
-        System.out.println();
-        // New Client uses New Service, the same new endpoint handles
-        // new and redirected old client requests
-        client.useNewRESTService("http://localhost:" + CustomerServiceClient.getPort()
-                                         + "/services/new/rest-endpoint");
         
         System.exit(0);
     }
