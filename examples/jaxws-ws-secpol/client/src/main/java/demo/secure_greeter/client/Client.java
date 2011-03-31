@@ -19,27 +19,26 @@ public final class Client {
     private static final QName PORT_NAME =
         new QName("http://talend.com/examples/secure-greeter", "GreeterPort");
 
+    
+    URL wsdl;
+    SecureGreeterPortType greeter;
+    
+    public Client(SecureGreeterPortType g) throws Exception {
+        greeter = g;
+        doWork();
+    }
     public Client() throws Exception {
         this(new String[0]);
     }
+    
     public Client(String args[]) throws Exception {
 
-        URL wsdl = null;
         if (args.length == 0) {
             wsdl = Client.class.getResource("/ws-secpol-wsdl/greeter.wsdl");
         }
-
-        SecureGreeterService service = new SecureGreeterService(wsdl, SERVICE_NAME);
-        SecureGreeterPortType greeter = service.getPort(PORT_NAME, SecureGreeterPortType.class);
-
-        ((BindingProvider)greeter).getRequestContext()
-            .put("ws-security.username", "abcd");
-        ((BindingProvider)greeter).getRequestContext()
-            .put("ws-security.callback-handler", 
-                 "com.talend.examples.secure_greeter.PasswordCallback");
-        ((BindingProvider)greeter).getRequestContext()
-            .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
-    
+        doWork();
+    }
+    public final void doWork() {
         System.out.println("Invoking sayHi...");
         System.out.println("server responded with: " + greeter.sayHi());
         System.out.println();
@@ -54,6 +53,25 @@ public final class Client {
         System.out.println();
     }
 
+    public void setGreeter(SecureGreeterPortType g) {
+        greeter = g;
+    }
+    public SecureGreeterPortType getGreeter() {
+        if (greeter == null) {
+            SecureGreeterService service = new SecureGreeterService(wsdl, SERVICE_NAME);
+            SecureGreeterPortType greeter = service.getPort(PORT_NAME, SecureGreeterPortType.class);
+
+            ((BindingProvider)greeter).getRequestContext()
+                .put("ws-security.username", "abcd");
+            ((BindingProvider)greeter).getRequestContext()
+                .put("ws-security.callback-handler", 
+                     "com.talend.examples.secure_greeter.PasswordCallback");
+            ((BindingProvider)greeter).getRequestContext()
+                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
+        }
+        return greeter;
+    }
+    
     public static void main(String[] args) throws Exception {
         new Client(args);
         System.exit(0);
