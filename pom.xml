@@ -50,7 +50,7 @@
         <activemq.version>5.4.2</activemq.version>
 
         <!-- OSGi (Karaf, Felix, Aries) -->
-        <aries.version>0.2-incubating</aries.version>
+        <aries.version>0.3</aries.version>
         <!--felix.fileinstall.version>3.0.2</felix.fileinstall.version>
         <felix.prefs.version>1.0.4</felix.prefs.version-->
         <karaf.version>2.1.4</karaf.version>
@@ -70,7 +70,7 @@
         <geronimo-jsp.version>1.0.1</geronimo-jsp.version>
         <geronimo-jta.version>1.1.1</geronimo-jta.version>
         <geronimo-saaj.version>1.1</geronimo-saaj.version>
-        <geronimo-servlet.version>1.2</geronimo-servlet.version>
+        <geronimo-servlet.version>1.0</geronimo-servlet.version>
         <geronimo-ws-metadata.version>1.1.3</geronimo-ws-metadata.version>
         <geronimo-transaction.version>1.1.1</geronimo-transaction.version>
 
@@ -112,7 +112,7 @@
         <jcr-api.bundle.version>1.0_3</jcr-api.bundle.version>
         <jdt-core.bundle.version>3.2.3_4</jdt-core.bundle.version>
         <jdom.bundle.version>1.1_3</jdom.bundle.version>
-        <jetty.version>7.2.2.v20101205</jetty.version>
+        <jetty.version>7.3.1.v20110307</jetty.version>
         <jexcelapi.bundle.version>2.4.2_3</jexcelapi.bundle.version>
         <jing.bundle.version>20030619_3</jing.bundle.version>
         <jruby.bundle.version>1.1.2_3</jruby.bundle.version>
@@ -124,7 +124,7 @@
         <junit.bundle.version>4.7_2</junit.bundle.version>
         <mina.bundle.version>1.1.7_4</mina.bundle.version>
         <mvel.bundle.version>1.3.12_2</mvel.bundle.version>
-        <neethi.bundle.version>2.0.4_3</neethi.bundle.version>
+        <neethi.bundle.version>3.0.0-SNAPSHOT</neethi.bundle.version>
         <ognl.bundle.version>2.7.3_4</ognl.bundle.version>
         <openjpa.bundle.version>2.0.0_1</openjpa.bundle.version>
         <opensaml.bundle.version>1.1_5</opensaml.bundle.version>
@@ -159,8 +159,8 @@
         <servicemix.specs.version>1.7.0</servicemix.specs.version>
 
         <!-- Other Dependencies -->
-        <abdera.version>1.1</abdera.version>
-        <axiom.version>1.2.8</axiom.version>
+        <abdera.version>1.1.2</abdera.version>
+        <axiom.version>1.2.10</axiom.version>
         <bouncycastle.version>140</bouncycastle.version>
         <commons-dbcp.version>1.3</commons-dbcp.version>
         <commons-jexl.version>2.0.1</commons-jexl.version>
@@ -181,11 +181,17 @@
         <log4j.version>1.2.16</log4j.version>
         <openjpa.version>2.0.0</openjpa.version>
         <tranql.version>1.6</tranql.version>
-        <woodstox.version>4.0.8</woodstox.version>
-        <woodstox.stax2-api.version>3.0.2</woodstox.stax2-api.version>
-        <wss4j.version>1.5.11</wss4j.version>
+        <woodstox.version>4.1.1</woodstox.version>
+        <woodstox.stax2-api.version>3.1.1</woodstox.stax2-api.version>
+        <wss4j.version>1.6-SNAPSHOT</wss4j.version>
+        <joda.time.version>1.6.2</joda.time.version>
+
+        <opensaml.version>2.4.1</opensaml.version>
+        <opensamlws.version>1.4.1</opensamlws.version>
+        <opensaml.xmltooling.version>1.3.1</opensaml.xmltooling.version>
+
         <xbean.version>3.7</xbean.version>
-        <xmlschema.version>1.4.7</xmlschema.version>
+        <xmlschema.version>2.0</xmlschema.version>
     </properties>
 
     <repositories>

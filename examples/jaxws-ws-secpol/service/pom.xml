@@ -1,17 +1,20 @@
 <!--
     Copyright (C) 2010 Talend Inc. - www.talend.com
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.talend.sf.examples.interceptors</groupId>
-    <artifactId>interceptors-server</artifactId>
-    <name>Interceptors Example - Service Artifacts</name>
+    <groupId>com.talend.sf.examples.jaxws-ws-secpol</groupId>
+    <artifactId>ws-secpol-server</artifactId>
+    <name>WS-Security Policy Example Service</name>
     <version>1.0</version>
     <packaging>bundle</packaging>
 
     <parent>
-        <groupId>com.talend.sf.examples.interceptors</groupId>
-        <artifactId>interceptors</artifactId>
+        <groupId>com.talend.sf.examples.jaxws-ws-secpol</groupId>
+        <artifactId>jaxws-ws-secpol</artifactId>
         <version>1.0</version>
     </parent>
     <build>
@@ -23,7 +26,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Require-Bundle>org.apache.cxf.bundle,org.springframework.beans,interceptors-common</Require-Bundle>
+                        <Require-Bundle>ws-secpol-common</Require-Bundle>
                     </instructions>
                 </configuration>
             </plugin>
@@ -34,7 +37,7 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <configuration>
-                        <mainClass>demo.interceptors.server.Server</mainClass>
+                        <mainClass>demo.secure_greeter.server.Server</mainClass>
                     </configuration>
                 </plugin>
             </plugins>
@@ -42,8 +45,8 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.talend.sf.examples.interceptors</groupId>
-            <artifactId>interceptors-common</artifactId>
+            <groupId>com.talend.sf.examples.jaxws-ws-secpol</groupId>
+            <artifactId>ws-secpol-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -54,14 +57,23 @@
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-databinding-aegis</artifactId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
             <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <artifactId>cxf-rt-ws-addr</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-policy</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
     </dependencies>
 </project>
