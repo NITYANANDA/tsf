@@ -3,7 +3,6 @@
     Copyright (C) 2010 Talend Inc. - www.talend.com
 -->
 <features>
-  <repository>mvn:org.apache.karaf/apache-karaf/${karaf.version}/xml/features</repository>
   <feature name='camel' version='${camel.version}'>
      <feature version='${camel.version}'>camel-core</feature>
      <feature version='${camel.version}'>camel-spring</feature>
