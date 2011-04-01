@@ -40,6 +40,13 @@
             <classifier>features</classifier>
         </dependency>
         <dependency>
+            <groupId>org.apache.cxf.karaf</groupId>
+            <artifactId>apache-cxf</artifactId>
+            <version>${cxf.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
             <groupId>org.apache.karaf.deployer</groupId>
             <artifactId>org.apache.karaf.deployer.war</artifactId>
             <version>${karaf.version}</version>
@@ -735,15 +742,15 @@
                         <configuration>
                             <descriptors>
                                 <descriptor>mvn:org.apache.karaf/apache-karaf/${karaf.version}/xml/features</descriptor>
+                                <descriptor>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</descriptor>
                                 <descriptor>file:${basedir}/target/classes/activemq-features.xml</descriptor>
                                 <!--descriptor>file:${basedir}/target/classes/camel-features.xml</descriptor-->
-                                <descriptor>file:${basedir}/target/classes/features.xml</descriptor>
+                                <!--descriptor>file:${basedir}/target/classes/features.xml</descriptor-->
                             </descriptors>
                             <features>
                                 <feature>activemq-blueprint</feature>
                                 <feature>activemq-spring</feature>
                                 <feature>cxf</feature>
-                                <feature>cxf-jaxrs</feature>
                             </features>
                             <repository>target/features-repo</repository>
                         </configuration>
@@ -781,6 +788,14 @@
                                     <version>${project.version}</version>
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>tsf.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.cxf.karaf</groupId>
+                                    <artifactId>apache-cxf</artifactId>
+                                    <version>${cxf.version}</version>
+                                    <outputDirectory>target/dependencies</outputDirectory>
+                                    <type>xml</type>
+                                    <classifier>features</classifier>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
