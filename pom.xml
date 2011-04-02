@@ -47,7 +47,7 @@
         <cxf.build-utils.version>2.3.1</cxf.build-utils.version>
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
-        <activemq.version>5.4.2</activemq.version>
+        <activemq.version>5.5.0</activemq.version>
 
         <!-- OSGi (Karaf, Felix, Aries) -->
         <aries.version>0.3</aries.version>
