@@ -26,11 +26,11 @@ and update the four places it occurs with the location of the stsstore.jks file 
 filesystem.
 
 3.) From the sts-war folder, run mvn clean install [tomcat:undeploy] tomcat:deploy.  This will deploy the STS.
-Make sure you can view the Metro STS WSDL located at: http://localhost:8080/DoubleItSTS/DoubleItSTSService
+Make sure you can view the Metro STS WSDL located at: http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT
 before proceeding.
 
 4.) From the service-war folder, run the same command as above to install the WSP.  Make sure you can view 
-the WSP WSDL located at: http://localhost:8080/doubleit/services/doubleit?wsdl before proceeding.
+the WSP WSDL located at: http://localhost:8080/doubleit/services/doubleitUT?wsdl before proceeding.
 
 5.) Finally, navigate to the client folder and run mvn clean install exec:exec.  You should see the results
 of two web service calls, with the client using UsernameToken in one call and X.509 in the other to get the

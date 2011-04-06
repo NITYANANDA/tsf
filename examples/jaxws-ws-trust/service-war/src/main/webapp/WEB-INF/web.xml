@@ -4,26 +4,13 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>Sample web service provider</display-name>
-    <listener>
-        <listener-class>
-             org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-	      classpath:META-INF/cxf/cxf.xml
-	      classpath:META-INF/cxf/cxf-extension-soap.xml
-	      classpath:META-INF/cxf/cxf-servlet.xml 
-              classpath:META-INF/cxf/cxf-extension-policy.xml
-              classpath:META-INF/cxf/cxf-extension-ws-security.xml
-              classpath:META-INF/cxf/cxf-extension-addr.xml
-        </param-value>
-    </context-param>
     <servlet>
         <servlet-name>WebServicePort</servlet-name>
         <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>config-location</param-name>
+            <param-value>WEB-INF/cxf-servlet.xml</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WebServicePort</servlet-name>

@@ -21,9 +21,6 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
    <jaxws:client name="{http://www.example.org/contract/DoubleIt}DoubleItPortUT" createdFromAPI="true">
        <jaxws:properties>
-           <!-- We do not need these two values from > WSS4J 1.5.11 -->
-           <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/>
-           <entry key="ws-security.encryption.username" value="myservicekey"/>
            <entry key="ws-security.sts.client">
                <bean class="org.apache.cxf.ws.security.trust.STSClient">
                    <constructor-arg ref="cxf"/>
@@ -36,6 +33,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
                            <entry key="ws-security.callback-handler" value="client.UTCallbackHandler"/>
                            <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/> 
                            <entry key="ws-security.encryption.username" value="mystskey"/>
+                           <entry key="ws-security.is-bsp-compliant" value="false"/>
                        </map>
                    </property>
                </bean>            
@@ -45,9 +43,6 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
    
    <jaxws:client name="{http://www.example.org/contract/DoubleIt}DoubleItPortX509" createdFromAPI="true">
        <jaxws:properties>
-           <!-- We do not need these two values from > WSS4J 1.5.11 -->
-           <entry key="ws-security.encryption.properties" value="clientKeystore.properties"/>
-           <entry key="ws-security.encryption.username" value="myservicekey"/>
            <entry key="ws-security.sts.client">
                <bean class="org.apache.cxf.ws.security.trust.STSClient">
                    <constructor-arg ref="cxf"/>
