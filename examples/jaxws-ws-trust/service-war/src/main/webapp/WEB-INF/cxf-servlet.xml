@@ -44,5 +44,18 @@
       </jaxws:properties> 
    </jaxws:endpoint> 
    
+   <jaxws:endpoint id="doubleitsaml2"
+      implementor="service.DoubleItPortTypeImpl"
+      address="/doubleitsaml2" 
+      endpointName="DoubleItPortSAML2"
+      wsdlLocation="WEB-INF/wsdl/DoubleIt.wsdl">
+        
+      <jaxws:properties>
+         <entry key="ws-security.callback-handler" value="service.ServiceKeystorePasswordCallback"/>
+         <entry key="ws-security.signature.properties" value="serviceKeystore.properties"/>
+         <entry key="ws-security.is-bsp-compliant" value="false"/>
+      </jaxws:properties> 
+   </jaxws:endpoint> 
+
 </beans>
 

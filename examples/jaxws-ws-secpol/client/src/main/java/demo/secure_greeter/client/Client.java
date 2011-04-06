@@ -32,10 +32,10 @@ public final class Client {
     }
     
     public Client(String args[]) throws Exception {
-
         if (args.length == 0) {
             wsdl = Client.class.getResource("/ws-secpol-wsdl/greeter.wsdl");
         }
+        getGreeter();
         doWork();
     }
     public final void doWork() {
@@ -59,7 +59,7 @@ public final class Client {
     public SecureGreeterPortType getGreeter() {
         if (greeter == null) {
             SecureGreeterService service = new SecureGreeterService(wsdl, SERVICE_NAME);
-            SecureGreeterPortType greeter = service.getPort(PORT_NAME, SecureGreeterPortType.class);
+            greeter = service.getPort(PORT_NAME, SecureGreeterPortType.class);
 
             ((BindingProvider)greeter).getRequestContext()
                 .put("ws-security.username", "abcd");

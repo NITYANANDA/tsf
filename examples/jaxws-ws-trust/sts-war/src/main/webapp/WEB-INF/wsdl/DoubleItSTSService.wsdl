@@ -216,6 +216,14 @@
                      <tc:KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/PublicKey
                      </tc:KeyType>
                   </tc:ServiceProvider>
+                  <tc:ServiceProvider
+                     endpoint="http://localhost:8080/doubleit/services/doubleitsaml2">
+                     <tc:CertAlias>myservicekey</tc:CertAlias>
+                     <tc:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0
+                     </tc:TokenType>
+                     <tc:KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/SymmetricKey
+                     </tc:KeyType>
+                  </tc:ServiceProvider>
                </tc:ServiceProviders>
             </tc:STSConfiguration>
             <wsam:Addressing wsp:Optional="false">

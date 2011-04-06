@@ -17,6 +17,10 @@ public class WSClient {
       // X.509 port
       DoubleItPortType x509Port = service.getDoubleItPortX509();
       doubleIt(x509Port, 15);
+
+      // SAML2 port
+      DoubleItPortType saml2Port = service.getDoubleItPortSAML2();
+      doubleIt(saml2Port, 20);
    }
 
    public static void doubleIt(DoubleItPortType port, int numToDouble) {
