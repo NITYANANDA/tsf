@@ -67,6 +67,8 @@ public final class Client {
                 .put("ws-security.callback-handler", 
                      "com.talend.examples.secure_greeter.PasswordCallback");
             ((BindingProvider)greeter).getRequestContext()
+                .put("ws-security.saml-callback-handler", new SamlCallbackHandler());
+            ((BindingProvider)greeter).getRequestContext()
                 .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
         }
         return greeter;

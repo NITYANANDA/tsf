@@ -141,7 +141,7 @@
                                 <sp:X509Token
                                     sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
                                     <wsp:Policy>
-                                        <sp:RequireDerivedKeys />
+                                        <!--<sp:RequireDerivedKeys />-->
                                         <sp:RequireThumbprintReference />
                                         <sp:WssX509V3Token10 />
                                     </wsp:Policy>
@@ -165,12 +165,22 @@
                 <sp:SignedSupportingTokens
                     xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
                     <wsp:Policy>
-                        <sp:UsernameToken
-                            sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
-                            <wsp:Policy>
-                                <sp:WssUsernameToken10 />
-                            </wsp:Policy>
-                        </sp:UsernameToken>
+                        <wsp:ExactlyOne>
+                            <wsp:All>
+                                <sp:UsernameToken
+                                 sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                    <wsp:Policy>
+                                        <sp:WssUsernameToken10 />
+                                    </wsp:Policy>
+                                </sp:UsernameToken>
+                                <sp:SamlToken
+                                 sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                    <wsp:Policy>
+                                        <sp:WssSamlV11Token11 />
+                                    </wsp:Policy>
+                                </sp:SamlToken>
+                            </wsp:All>
+                        </wsp:ExactlyOne>
                     </wsp:Policy>
                 </sp:SignedSupportingTokens>
                 <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
