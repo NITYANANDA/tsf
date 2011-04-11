@@ -4,9 +4,7 @@
     <id>win-bin</id>
 
     <formats>
-        <format>dir</format>
         <format>zip</format>
-        <format>dir</format>
     </formats>
 
     <fileSets>
@@ -185,7 +183,20 @@
             <lineEnding>unix</lineEnding>
         </file>
     </files>
+
     <dependencySets>
+        <!-- Working waiting Karaf 2.2.1 -->
+        <!-- See KARAF-547 -->
+        <dependencySet>
+            <outputDirectory>/container/system</outputDirectory>
+            <outputFileNameMapping>org/apache/karaf/assemblies/features/${artifact.artifactId}/${artifact.baseVersion}/${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <unpack>false</unpack>
+            <scope>runtime</scope>
+            <includes>
+                <include>org.apache.karaf.assemblies.features:standard:xml:features</include>
+                <include>org.apache.karaf.assemblies.features:enterprise:xml:features</include>
+            </includes>
+        </dependencySet>
         <dependencySet>
             <outputDirectory>/container/system</outputDirectory>
             <outputFileNameMapping>org/apache/cxf/karaf/${artifact.artifactId}/${artifact.baseVersion}/${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
