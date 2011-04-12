@@ -3,9 +3,4 @@
         <bundle>mvn:joda-time/joda-time/${joda.time.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.opensaml/${opensaml.bundle.version}</bundle>
     </feature>
-    <feature name="wss4j" version="${wss4j.version}">
-        <feature version='[2.4,3)'>opensaml</feature>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlsec/${xmlsec.bundle.version}</bundle>
-        <bundle>mvn:org.apache.ws.security/wss4j/${wss4j.version}</bundle>
-    </feature>
 </features>
