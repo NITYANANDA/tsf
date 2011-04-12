@@ -25,7 +25,7 @@ Short introduction to TSF and Karaf
 ===========================
 
 Make sure to read the Karaf getting started:
-http://karaf.apache.org/manual/2.1.99-SNAPSHOT/quick-start.html
+http://karaf.apache.org/manual/2.2.0/quick-start.html
 
 > list
 
@@ -64,7 +64,7 @@ TSF Container (Karaf) is very silent. Make sure to have a tail -f on the log run
 
 The container will keep its state after restarts. So to really reset the container delete the data directory.
 
-Interested how a features.xml at mvn:org.apache.karaf/apache-karaf/2.1.3/xml/features looks? Try "cat mvn:org.apache.karaf/apache-karaf/2.1.3/xml/features"
+Interested how a features.xml at mvn:org.apache.karaf.assemblies.features/standard/2.2.0/xml/features looks? Try "cat mvn:org.apache.karaf.assemblies.features/standard/2.2.0/xml/features"
 
 Use the environment variable KARAF_DEBUG=true to prepare the container for a remote debugging session. Connect to it using the Eclipse "Remote Java Application" starter.
 

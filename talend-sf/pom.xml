@@ -752,11 +752,13 @@
                                 <descriptor>mvn:org.apache.karaf.assemblies.features/standard/${karaf.version}/xml/features</descriptor>
                                 <descriptor>mvn:org.apache.karaf.assemblies.features/enterprise/${karaf.version}/xml/features</descriptor>
                                 <descriptor>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</descriptor>
+                                <descriptor>file:${basedir}/target/classes/wss4j-feature.xml</descriptor>
                                 <descriptor>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</descriptor>
                             </descriptors>
                             <features>
                                 <feature>activemq-blueprint</feature>
                                 <feature>activemq-spring</feature>
+                                <feature>wss4j</feature>
                                 <feature>cxf</feature>
                             </features>
                             <repository>target/features-repo</repository>
