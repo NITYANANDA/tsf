@@ -39,19 +39,18 @@ Starting the service
 
     cd war; mvn jetty:run
 
+ * Copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc
  * From within the Talend Service Factory OSGi container:
 
-    1. Copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc
-
-    2. Install and start a bundle configuring a JAAS LoginModule :  
+    1. Install and start a bundle configuring a JAAS LoginModule :  
 	
 	install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-service-jaas/1.0
 	start <bundle-id>
 	
-	3. Install and start common and service bundles :
+    2. Install and start common and service bundles :
 	
 	install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-common/1.0
-    install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-service/1.0
+        install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-service/1.0
     
     That should print out the bundle IDs for the common and server bundles. From 
     the OSGi command line, then start the installed bundles, for example
