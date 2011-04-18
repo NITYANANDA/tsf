@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.transform.TransformInInterceptor;
 import org.apache.cxf.interceptor.transform.TransformOutInterceptor;
@@ -133,7 +130,7 @@ public class RESTClient {
     public void useOldRESTServiceWithNewClientAndXPath() throws Exception {
         List<Object> providers = createJAXRSProviders();
 
-        String address = "http://localhost:" + port + "/services/direct/rest/customerservice";
+        String address = "http://localhost:" + 8080 + "/services/direct/rest/customerservice";
         WebClient client = WebClient.create(address, providers);
         
         // The outgoing new Customer data needs to be transformed for 
@@ -153,9 +150,8 @@ public class RESTClient {
         
         XMLSource source = 
             client.query("name", "Smith New to Old REST, XPath").get(XMLSource.class);
-        
         customer.v2.Customer xmlCustomer =
-            source.getNode("/ns:Customer", 
+            source.getNode("/ns:customer", 
                            Collections.singletonMap("ns", "http://customer/v2"), 
                            customer.v2.Customer.class);
         printNewCustomerDetails(xmlCustomer);
