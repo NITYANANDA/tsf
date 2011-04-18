@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <cxf.version>2.4.0-SNAPSHOT</cxf.version>
+        <cxf.version>2.4.0</cxf.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
