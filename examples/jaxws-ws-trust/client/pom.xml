@@ -1,3 +1,6 @@
+<!--
+    Copyright (C) 2011 Talend Inc. - www.talend.com
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
@@ -5,18 +8,17 @@
    <parent>
       <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
       <artifactId>jaxws-ws-trust</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
    </parent>
    <artifactId>jaxws-ws-trust-client</artifactId>
    <name>CXF WSC for WS-Trust example</name>
-   <packaging>jar</packaging>
+   <packaging>bundle</packaging>
 
    <dependencies>
       <dependency>
          <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
-         <artifactId>jaxws-ws-trust-service-war</artifactId>
-         <classifier>jaxws</classifier>
-         <version>1.0-SNAPSHOT</version>
+         <artifactId>jaxws-ws-trust-common</artifactId>
+         <version>1.0</version>
       </dependency>
    </dependencies>
 
@@ -30,6 +32,17 @@
                <target>1.6</target>
             </configuration>
          </plugin>
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+                <instructions>
+                    <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                    <Require-Bundle>jaxws-ws-trust-common</Require-Bundle>
+                </instructions>
+            </configuration>
+            </plugin>
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
