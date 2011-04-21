@@ -6,25 +6,18 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.talend.sf.examples.jaxws-ws-secpol</groupId>
-    <artifactId>ws-secpol-common</artifactId>
-    <name>WS-Security Policy Example Common</name>
+    <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
+    <artifactId>jaxws-ws-trust-common</artifactId>
+    <name>WS-Trust Common</name>
     <version>1.0</version>
     <packaging>bundle</packaging>
 
     <parent>
-        <groupId>com.talend.sf.examples.jaxws-ws-secpol</groupId>
-        <artifactId>jaxws-ws-secpol</artifactId>
+        <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
+        <artifactId>jaxws-ws-trust</artifactId>
         <version>1.0</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.ws.security</groupId>
-            <artifactId>wss4j</artifactId>
-            <version>1.6.0</version>
-        </dependency>
-    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -34,7 +27,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>ws-secpol-wsdl,com.talend.examples.secure_greeter</Export-Package>
+                        <Export-Package>ws-trust-common,org.example.contract.doubleit</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -49,7 +42,7 @@
                         <configuration>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/ws-secpol-wsdl/greeter.wsdl</wsdl>
+                                    <wsdl>${basedir}/src/main/resources/ws-trust-common/DoubleIt.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

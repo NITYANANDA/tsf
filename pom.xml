@@ -126,7 +126,7 @@
         <neethi.bundle.version>3.0.0</neethi.bundle.version>
         <ognl.bundle.version>2.7.3_4</ognl.bundle.version>
         <openjpa.bundle.version>2.0.0_1</openjpa.bundle.version>
-        <opensaml.bundle.version>2.4.1_1-SNAPSHOT</opensaml.bundle.version>
+        <opensaml.bundle.version>2.4.1_1</opensaml.bundle.version>
         <oscache.bundle.version>2.4_4</oscache.bundle.version>
         <oscore.bundle.version>2.2.4_4</oscore.bundle.version>
         <osworkflow.bundle.version>2.7.0_4</osworkflow.bundle.version>

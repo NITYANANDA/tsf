@@ -1,6 +1,0 @@
-<features>
-    <feature name="opensaml" version="${opensaml.bundle.version}">
-        <bundle>mvn:joda-time/joda-time/${joda.time.version}</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.opensaml/${opensaml.bundle.version}</bundle>
-    </feature>
-</features>

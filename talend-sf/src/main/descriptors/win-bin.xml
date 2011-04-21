@@ -183,13 +183,6 @@
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
         </file>
-        <file>
-            <source>${basedir}/target/classes/wss4j-feature.xml</source>
-            <outputDirectory>/container/system/org/talend/tsf/wss4j/${wss4j.version}/</outputDirectory>
-            <destName>wss4j-${wss4j.version}-features.xml</destName>
-            <fileMode>0755</fileMode>
-            <lineEnding>unix</lineEnding>
-        </file>
     </files>
 
     <dependencySets>

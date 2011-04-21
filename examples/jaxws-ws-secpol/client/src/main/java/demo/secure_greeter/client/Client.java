@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Talend Inc. - www.talend.com
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
  */
 package demo.secure_greeter.client;
 
@@ -16,17 +16,25 @@ public final class Client {
 
     private static final QName SERVICE_NAME =
         new QName("http://talend.com/examples/secure-greeter", "SecureGreeterService");
-    private static final QName PORT_NAME =
-        new QName("http://talend.com/examples/secure-greeter", "GreeterPort");
+    private static final QName UT_PORT_NAME =
+        new QName("http://talend.com/examples/secure-greeter", "UTGreeterPort");
+    private static final QName SAML_PORT_NAME =
+        new QName("http://talend.com/examples/secure-greeter", "SAMLGreeterPort");
 
     
     URL wsdl;
-    SecureGreeterPortType greeter;
+    SecureGreeterPortType utGreeter;
+    SecureGreeterPortType samlGreeter;
     
-    public Client(SecureGreeterPortType g) throws Exception {
-        greeter = g;
+    public Client(
+        SecureGreeterPortType utGreeter,
+        SecureGreeterPortType samlGreeter
+    ) throws Exception {
+        this.utGreeter = utGreeter;
+        this.samlGreeter = samlGreeter;
         doWork();
     }
+    
     public Client() throws Exception {
         this(new String[0]);
     }
@@ -35,43 +43,57 @@ public final class Client {
         if (args.length == 0) {
             wsdl = Client.class.getResource("/ws-secpol-wsdl/greeter.wsdl");
         }
-        getGreeter();
+        getUTGreeter();
+        getSAMLGreeter();
         doWork();
     }
+    
     public final void doWork() {
-        System.out.println("Invoking sayHi...");
-        System.out.println("server responded with: " + greeter.sayHi());
-        System.out.println();
-
         System.out.println("Invoking greetMe...");
-        System.out.println("server responded with: " + greeter.greetMe(System.getProperty("user.name")));
+        System.out.println("server responded with: " + utGreeter.greetMe(System.getProperty("user.name")));
         System.out.println();
-
-        System.out.println("Invoking greetMeOneWay...");
-        greeter.greetMeOneWay(System.getProperty("user.name"));
-        System.out.println("No response from server as method is OneWay");
+        
+        System.out.println("Invoking greetMe...");
+        System.out.println("server responded with: " + samlGreeter.greetMe(System.getProperty("user.name")));
         System.out.println();
     }
 
-    public void setGreeter(SecureGreeterPortType g) {
-        greeter = g;
-    }
-    public SecureGreeterPortType getGreeter() {
-        if (greeter == null) {
+    public SecureGreeterPortType getUTGreeter() {
+        if (utGreeter == null) {
             SecureGreeterService service = new SecureGreeterService(wsdl, SERVICE_NAME);
-            greeter = service.getPort(PORT_NAME, SecureGreeterPortType.class);
+            utGreeter = service.getPort(UT_PORT_NAME, SecureGreeterPortType.class);
 
-            ((BindingProvider)greeter).getRequestContext()
+            ((BindingProvider)utGreeter).getRequestContext()
                 .put("ws-security.username", "abcd");
-            ((BindingProvider)greeter).getRequestContext()
+            ((BindingProvider)utGreeter).getRequestContext()
                 .put("ws-security.callback-handler", 
                      "com.talend.examples.secure_greeter.PasswordCallback");
-            ((BindingProvider)greeter).getRequestContext()
-                .put("ws-security.saml-callback-handler", new SamlCallbackHandler());
-            ((BindingProvider)greeter).getRequestContext()
+            ((BindingProvider)utGreeter).getRequestContext()
                 .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
         }
-        return greeter;
+        return utGreeter;
+    }
+    
+    public SecureGreeterPortType getSAMLGreeter() {
+        if (samlGreeter == null) {
+            SecureGreeterService service = new SecureGreeterService(wsdl, SERVICE_NAME);
+            samlGreeter = service.getPort(SAML_PORT_NAME, SecureGreeterPortType.class);
+
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.signature.username", "alice");
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.encryption.username", "bob");
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.callback-handler", 
+                     "com.talend.examples.secure_greeter.PasswordCallback");
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.saml-callback-handler", new SamlCallbackHandler());
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
+            ((BindingProvider)samlGreeter).getRequestContext()
+                .put("ws-security.signature.properties", "/ws-secpol-wsdl/alice.properties");
+        }
+        return samlGreeter;
     }
     
     public static void main(String[] args) throws Exception {

@@ -32,9 +32,22 @@ before proceeding.
 4.) From the service-war folder, run the same command as above to install the WSP.  Make sure you can view 
 the WSP WSDL located at: http://localhost:8080/doubleit/services/doubleitUT?wsdl before proceeding.
 
-5.) Finally, navigate to the client folder and run mvn clean install exec:exec.  You should see the results
-of two web service calls, with the client using UsernameToken in one call and X.509 in the other to get the
-SAML Assertion.
+5.) Finally, navigate to the client folder:
+
+ * To run the client in a standalone manner, run mvn clean install exec:exec.
+ * From within the OSGi container
+     From the OSGi command line, run:
+        install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/1.0
+        install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/1.0
+     That should print out the bundle ID for the client bundle.  From
+     the OSGi command line, then run
+        start 115
+     where 115 is the bundle ID number that was printed during install.
+
+
+You should see the results of three web service calls, with the client using
+UsernameToken in one call, and X.509 in the other to get the SAML Assertion. 
+The third web service call uses a SAML2 Assertion.
 
 For DEBUGGING:
 

@@ -1,21 +1,6 @@
 <!--
-  ~ /**
-  ~  * Licensed to the Apache Software Foundation (ASF) under one or more
-  ~  * contributor license agreements.  See the NOTICE file distributed with
-  ~  * this work for additional information regarding copyright ownership.
-  ~  * The ASF licenses this file to You under the Apache License, Version 2.0
-  ~  * (the "License"); you may not use this file except in compliance with
-  ~  * the License.  You may obtain a copy of the License at
-  ~  *
-  ~  *      http://www.apache.org/licenses/LICENSE-2.0
-  ~  *
-  ~  * Unless required by applicable law or agreed to in writing, software
-  ~  * distributed under the License is distributed on an "AS IS" BASIS,
-  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  * See the License for the specific language governing permissions and
-  ~  * limitations under the License.
-  ~  */
-  -->
+    Copyright (C) 2011 Talend Inc. - www.talend.com
+-->
 
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,18 +20,26 @@
         </cxf:features>
     </cxf:bus>
   
-    <!--jaxws:endpoint id="Greeter"
-        implementor="demo.secure_greeter.server.GreeterImpl">
-        <jaxws:properties>
-            <entry key="ws-security.callback-handler" value="com.talend.examples.secure_greeter.PasswordCallback"/>
-            <entry key="ws-security.encryption.properties" value="/ws-secpol-wsdl/bob.properties"/>
-        </jaxws:properties>
-    </jaxws:endpoint -->
-    <jaxws:server id="Greeter"
+    <jaxws:server id="UTGreeter"
+        xmlns:ns1="http://talend.com/examples/secure-greeter"
+        endpointName="ns1:UTGreeterPort"
         serviceClass="demo.secure_greeter.server.GreeterImpl">
         <jaxws:properties>
             <entry key="ws-security.callback-handler" value="com.talend.examples.secure_greeter.PasswordCallback"/>
             <entry key="ws-security.encryption.properties" value="/ws-secpol-wsdl/bob.properties"/>
         </jaxws:properties>
     </jaxws:server>
+    
+    <jaxws:server id="SAMLGreeter"
+        xmlns:ns1="http://talend.com/examples/secure-greeter"
+        endpointName="ns1:SAMLGreeterPort"
+        serviceClass="demo.secure_greeter.server.GreeterImpl">
+        <jaxws:properties>
+            <entry key="ws-security.callback-handler" value="com.talend.examples.secure_greeter.PasswordCallback"/>
+            <entry key="ws-security.encryption.properties" value="/ws-secpol-wsdl/alice.properties"/>
+            <entry key="ws-security.signature.properties" value="/ws-secpol-wsdl/bob.properties"/>
+            <entry key="ws-security.saml2.validator" value="demo.secure_greeter.server.ServerSamlValidator"/>
+        </jaxws:properties>
+    </jaxws:server>
+    
 </blueprint>
