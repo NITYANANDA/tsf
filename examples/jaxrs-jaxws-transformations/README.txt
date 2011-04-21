@@ -50,6 +50,16 @@ Starting the service
  * In the servlet container
 
     cd war; mvn jetty:run
+
+ * From within the Talend Service Factory OSGi container:
+    
+    Unix (with TSF installed in the home directory of 'username'):
+    osgi:install -s webbundle:file:/home/username/tsf/examples/jaxrs-jaxws-transformations/war/target/services.war?Webapp-Context=/services
+    
+    Windows:
+    osgi:install -s webbundle:file:/C:/Work/tsf/examples/jaxrs-jaxws-transformations/war/target/services.war?Webapp-Context=/services
+
+    This command installs a services.war file as an OSGi bundle. This is the simplest way to reuse CXFServlet declarations in web.xml.
  
 Running the client
 ---------------------------------------
