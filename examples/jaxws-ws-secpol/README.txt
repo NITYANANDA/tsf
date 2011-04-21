@@ -1,4 +1,4 @@
-WS-SecurityPoliy Demo using Document-Literal Style
+WS-SecurityPolicy Demo using Document-Literal Style
 ==================================================
 
 
