@@ -49,11 +49,11 @@ public final class Client {
     }
     
     public final void doWork() {
-        System.out.println("Invoking greetMe...");
+        System.out.println("Invoking greetMe using UsernameToken...");
         System.out.println("server responded with: " + utGreeter.greetMe(System.getProperty("user.name")));
         System.out.println();
         
-        System.out.println("Invoking greetMe...");
+        System.out.println("Invoking greetMe using SAML...");
         System.out.println("server responded with: " + samlGreeter.greetMe(System.getProperty("user.name")));
         System.out.println();
     }
