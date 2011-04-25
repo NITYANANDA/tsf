@@ -83,7 +83,7 @@ You can find more information about Apache CXF at http://cxf.apache.org/
 
 Please submit CXF bug reports with JIRA at https://issues.apache.org/jira/browse/CXF 
 
-Please submit TSF bug reports with JIRA at http://www.talendforge.org
+Please submit TSF bug reports with JIRA at https://jira.sopera.de/browse/SF
 
 Examples are documented individually and include instructions for building
 and running each example with just a few command lines.  See below for obtaining 
@@ -98,9 +98,10 @@ available from http://www.talend.com/resources/documentation.php#SF .  The
 example applications and tutorials demonstrate functionality and advanced 
 features of Talend Service Factory CE.  The examples demonstrate how to use 
 different functionality including:
-* 	Advanced JAX-RS
-*	multi-platform deployment to JVM / Servlet / JEE Containers / OSGi
-*	asynchronous messaging
+* Advanced JAX-RS
+* multi-platform deployment to JVM / Servlet / JEE Containers / OSGi
+* asynchronous messaging
+* Various WS-Security options      
 
 
 Export Notice 

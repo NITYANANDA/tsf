@@ -98,9 +98,27 @@
             <directory>${basedir}</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>README.txt</include>
                 <include>NOTICE</include>
-                <!--include>RELEASE*</include-->
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}</directory>
+            <outputDirectory>/container</outputDirectory>
+            <includes>
+                <include>README.txt</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <directoryMode>755</directoryMode>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/..</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README.txt</include>
             </includes>
             <lineEnding>unix</lineEnding>
             <directoryMode>755</directoryMode>
