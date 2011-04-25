@@ -24,6 +24,7 @@
         <module>jaxrs-jaxws-transformations</module>
         <module>interceptors</module>
         <module>jaxws-ws-trust</module>
+        <module>jaxws-ws-secpol</module>
     </modules>
 
     <build>
