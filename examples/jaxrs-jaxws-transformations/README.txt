@@ -1,7 +1,7 @@
 JAX-RS JAX-WS Transformations Example 
 =======================================
 
-The demo shows how CXF can help with mantaining backward and forward compatibility between JAX-RS and JAX-WS consumers and endpoints.
+The demo shows how CXF can help with maintaining backward and forward compatibility between JAX-RS and JAX-WS consumers and endpoints.
 
 Backward compatibility allows for newer endpoints to consume requests from older clients and newer clients to consume responses from older endpoints while forward compatibility allows for newer clients to call the older endpoints and newer endpoints to reply to older clients. 
 

@@ -22,6 +22,11 @@ to make a call to a Metro Secure Token Service (STS) and subsequently
 using the SAML token received to make a web service call to a CXF
 web service provider.
 
+jaxws-ws-secpol: demonstrates using WS-SecurityPolicy and configuration 
+to secure communication between CXF client and servers using various
+security requirements and including tokens like UsernameToken and
+SAML assertions.
+
 jaxws-jms-spec: demonstrates using JAX-WS clients and servers to
 talk SOAP over JMS, but using the SOAP/JMS Specification for 
 configuration.
@@ -38,6 +43,9 @@ resource methods consuming and producing data in different formats (XML
 and JSON), using JAX-RS Response to return status, headers and optional 
 entity, using UriInfo and UriBuilder for working with URI and 
 ExceptionMappers for handling application exceptions.
+
+jaxrs-attachments:  demonstrates how JAX-RS consumers and providers can 
+read and write multipart attachments.
 
 jaxrs-jaxws-authorization: shows how a Role-Base-Access-Control policy 
 can be applied to JAX-WS and JAX-RS services with the help of the 
@@ -57,4 +65,7 @@ corresponding endpoints.
 jaxrs-jms-http: demonstrates how a JAX-RS HTTP server can be enhanced
 to receive JMS messages.
 
+jaxrs-transformations: demonstrates how CXF can help with maintaining
+backward and forward compatibility between JAX-RS and JAX-WS consumers
+and endpoints by using the Transformation Feature of CXF.
 
