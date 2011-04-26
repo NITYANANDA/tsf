@@ -52,7 +52,7 @@ Starting the service
     cd war; mvn jetty:run
 
  * From within the Talend Service Factory OSGi container:
-    
+    Note: Installing a webbundle on Linux may not work - alternative instructions will be provided once the better solution is found.    
     Unix (with TSF installed in the home directory of 'username'):
     osgi:install -s webbundle:file:/home/username/tsf/examples/jaxrs-jaxws-transformations/war/target/services.war?Webapp-Context=/services
     
