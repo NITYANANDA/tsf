@@ -1,6 +1,12 @@
-WS-SecurityPolicy Demo using Document-Literal Style
+WS-SecurityPolicy Demo
 ==================================================
 
+This sample demonstrates a CXF SOAP client invoking on a CXF Web Service
+provider (WSP), where the services are secured using WS-SecurityPolicy. In the
+first invocation, authentication is performed via a wsse UsernameToken, which
+is secured using a SymmetricBinding policy. In the second invocation, an
+AsymmetricBinding policy is used to secure the message exchange, where a SAML
+Assertion is also required by the WSP. 
 
 This sample consists of 3 parts:
 common/   - This directory contains the code that is common

@@ -18,7 +18,13 @@ import org.apache.ws.security.saml.ext.builder.SAML1Constants;
 import org.opensaml.common.SAMLVersion;
 
 /**
- * A CallbackHandler instance used to create a simple SAML2.0 Assertion.
+ * A CallbackHandler instance used to create a simple SAML 2.0 Assertion. This assertion will
+ * be added to the outbound security header of the client request. As it uses a subject
+ * confirmation method of "Sender Vouches", it conveys to the Web Service Provider that the
+ * client has authenticated an external user in some way (not shown as part of this sample), 
+ * and has assigned the attribute role of "authenticated-client" to the external user. The
+ * assertion that will be generated from this CallbackHandler instance will be signed by the 
+ * client, as per the policy definition ("SignedSupportingTokens").
  */
 public class SamlCallbackHandler implements CallbackHandler {
 
