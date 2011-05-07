@@ -1,7 +1,7 @@
 WS-SecurityPolicy Demo
 ==================================================
 
-This sample demonstrates a CXF SOAP client invoking on a CXF Web Service
+This sample demonstrates a CXF SOAP client invoking a CXF Web Service
 provider (WSP), where the services are secured using WS-SecurityPolicy. In the
 first invocation, authentication is performed via a wsse UsernameToken, which
 is secured using a SymmetricBinding policy. In the second invocation, an
@@ -24,6 +24,10 @@ client/   - This is a sample client application that uses
 	    makes several calls with it.
 
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container setup instructions.
+
 
 Building the Demo
 ---------------------------------------
@@ -39,29 +43,23 @@ Starting the Service
   * From the command line:
      cd service ; mvn exec:java
 
-  * From within the OSGi container
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-common/1.0
-        install mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-server/1.0
-     That should print out the bundle ID for the server bundle.  From 
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+  * From within the OSGi container:
+     karaf@tsf> features:install tif-example-jaxws-ws-secpol-server     
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
 
 
 Running the Client
 ---------------------------------------
   * From the command line:
      cd client ; mvn exec:java
-  * From within the OSGi container
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-common/1.0
-        install mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-client/1.0
-     That should print out the bundle ID for the client bundle.  From 
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
 
+  * From within the OSGi container:
+     karaf@tsf> features:install tif-example-jaxws-ws-secpol-client
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
 
 
 Cleaning up

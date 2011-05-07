@@ -1,4 +1,3 @@
-
 Welcome to Talend Service Factory Community Edition (CE)!
 =========================================================
 
@@ -9,7 +8,6 @@ architecture is based on Spring, so it will work with your application
 regardless of the platform on which it is running.  It will run on 
 stand-alone JVM applications, as part of a servlet container such as 
 Tomcat, within a JEE server, or in an OSGi container such as Equinox.  
-
 
 This package contains several new examples that show advanced features
 of CXF.  All of the examples are setup to be built and run independently,
@@ -68,4 +66,26 @@ to receive JMS messages.
 jaxrs-transformations: demonstrates how CXF can help with maintaining
 backward and forward compatibility between JAX-RS and JAX-WS consumers
 and endpoints by using the Transformation Feature of CXF.
+
+To build all examples:
+===============================================================================
+
+> cd examples
+> mvn clean install
+
+To prepare the TSF Container for the examples:
+===============================================================================
+
+Start TSF. From the TSF root directory:
+
+> cd container
+> bin/tsf
+
+In the TSF shell:
+
+> features:addurl mvn:com.talend.sf.examples/osgi/1.0/xml/features
+
+This command adds the features repository for the examples to the container.  (See 
+http://karaf.apache.org/manual/2.1.99-SNAPSHOT/users-guide/provisioning.html for
+more details.)  This only needs to be done once for all examples.
 

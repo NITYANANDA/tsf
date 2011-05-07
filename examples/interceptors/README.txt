@@ -56,21 +56,22 @@ DemoInterceptor class in the interceptors-common project and put
 a breakpoint at the start of the handleMessage method.
 
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container setup instructions.
+
 Starting the Service
 ---------------------------------------
-  * From the command line:
+* From the command line:
      cd service ; mvn exec:java
 
-  * From within the Talend Service Factory OSGi container:
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.interceptors/interceptors-common/1.0
-        install mvn:com.talend.sf.examples.interceptors/interceptors-server/1.0
-     That should print out the bundle ID for the server bundle.  From 
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+* From within the Talend Service Factory OSGi container:
+   karaf@tsf> features:install tsf-example-interceptors-server
 
-  * From within Eclipse:
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
+
+* From within Eclipse:
      Open the Server class in the interceptors-server project
      Right click and select "Run As -> Java Application" or 
           "Debug As -> Java Application"
@@ -78,19 +79,16 @@ Starting the Service
 
 Running the Client
 ---------------------------------------
-  * From the command line:
+* From the command line:
      cd client ; mvn exec:java
 
-  * From within the OSGi container
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.interceptors/interceptors-common/1.0
-        install mvn:com.talend.sf.examples.interceptors/interceptors-client/1.0
-     That should print out the bundle ID for the client bundle.  From 
-     the OSGi command line, then run
-        start 116
-     where 116 is the bundle ID number that was printed during install.
+* From within the OSGi container
+   karaf@tsf> features:install tsf-example-interceptors-client
 
-  * From within Eclipse:
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
+
+* From within Eclipse:
      Open the Client class in the interceptors-client project
      Right click and select "Run As -> Java Application" or 
           "Debug As -> Java Application"
