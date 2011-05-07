@@ -2,10 +2,8 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
 
     <!--
-        Copyright (C) 2010 Talend Inc. - www.talend.com
+        Copyright (C) 2011 Talend Inc. - www.talend.com
     -->
-
-    <!--repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository-->
 
     <feature name='tsf-example-jaxrs-intro' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxrs-intro-example/jaxrs-intro-common/${project.version}</bundle>
@@ -37,6 +35,16 @@
         <bundle>mvn:com.talend.sf.examples.interceptors/interceptors-client/${project.version}</bundle>
     </feature>
 
+    <feature name='tsf-example-jaxws-jms-spec-server' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-common/${project.version}</bundle>
+        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-server/${project.version}</bundle>
+    </feature>
+
+    <feature name='tsf-example-jaxws-jms-spec-client' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-common/${project.version}</bundle>
+        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-client/${project.version}</bundle>
+    </feature>
+
     <feature name='tsf-example-jaxrs-attachments' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxrs-attachments-example/jaxrs-attachments-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-attachments-example/jaxrs-attachments-service/${project.version}</bundle>
@@ -63,12 +71,7 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-jms-http/jaxrs-jms-http-service/${project.version}</bundle>
     </feature>
 
-    <feature name='tsf-example-jaxws-jms-spec' version='${project.version}' resolver='(obr)'>
-        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-common/${project.version}</bundle>
-        <bundle>mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-server/${project.version}</bundle>
-    </feature>
-
-    <feature name='tif-example-jaxws-ws-trust' version='${project.version}' resolver='(obr)'>
+    <feature name='tif-example-jaxws-ws-trust-client' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/${project.version}</bundle>
     </feature>

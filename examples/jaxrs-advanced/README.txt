@@ -36,7 +36,7 @@ From the base directory of this sample (i.e., where this README file is
 located), the maven pom.xml file can be used to build and run the demo. 
 
 
-Using either UNIX or Windows:
+Using either Linux or Windows:
 
     mvn install
 
@@ -72,7 +72,8 @@ Running the client
    - mvn exec:java
 
 By default, the client will use the http port 8080 for constructing the URIs.
-This port value is set during the build in the client.properties resource file. If the server is listening on an alternative port then you can use an 'http.port' system property during the build :
+This port value is set during the build in the client.properties resource file. If the server 
+is listening on an alternative port then you can use an 'http.port' system property during the build:
    
 - mvn install -Dhttp.port=8181
 

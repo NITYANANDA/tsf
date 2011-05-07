@@ -26,12 +26,17 @@ From the base directory of this sample (i.e., where this README file is
 located), the maven pom.xml file can be used to build and run the demo. 
 
 
-Using either UNIX or Windows:
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
 
-    mvn install
+Building:
+---------
+Using either Linux or Windows:  mvn install
 
-Running this command will build the demo and create a WAR archive and an OSGi bundle 
-for deploying the service either to servlet or OSGi containers.
+Running this command will build the demo and create a WAR archive and an 
+OSGi bundle for deploying the service either to servlet or OSGi containers.
 
 Starting the service
 ---------------------------------------
@@ -42,20 +47,10 @@ Starting the service
  * Copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc
  * From within the Talend Service Factory OSGi container:
 
-    1. Install and start a bundle configuring a JAAS LoginModule :  
-	
-	install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-service-jaas/1.0
-	start <bundle-id>
-	
-    2. Install and start common and service bundles :
-	
-	install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-common/1.0
-        install mvn:com.talend.sf.examples.jaxrs-jaxws-authorization/jaxrs-jaxws-authorization-service/1.0
-    
-    That should print out the bundle IDs for the common and server bundles. From 
-    the OSGi command line, then start the installed bundles, for example
-        start 115
-    where 115 is the bundle ID number that was printed during install.
+   karaf@tsf> features:install tsf-example-jaxws-authorization
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
 
 Running the client
 ---------------------------------------

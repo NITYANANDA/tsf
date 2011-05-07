@@ -19,12 +19,15 @@ war/      - This is a war achive.
 This demo uses ActiveMQ as the JMS implementation for 
 illustration purposes only. 
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
+
 
 Building the Demo
 ---------------------------------------
-  
-Using either UNIX or Windows:
-
+Using either Linux or Windows:
     mvn install
 
 
@@ -33,11 +36,11 @@ Running the JMS Broker
 The sample requires a JMS broker to be running.  There are two
 ways to get a JMS broker running:
 
- * From the command line
+* From the command line
      In separate command windows/shells:
      mvn -Pjms.broker
 
- * From within the Talend Service Factory OSGi container:
+* From within the Talend Service Factory OSGi container:
      From the OSGi command line, run:
          activemq:create-broker 
      That will create a new broker broker with the defaults and 
@@ -46,19 +49,14 @@ ways to get a JMS broker running:
 
 Starting the service
 ---------------------------------------
- * In the servlet container
+* In the servlet container
+   cd war; mvn jetty:run
 
-    cd war; mvn jetty:run
+* From within the Talend Service Factory OSGi container
+   karaf@tsf> features:install tsf-example-jaxrs-jms-http
 
- * From within the Talend Service Factory OSGi container
-
-    From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxrs-jms-http/jaxrs-jms-http-common/1.0
-        install mvn:com.talend.sf.examples.jaxrs-jms-http/jaxrs-jms-http-service/1.0
-     That should print out the bundle IDs for the common and server bundles. From 
-     the OSGi command line, then start the installed bundles, for example
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
 
 
 Running the Client
@@ -69,7 +67,8 @@ Running the Client
 Note that the client will do both HTTP and JMS based invocations.
 
 By default, the HTTP client will use the http port 8080 for constructing the URIs.
-This port value is set during the build in the client.properties resource file. If the server is listening on the alternative port then you can use an 'http.port' system property during the build :
+This port value is set during the build in the client.properties resource file. If the server 
+is listening on the alternative port then you can use an 'http.port' system property during the build:
    
 - mvn install -Dhttp.port=8181
 

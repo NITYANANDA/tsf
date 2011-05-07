@@ -26,12 +26,14 @@ client/   - This is a sample client application that uses
 This demo uses ActiveMQ as the JMS implementation for 
 illustration purposes only. 
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container setup instructions.
+
 
 Building the Demo
 ---------------------------------------
-  
-Using either UNIX or Windows:
-
+Using either Linux or Windows:
     mvn install
 
 
@@ -53,31 +55,22 @@ ways to get a JMS broker running:
 
 Starting the Service
 ---------------------------------------
-  * From the command line:
+* From the command line:
      cd service ; mvn exec:java
 
-  * From within the OSGi container
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-common/1.0
-        install mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-server/1.0
-     That should print out the bundle ID for the server bundle.  From 
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+* From within the OSGi container
+   karaf@tsf> features:install tsf-example-jaxws-jms-spec-server
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
 
 
 Running the Client
 ---------------------------------------
-  * From the command line:
-     cd client ; mvn exec:java
-  * From within the OSGi container
-     From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-common/1.0
-        install mvn:com.talend.sf.examples.jaxws-jms-spec/jms-spec-client/1.0
-     That should print out the bundle ID for the client bundle.  From 
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+* From the command line:
+   cd client ; mvn exec:java
+* From within the OSGi container:
+   karaf@tsf> features:install tsf-example-jaxws-jms-spec-client
 
 
 

@@ -26,13 +26,14 @@ client/   - This is a sample client application that uses
 
 Usage
 ===============================================================================
-Note: Please follow the parent README.txt first for common build and container setup instructions.
+Note: Please follow the parent README.txt first for common build and container
+setup instructions.
 
 
 Building the Demo
 ---------------------------------------
   
-Using either UNIX or Windows:
+Using either Linux or Windows:
 
     mvn install
 
@@ -57,9 +58,6 @@ Running the Client
 
   * From within the OSGi container:
      karaf@tsf> features:install tif-example-jaxws-ws-secpol-client
-
-   (Make sure you've first installed the examples features repository as described in the
-   parent README.)
 
 
 Cleaning up

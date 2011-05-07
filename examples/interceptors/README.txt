@@ -29,10 +29,14 @@ a breakpoint in the interceptor and "debug" the example.   This
 will allow inspecting the message and chain.
 
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
+
 Building the Demo
 ---------------------------------------
-Using either UNIX or Windows:
-
+Using either Linux or Windows:
     mvn install
 
 
@@ -55,10 +59,6 @@ workspace.   At this point, it's recommended that you open the
 DemoInterceptor class in the interceptors-common project and put
 a breakpoint at the start of the handleMessage method.
 
-
-Usage
-===============================================================================
-Note: Please follow the parent README.txt first for common build and container setup instructions.
 
 Starting the Service
 ---------------------------------------
@@ -84,9 +84,6 @@ Running the Client
 
 * From within the OSGi container
    karaf@tsf> features:install tsf-example-interceptors-client
-
-   (Make sure you've first installed the examples features repository as described in the
-   parent README.)
 
 * From within Eclipse:
      Open the Client class in the interceptors-client project

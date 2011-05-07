@@ -37,6 +37,12 @@ Using either UNIX or Windows:
 Running this command will build the demo and create a WAR archive and an OSGi bundle 
 for deploying the service either to servlet or OSGi containers.
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
+
+
 Starting the service
 ---------------------------------------
  * In the servlet container
@@ -45,13 +51,12 @@ Starting the service
 
  * From within the Talend Service Factory OSGi container:
 
-    From the OSGi command line, run:
-	install mvn:com.talend.sf.examples.jaxrs-attachments-example/jaxrs-attachments-common/1.0
-    install mvn:com.talend.sf.examples.jaxrs-attachments-example/jaxrs-attachments-service/1.0
-     That should print out the bundle IDs for the common and server bundles.  From 
-     the OSGi command line, then start the installed bundles, for example
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+ * From the OSGi command line, run:
+    karaf@tsf> features:install tsf-example-jaxrs-attachments
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
+
  * From the command line :
    cd service; mvn -Pserver
     
