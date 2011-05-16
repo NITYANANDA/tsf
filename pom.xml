@@ -53,7 +53,7 @@
         <aries.version>0.3</aries.version>
         <!--felix.fileinstall.version>3.0.2</felix.fileinstall.version>
         <felix.prefs.version>1.0.4</felix.prefs.version-->
-        <karaf.version>2.2.0</karaf.version>
+        <karaf.version>2.2.1</karaf.version>
         <osgi.compendium.version>4.2.0</osgi.compendium.version>
         <osgi.core.version>4.2.0</osgi.core.version>
 
