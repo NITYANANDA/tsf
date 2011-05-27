@@ -75,6 +75,13 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-jdk14</artifactId>
+                                <version>1.5.11</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
