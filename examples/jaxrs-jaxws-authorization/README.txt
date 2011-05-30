@@ -47,7 +47,7 @@ Starting the service
  * Copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc
  * From within the Talend Service Factory OSGi container:
 
-   karaf@tsf> features:install tsf-example-jaxws-authorization
+   karaf@tsf> features:install tsf-example-jaxrs-jaxws-authorization
 
    (Make sure you've first installed the examples features repository as described in the
    parent README.)
