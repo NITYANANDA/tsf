@@ -8,9 +8,9 @@ not meant for production use.
 
 How to Deploy:
 
-1.) The STS and WSP runs on standalone Tomcat (Version 6, Tomcat 7 has a problem with the Maven Tomcat plugin
-at the time of writing).  If not already done, configure Maven to be able to install and uninstall 
-the WSP and the STS by following this section: http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat
+1.) The STS and WSP run on standalone Tomcat Version 6.  If not already done, configure Maven to be able to install 
+and uninstall the WSP and the STS by following this section: 
+http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat
 
 2.) The path location for the STS keystore in the STS WSDL 
 (sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl)
