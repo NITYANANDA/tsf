@@ -1,10 +1,31 @@
-jaxws-ws-trust:
+WS-Trust
+=================================
 
 Provides an example of a CXF SOAP client (WSC) accessing a Metro STS for a SAML assertion and then subsequently
 making a call to a CXF web service provider (WSP).  Two WSC->STS calls are made, one using UsernameToken 
 authentication and the other X.509 authentication, but in both cases the same SAML assertion is provided to
 the WSP.  Sample keystores and truststores for the WSC, WSP, and STS are provided in this project but are of course
 not meant for production use.
+
+
+Important Note:  by default, this example uses strong encryption which is 
+recommended for use in production systems.  To run this example "out of the
+box", you MUST have the "Java(TM) Cryptography Extension (JCE) Unlimited 
+Strength Jurisdiction Policy Files" installed into your JRE.  See your
+JRE provider for more information.   Alternatively, you can change to using
+a lower end encyption algorithm by editing the security policies in:
+
+service-war/src/main/webapp/WEB-INF/wsdl/DoubleIt.wsdl 
+client/src/main/resources/DoubleItSTSService.wsdl 
+sts-war/bin/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl 
+sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl 
+common/src/main/resources/ws-trust-common/DoubleIt.wsdl  
+common/src/main/resources/ws-trust-common/DoubleItSTSService.wsdl
+
+to change from "Basic256" to "Basic128".   If you receive and error like 
+"Illegal key length" when running the demo, you need to change to Basic128 or
+install the Unlimited Strength encryption libraries.
+
 
 How to Deploy:
 

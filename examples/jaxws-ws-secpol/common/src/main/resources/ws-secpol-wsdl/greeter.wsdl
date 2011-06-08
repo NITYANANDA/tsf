@@ -114,7 +114,13 @@
                         </sp:ProtectionToken>
                         <sp:AlgorithmSuite>
                             <wsp:Policy>
-                                <sp:Basic128 />
+                                <sp:Basic256 />
+                                <!-- 
+                                    To use the export grade encryption that comes bundled in the JDK,
+                                    comment out the above Basic256 algorithm and uncomment the
+                                    below Basic128.
+                                -->
+                                <!-- <sp:Basic128 /> -->
                             </wsp:Policy>
                         </sp:AlgorithmSuite>
                         <sp:Layout>
@@ -187,7 +193,13 @@
                         </sp:RecipientToken>
                         <sp:AlgorithmSuite>
                             <wsp:Policy>
-                                <sp:Basic128 />
+                               <sp:Basic256 />
+                               <!-- 
+                                    To use the export grade encryption that comes bundled in the JDK,
+                                    comment out the above Basic256 algorithm and uncomment the
+                                    below Basic128.
+                                -->
+                                <!-- <sp:Basic128 /> -->
                             </wsp:Policy>
                         </sp:AlgorithmSuite>
                         <sp:Layout>
