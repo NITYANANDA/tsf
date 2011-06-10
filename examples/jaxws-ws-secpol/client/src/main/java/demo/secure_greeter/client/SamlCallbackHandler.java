@@ -14,7 +14,7 @@ import org.apache.ws.security.saml.ext.SAMLCallback;
 import org.apache.ws.security.saml.ext.bean.AttributeBean;
 import org.apache.ws.security.saml.ext.bean.AttributeStatementBean;
 import org.apache.ws.security.saml.ext.bean.SubjectBean;
-import org.apache.ws.security.saml.ext.builder.SAML1Constants;
+import org.apache.ws.security.saml.ext.builder.SAML2Constants;
 import org.opensaml.common.SAMLVersion;
 
 /**
@@ -37,7 +37,7 @@ public class SamlCallbackHandler implements CallbackHandler {
                 String subjectName = "uid=auth_client";
                 SubjectBean subjectBean = 
                     new SubjectBean(
-                        subjectName, null, SAML1Constants.CONF_SENDER_VOUCHES
+                        subjectName, null, SAML2Constants.CONF_SENDER_VOUCHES
                     );
                 callback.setSubject(subjectBean);
                 
