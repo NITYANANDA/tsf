@@ -135,10 +135,10 @@
             </wsam:Addressing>
             <sc:KeyStore wspp:visibility="private" alias="mystskey"
                keypass="stskpass" storepass="stsspass" type="JKS"
-               location="/tsfexampledir/jaxws-ws-trust/sts-war/stsstore.jks" />
+               location="${keystore.dir}/stsstore.jks" />
             <sc:TrustStore wspp:visibility="private"
                storepass="stsspass" type="JKS"
-               location="/tsfexampledir/jaxws-ws-trust/sts-war/stsstore.jks" />
+               location="${keystore.dir}/stsstore.jks" />
          </wsp:All>
       </wsp:ExactlyOne>
    </wsp:Policy>

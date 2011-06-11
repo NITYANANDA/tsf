@@ -37,22 +37,22 @@
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <configuration>
                     <downloadSources>true</downloadSources>
-               <!--downloadJavadocs>true</downloadJavadocs-->
+                    <!--downloadJavadocs>true</downloadJavadocs-->
                     <useProjectReferences>false</useProjectReferences>
                 </configuration>
             </plugin>
-            <plugin><!--use mvn tomcat:deploy or mvn tomcat:undeploy -->
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat-maven-plugin</artifactId>
-                <version>1.0-beta-1</version>
-                <configuration>
-                    <server>myTomcat</server>
-                    <path>/${project.build.finalName}</path>
-               <!--url>Place URL if different from http://localhost:8080/manager</url-->
-                </configuration>
+            <plugin><!--for mvn tomcat:deploy/:undeploy/:redeploy -->
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>tomcat-maven-plugin</artifactId>
+               <version>1.1</version>
+               <configuration>
+                  <server>myTomcat</server>
+                  <url>http://localhost:8080/manager/text</url>
+                  <path>/${project.build.finalName}</path>
+               </configuration>
             </plugin>
         </plugins>
-      <!-- Name of the generated WAR file -->
+        <!-- Name of the generated WAR file -->
         <finalName>doubleit</finalName>
     </build>
 

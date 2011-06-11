@@ -26,47 +26,34 @@ to change from "Basic256" to "Basic128".   If you receive and error like
 "Illegal key length" when running the demo, you need to change to Basic128 or
 install the Unlimited Strength encryption libraries.
 
-
 How to Deploy:
 
-1.) The STS and WSP run on standalone Tomcat Version 6.  If not already done, configure Maven to be able to install 
+1.) The STS and WSP run on standalone Tomcat Version 7.  If not already done, 
+configure Maven to be able to install 
 and uninstall the WSP and the STS by following this section: 
-http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat
+http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also start up Tomcat.
 
-2.) The path location for the STS keystore in the STS WSDL 
-(sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl)
-are hardcoded to /tsfexampledir/jaxws-ws-trust/sts-war/stsstore.jks, where tsfexampledir is 
-a symbolic link to whereever you installed the TSF examples. For Linux, you can create a symbolic link 
-FROM THE ROOT DIRECTORY ("/") as follows:
+2.) From the root jaxws-ws-trust, folder, run "mvn clean install".  If no errors, can then 
+run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on subsequent runs as appropriate),
+either from the same folder (to deploy the STS and WSP at the same time) or separately, one at a time,
+from the service-war and sts folders.
 
-user@machine:/$ sudo ln -s /path/to/tsf/examples tsfexampledir
+Before proceeding to the next step, make sure you can view the following WSDLs:
+Metro STS WSDL located at: http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT
+CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 
-If you don't wish to use symbolic links, or for Windows, you will need to update the keystore and 
-truststore location information in the STS WSDL.  Just search on stsstore.jks in the WSDL 
-and update the four places it occurs with the location of the stsstore.jks file on your
-filesystem.
-
-3.) From the sts-war folder, run mvn clean install [tomcat:undeploy] tomcat:deploy.  This will deploy the STS.
-Make sure you can view the Metro STS WSDL located at: http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT
-before proceeding.
-
-4.) From the service-war folder, run the same command as above to install the WSP.  Make sure you can view 
-the WSP WSDL located at: http://localhost:8080/doubleit/services/doubleitUT?wsdl before proceeding.
-
-5.) Finally, navigate to the client folder:
+3.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
- * From within the OSGi container
+ * Alternatively, to run from within the OSGi container
      From the OSGi command line, run:
         install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/1.0
         install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/1.0
-     That should print out the bundle ID for the client bundle.  From
-     the OSGi command line, then run
-        start 115
-     where 115 is the bundle ID number that was printed during install.
+     Make a note of the bundle IDs that the container displays with above commands, then
+     start each bundle from the OSGi command line using:  start XXX YYY
+     where XXX and YYY are the bundle IDs for the two bundles above.
 
-
-You should see the results of three web service calls, with the client using
+Either way, you should see the results of three web service calls, with the client using
 UsernameToken in one call, and X.509 in the other to get the SAML Assertion. 
 The third web service call uses a SAML2 Assertion.
 
@@ -82,5 +69,4 @@ any errors reported by the WSP or the STS.
 
 4.) Use Wireshark to view messages:
 http://www.jroller.com/gmazza/entry/soap_calls_over_wireshark
-
 

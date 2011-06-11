@@ -6,13 +6,14 @@
    <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
    <artifactId>jaxws-ws-trust</artifactId>
    <version>1.0</version>
-   <name>WS Trust Sample</name>
+   <name>WS Trust Parent POM</name>
    <packaging>pom</packaging>
 
    <modules>
        <module>common</module>
        <module>service-war</module>
        <module>client</module>
+       <module>sts-war</module>
    </modules>
 
    <build>
@@ -38,7 +39,8 @@
    </build>
 
    <properties>
-      <cxf.version>2.4.0</cxf.version>
+      <cxf.version>2.4.1-SNAPSHOT</cxf.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
    <dependencies>
       <dependency>
