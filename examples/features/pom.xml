@@ -18,9 +18,9 @@
     <name>TSF :: Examples :: features</name>
     
     <properties>
-        <tsf.version>2.4.0</tsf.version>
+        <tsf.version>2.4.1</tsf.version>
         <activemq.version>5.5.0</activemq.version>
-        <cxf.version>2.4.0</cxf.version>
+        <cxf.version>2.4.1</cxf.version>
         <camel.version>2.7.1</camel.version>
         <karaf.version>2.2.0</karaf.version>
         <spring.version>3.0.5.RELEASE</spring.version>
