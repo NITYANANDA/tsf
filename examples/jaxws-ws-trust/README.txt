@@ -28,12 +28,17 @@ install the Unlimited Strength encryption libraries.
 
 How to Deploy:
 
-1.) The STS and WSP run on standalone Tomcat Version 7.  If not already done, 
+1.) The Metro STS requires the newer 2.2.x versions 
+of JAX-WS and JAXB (included in the JAX-WS download) not provided by default 
+in Java SE 6.  Download JAX-WS V 2.2.x from http://jax-ws.java.net/ and place the 
+jaxb-api.jar and jaxws-api.jar in your JDK's JDK_HOME/JRE/lib/endorsed folder.
+
+2.) The STS and WSP run on standalone Tomcat Version 7.  If not already done, 
 configure Maven to be able to install 
 and uninstall the WSP and the STS by following this section: 
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also start up Tomcat.
 
-2.) From the root jaxws-ws-trust, folder, run "mvn clean install".  If no errors, can then 
+3.) From the root jaxws-ws-trust, folder, run "mvn clean install".  If no errors, can then 
 run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on subsequent runs as appropriate),
 either from the same folder (to deploy the STS and WSP at the same time) or separately, one at a time,
 from the service-war and sts folders.
@@ -42,7 +47,7 @@ Before proceeding to the next step, make sure you can view the following WSDLs:
 Metro STS WSDL located at: http://localhost:8080/DoubleItSTS/DoubleItSTSServiceUT
 CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 
-3.) Navigate to the client folder:
+4.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
  * Alternatively, to run from within the OSGi container
