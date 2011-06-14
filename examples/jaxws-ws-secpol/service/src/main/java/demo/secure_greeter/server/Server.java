@@ -25,7 +25,7 @@ public class Server {
         properties.put("ws-security.callback-handler",
                        "com.talend.examples.secure_greeter.PasswordCallback");
         properties.put("ws-security.signature.properties",
-                       "/ws-secpol-wsdl/bob.properties");
+                       "/ws-secpol-wsdl/service.properties");
         properties.put(
             Endpoint.WSDL_PORT, 
             new QName("http://talend.com/examples/secure-greeter", "UTGreeterPort")
@@ -40,9 +40,9 @@ public class Server {
         properties.put("ws-security.callback-handler",
                        "com.talend.examples.secure_greeter.PasswordCallback");
         properties.put("ws-security.encryption.properties",
-                       "/ws-secpol-wsdl/alice.properties");
+                       "/ws-secpol-wsdl/client.properties");
         properties.put("ws-security.signature.properties",
-                       "/ws-secpol-wsdl/bob.properties");
+                       "/ws-secpol-wsdl/service.properties");
         properties.put("ws-security.saml2.validator",
                        "demo.secure_greeter.server.ServerSamlValidator");
         properties.put(

@@ -69,7 +69,7 @@ public final class Client {
                 .put("ws-security.callback-handler", 
                      "com.talend.examples.secure_greeter.PasswordCallback");
             ((BindingProvider)utGreeter).getRequestContext()
-                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
+                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/service.properties");
         }
         return utGreeter;
     }
@@ -89,9 +89,9 @@ public final class Client {
             ((BindingProvider)samlGreeter).getRequestContext()
                 .put("ws-security.saml-callback-handler", new SamlCallbackHandler());
             ((BindingProvider)samlGreeter).getRequestContext()
-                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/bob.properties");
+                .put("ws-security.encryption.properties", "/ws-secpol-wsdl/service.properties");
             ((BindingProvider)samlGreeter).getRequestContext()
-                .put("ws-security.signature.properties", "/ws-secpol-wsdl/alice.properties");
+                .put("ws-security.signature.properties", "/ws-secpol-wsdl/client.properties");
         }
         return samlGreeter;
     }
