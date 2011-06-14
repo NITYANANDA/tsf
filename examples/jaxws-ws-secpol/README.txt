@@ -9,14 +9,19 @@ AsymmetricBinding policy is used to secure the message exchange, where a SAML
 Assertion is also required by the WSP. 
 
 
-Important Note:  by default, this example uses strong encryption which is 
+Important Note:  By default, this example uses strong encryption which is 
 recommended for use in production systems.  To run this example "out of the
 box", you MUST have the "Java(TM) Cryptography Extension (JCE) Unlimited 
 Strength Jurisdiction Policy Files" installed into your JRE.  See your
-JRE provider for more information.   Alternatively, you can change to using
-a lower end encyption algorithm by editing the security policies in:
+JRE provider for more information.   (For Oracle JDK6, the download is available here:
+http://www.oracle.com/technetwork/java/javase/downloads/index.html, see the README
+file from the download for installation instructions.)   
+
+Alternatively, you can change to using a lower end encyption algorithm 
+by editing the security policies in:
 common/src/main/resources/ws-secpol-wsdl/greeter.wsdl
-to change from "Basic256" to "Basic128". If you receive and error like 
+
+to change from "Basic256" to "Basic128". If you receive an error like 
 "Illegal key length" when running the demo, you need to change to Basic128 or
 install the Unlimited Strength encryption libraries.
 
