@@ -37,7 +37,6 @@
                 <bean class="com.talend.examples.secure_greeter.PasswordCallback"/> 
             </entry>
             <entry key="ws-security.encryption.properties" value="/ws-secpol-wsdl/bob.properties"/>
-            <entry key="ws-security.saml-callback-handler" value="demo.secure_greeter.client.SamlCallbackHandler"/>
         </jaxws:properties>
     </jaxws:client>
     

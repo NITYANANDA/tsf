@@ -26,7 +26,7 @@
         serviceClass="demo.secure_greeter.server.GreeterImpl">
         <jaxws:properties>
             <entry key="ws-security.callback-handler" value="com.talend.examples.secure_greeter.PasswordCallback"/>
-            <entry key="ws-security.encryption.properties" value="/ws-secpol-wsdl/bob.properties"/>
+            <entry key="ws-security.signature.properties" value="/ws-secpol-wsdl/bob.properties"/>
         </jaxws:properties>
     </jaxws:server>
     

@@ -24,7 +24,7 @@ public class Server {
         Map<String, Object> properties = new HashMap<String, Object>();
         properties.put("ws-security.callback-handler",
                        "com.talend.examples.secure_greeter.PasswordCallback");
-        properties.put("ws-security.encryption.properties",
+        properties.put("ws-security.signature.properties",
                        "/ws-secpol-wsdl/bob.properties");
         properties.put(
             Endpoint.WSDL_PORT, 
