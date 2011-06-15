@@ -65,7 +65,7 @@ Starting the service
 
    ***** NEW TEXT *****
     1. Install common and service bundles uisng the demo feature:
-     karaf@tsf> features:install tsf-example-jaxrs-jaxws-description-first
+     karaf@tsf> features:install tsf-example-jaxrs-jaxws-transformations
 
     (Make sure you've first installed the examples features repository as described in the
    parent README.) 
