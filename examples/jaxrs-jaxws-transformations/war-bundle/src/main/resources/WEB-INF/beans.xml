@@ -20,62 +20,72 @@
 
      <!-- Old SOAP and REST endpoints -->
 
-     <jaxrs:server address="/rest" 
-                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
-       <jaxrs:serviceBeans>
-         <ref bean="old-customer-bean"/>
-       </jaxrs:serviceBeans>
-       <jaxrs:providers>
-         <ref bean="jaxb-provider"/>
-       </jaxrs:providers>		   
-     </jaxrs:server>
+     <bean class="org.apache.cxf.jaxrs.JAXRSServerFactoryBean" init-method="create">
+         <property name="address" value="/rest"/>
+         <property name="modelRef" value="classpath:/model/CustomerService-jaxrs.xml"/>
+         <property name="serviceBean" ref="old-customer-bean"/>
+         <property name="providers">
+             <ref bean="jaxb-provider"/>
+         </property> 
+     </bean>
 
-     <jaxws:endpoint implementor="#old-customer-bean" address="/soap"/>      
+     <bean class="org.apache.cxf.jaxws.JaxWsServerFactoryBean" init-method="create">
+         <property name="address" value="/soap"/>
+         <property name="serviceBean" ref="old-customer-bean"/>
+     </bean>
 
      <bean id="old-customer-bean" class="server.CustomerServiceImpl"/>
      
      <!-- New SOAP and REST endpoints -->
-
-     <jaxrs:server address="/new-rest" 
-                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
-       <jaxrs:serviceBeans>
-         <ref bean="new-customer-bean"/>
-       </jaxrs:serviceBeans>
-       <jaxrs:providers>
-         <ref bean="jaxb-provider"/>
-       </jaxrs:providers>		   
-     </jaxrs:server>
-
-     <jaxws:endpoint implementor="#new-customer-bean" address="/new-soap"/>      
-
+     
+     <bean class="org.apache.cxf.jaxrs.JAXRSServerFactoryBean" init-method="create">
+         <property name="address" value="/new-rest"/>
+         <property name="modelRef" value="classpath:/model/CustomerService-jaxrs.xml"/>
+         <property name="serviceBean" ref="new-customer-bean"/>
+         <property name="providers">
+             <ref bean="jaxb-provider"/>
+         </property> 
+     </bean> 
+     
+     <bean class="org.apache.cxf.jaxws.JaxWsServerFactoryBean" init-method="create">
+         <property name="address" value="/new-soap"/>
+         <property name="serviceBean" ref="new-customer-bean"/>
+     </bean>
      <bean id="new-customer-bean" class="server.NewCustomerServiceImpl"/>
-     
+    
      <!-- new SOAP endpoint with the transformation -->
-     
-     <jaxws:endpoint 
-         implementor="#new-customer-bean" 
-         address="/soap-endpoint"
-         endpointName="s:CustomerServiceNewPort"
-         serviceName="s:CustomerService"
-         xmlns:s="http://customerservice.example.com/">
-         <jaxws:features>
-           <ref bean="transformFeatureRedirect" />
-         </jaxws:features>
-     </jaxws:endpoint>
+
+     <bean class="org.apache.cxf.jaxws.JaxWsServerFactoryBean" init-method="create">
+        <property name="address" value="/soap-endpoint"/>
+        <property name="serviceBean" ref="new-customer-bean"/>
+        <property name="serviceName">
+            <bean class="javax.xml.namespace.QName" factory-method="valueOf">
+              <constructor-arg value="{http://customerservice.example.com/}CustomerService"/>
+            </bean>
+        </property>  
+        <property name="endpointName">
+            <bean class="javax.xml.namespace.QName" factory-method="valueOf">
+              <constructor-arg value="{http://customerservice.example.com/}CustomerServiceNewPort"/>
+            </bean>
+        </property>
+        <property name="features">
+            <ref bean="transformFeatureRedirect" />
+        </property>
+     </bean>     
      
      <!-- new JAX-RS endpoint with the transformation -->
-     <jaxrs:server address="/rest-endpoint" 
-                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
-       <jaxrs:serviceBeans>
-         <ref bean="new-customer-bean"/>
-       </jaxrs:serviceBeans>
-       <jaxrs:providers>
-         <ref bean="jaxb-provider"/>
-       </jaxrs:providers>
-       <jaxrs:features>
-           <ref bean="transformFeatureRedirect" />
-       </jaxrs:features>   		   
-     </jaxrs:server>
+     <bean class="org.apache.cxf.jaxrs.JAXRSServerFactoryBean" init-method="create">
+         <property name="address" value="/rest-endpoint"/>
+         <property name="modelRef" value="classpath:/model/CustomerService-jaxrs.xml"/>
+         <property name="serviceBean" ref="new-customer-bean"/>
+         <property name="providers">
+             <ref bean="jaxb-provider"/>
+         </property>
+         <property name="features">
+            <ref bean="transformFeatureRedirect" />
+        </property> 
+     </bean>     
+     
 
      <bean id="transformFeatureRedirect" class="org.apache.cxf.feature.StaxTransformFeature">
           <property name="contextPropertyName" value="http.service.redirection"/>
@@ -92,6 +102,7 @@
      </bean>
      
      <!-- JAXB provider reused by all JAX-RS endpoints -->
+
      <bean id="jaxb-provider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
         <property name="unmarshallAsJaxbElement" value="true"/>
         <property name="marshallAsJaxbElement" value="true"/>

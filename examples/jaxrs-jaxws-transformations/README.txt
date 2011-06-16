@@ -52,31 +52,17 @@ Starting the service
     cd war; mvn jetty:run
 
  * From within the Talend Service Factory OSGi container:
-    ***** OLD TEXT *****
-    Note: Installing a webbundle on Linux may not work - alternative instructions will be provided once the better solution is found.    
-    Unix (with TSF installed in the home directory of 'username'):
-    osgi:install -s webbundle:file:/home/username/tsf/examples/jaxrs-jaxws-transformations/war/target/services.war?Webapp-Context=/services
-    
-    Windows:
-    osgi:install -s webbundle:file:/C:/Work/tsf/examples/jaxrs-jaxws-transformations/war/target/services.war?Webapp-Context=/services
-
-    This command installs a services.war file as an OSGi bundle. This is the simplest way to reuse CXFServlet declarations in web.xml.
-   ***** END OF OLD TEXT *****
-
-   ***** NEW TEXT *****
-    1. Install common and service bundles uisng the demo feature:
+    1. Install common and service bundles using the demo feature:
      karaf@tsf> features:install tsf-example-jaxrs-jaxws-transformations
 
-    (Make sure you've first installed the examples features repository as described in the
-   parent README.) 
+    (Make sure you've first installed the examples features repository as described in the parent README.)
     2. Install a web-bundle
 
     Unix (with TSF installed in the home directory of 'username'):
-    karaf@tsf> osgi:install -s webbundle:file:/home/username/tsf/examples/jaxrs-jaxws-transformations/war/target/services.jar
+    karaf@tsf> osgi:install -s webbundle:file:/home/username/tsf/examples/jaxrs-jaxws-transformations/war-bundle/target/services.jar
     
     Windows:
-    karaf@tsf> osgi:install -s webbundle:file:/C:/Work/tsf/examples/jaxrs-jaxws-transformations/war/target/services.jar
-   ***** END OF NEW TEXT *****
+    karaf@tsf> osgi:install -s webbundle:file:/C:/Work/tsf/examples/jaxrs-jaxws-transformations/war-bundle/target/services.jar
 
 Running the client
 ---------------------------------------
