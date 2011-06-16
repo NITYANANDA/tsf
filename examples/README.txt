@@ -86,6 +86,6 @@ In the TSF shell:
 > features:addurl mvn:com.talend.sf.examples/osgi/1.0/xml/features
 
 This command adds the features repository for the examples to the container.  (See 
-http://karaf.apache.org/manual/2.1.99-SNAPSHOT/users-guide/provisioning.html for
+http://karaf.apache.org/manual/2.2.0/users-guide/provisioning.html for
 more details.)  This only needs to be done once for all examples.
 
