@@ -15,12 +15,12 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-advanced-example/jaxrs-advanced-service-bundle/${project.version}</bundle>
     </feature>
 
-    <feature name='tif-example-jaxws-ws-secpol-server' version='${project.version}' resolver='(obr)'>
+    <feature name='tsf-example-jaxws-ws-secpol-server' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-server/${project.version}</bundle>
     </feature>
         
-    <feature name='tif-example-jaxws-ws-secpol-client' version='${project.version}' resolver='(obr)'>
+    <feature name='tsf-example-jaxws-ws-secpol-client' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-secpol/ws-secpol-client/${project.version}</bundle>
     </feature>
@@ -61,6 +61,11 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-description-first/jaxrs-jaxws-description-first-service/${project.version}</bundle>
     </feature>
 
+     <feature name='tsf-example-jaxrs-jaxws-transformations' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-common/${project.version}</bundle>
+        <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-service/${project.version}</bundle>
+    </feature>
+
     <feature name='tsf-example-jaxrs-jaxws-java-first' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-java-first/jaxrs-jaxws-java-first-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-java-first/jaxrs-jaxws-java-first-service/${project.version}</bundle>
@@ -71,7 +76,7 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-jms-http/jaxrs-jms-http-service/${project.version}</bundle>
     </feature>
 
-    <feature name='tif-example-jaxws-ws-trust-client' version='${project.version}' resolver='(obr)'>
+    <feature name='tsf-example-jaxws-ws-trust-client' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/${project.version}</bundle>
     </feature>

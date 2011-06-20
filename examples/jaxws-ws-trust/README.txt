@@ -63,13 +63,13 @@ CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 4.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
- * Alternatively, to run from within the OSGi container
-     From the OSGi command line, run:
-        install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/1.0
-        install mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/1.0
-     Make a note of the bundle IDs that the container displays with above commands, then
-     start each bundle from the OSGi command line using:  start XXX YYY
-     where XXX and YYY are the bundle IDs for the two bundles above.
+ * Alternatively, it is possible to run the client from within the OSGi
+   container. One thing to be aware of is that the default port for Tomcat
+   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
+   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+
+   From the OSGi command line, run:
+      karaf@tsf> features:install tsf-example-jaxws-ws-trust-client
 
 Either way, you should see the results of three web service calls, with the client using
 UsernameToken in one call, and X.509 in the other to get the SAML Assertion. 

@@ -6,7 +6,7 @@
    <parent>
       <groupId>com.talend.sf.interop.wstrust-metro</groupId>
       <artifactId>wstrust-metro</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
    </parent>
    <artifactId>wstrust-metro-sts-war</artifactId>
    <name>Metro STS</name>
