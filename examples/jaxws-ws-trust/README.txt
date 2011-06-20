@@ -42,6 +42,15 @@ configure Maven to be able to install
 and uninstall the WSP and the STS by following this section: 
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also start up Tomcat.
 
+Note: If you wish to use Tomcat 6, the following changes will be needed:
+
+a.) In the tomcat-maven-plugin in the service-war and sts-war module, change the URL to 
+http://localhost:8080/manager (instead of the http://localhost:8080/manager/text used by 
+Tomcat 7.)
+
+b.) In Tomcat 6's tomcat-users.xml file, instead of giving the tomcat user 
+the "manager-script" and "manager-gui" roles, give him the Tomcat 6-specific "manager" role.
+
 3.) From the root jaxws-ws-trust, folder, run "mvn clean install".  If no errors, can then 
 run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on subsequent runs as appropriate),
 either from the same folder (to deploy the STS and WSP at the same time) or separately, one at a time,
