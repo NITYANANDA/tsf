@@ -24,20 +24,20 @@
         </jaxrs:serviceBeans>
         <!-- custom providers -->
         <jaxrs:providers>
-           <bean class="service.PersonExceptionMapper" />
+           <bean class="service.advanced.PersonExceptionMapper" />
            <ref bean="jsonProvider"/>
         </jaxrs:providers>
      </jaxrs:server>
 
-     <bean id="searchBean" class="service.PersonServiceImpl">
+     <bean id="searchBean" class="service.advanced.PersonServiceImpl">
          <property name="storage" ref="storageBean"/>
      </bean>
      
-     <bean id="personBean" class="service.SearchService">
+     <bean id="personBean" class="service.advanced.SearchService">
          <property name="storage" ref="storageBean"/>
      </bean>
      
-     <bean id="storageBean" class="service.PersonInfoStorage"/>
+     <bean id="storageBean" class="service.advanced.PersonInfoStorage"/>
      
      <!-- 
         default Jettison-based JSON provider is configured to 

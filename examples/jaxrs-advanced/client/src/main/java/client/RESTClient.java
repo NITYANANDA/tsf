@@ -19,9 +19,9 @@ import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.ResponseReader;
 import org.apache.cxf.jaxrs.client.WebClient;
 
-import common.Person;
-import common.PersonCollection;
-import common.PersonService;
+import common.advanced.Person;
+import common.advanced.PersonCollection;
+import common.advanced.PersonService;
 
 /**
  * Example showing the interaction between HTTP-centric and proxy based RESTful clients and JAX-RS server

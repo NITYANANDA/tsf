@@ -11,10 +11,10 @@ import javax.ws.rs.core.Application;
 
 import org.apache.cxf.jaxrs.provider.JSONProvider;
 
-import service.PersonExceptionMapper;
-import service.PersonInfoStorage;
-import service.PersonServiceImpl;
-import service.SearchService;
+import service.advanced.PersonExceptionMapper;
+import service.advanced.PersonInfoStorage;
+import service.advanced.PersonServiceImpl;
+import service.advanced.SearchService;
 
 /*
  * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 
