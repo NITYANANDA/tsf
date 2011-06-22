@@ -1,10 +1,10 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.attachment;
 
-import common.XopAttachmentService;
-import common.XopBean;
+import common.attachment.XopAttachmentService;
+import common.attachment.XopBean;
 
 /**
  * JAX-RS XopAttachmentService root resource

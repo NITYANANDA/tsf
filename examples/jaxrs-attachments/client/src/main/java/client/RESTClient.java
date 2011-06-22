@@ -15,10 +15,10 @@ import javax.activation.DataHandler;
 import javax.imageio.ImageIO;
 import javax.mail.util.ByteArrayDataSource;
 
-import common.Book;
-import common.MultipartsService;
-import common.XopAttachmentService;
-import common.XopBean;
+import common.attachment.Book;
+import common.attachment.MultipartsService;
+import common.attachment.XopAttachmentService;
+import common.attachment.XopBean;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;

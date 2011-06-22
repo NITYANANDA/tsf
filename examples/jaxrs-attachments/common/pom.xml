@@ -27,7 +27,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Import-Package>*</Import-Package>
-                        <Export-Package>common</Export-Package>
+                        <Export-Package>common.attachment</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

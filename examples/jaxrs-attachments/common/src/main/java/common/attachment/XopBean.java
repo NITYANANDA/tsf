@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package common;
+package common.attachment;
 
 import java.awt.Image;
 

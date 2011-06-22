@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package common;
+package common.attachment;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

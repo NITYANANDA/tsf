@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.attachment;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -9,8 +9,8 @@ import java.util.List;
 
 import javax.activation.DataHandler;
 
-import common.Book;
-import common.MultipartsService;
+import common.attachment.Book;
+import common.attachment.MultipartsService;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;

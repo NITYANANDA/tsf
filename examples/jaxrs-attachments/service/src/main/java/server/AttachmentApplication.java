@@ -12,8 +12,8 @@ import javax.ws.rs.core.Application;
 
 import org.apache.cxf.jaxrs.provider.JSONProvider;
 
-import service.MultipartsServiceImpl;
-import service.XopAttachmentServiceImpl;
+import service.attachment.MultipartsServiceImpl;
+import service.attachment.XopAttachmentServiceImpl;
 
 /*
  * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 

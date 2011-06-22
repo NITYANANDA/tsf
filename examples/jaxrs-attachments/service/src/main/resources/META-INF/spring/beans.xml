@@ -19,8 +19,8 @@
      <jaxrs:server id="attachmentService" 
                    address="/attachments">
          <jaxrs:serviceBeans>
-             <bean class="service.XopAttachmentServiceImpl"/>
-             <bean class="service.MultipartsServiceImpl"/>
+             <bean class="service.attachment.XopAttachmentServiceImpl"/>
+             <bean class="service.attachment.MultipartsServiceImpl"/>
          </jaxrs:serviceBeans>
          <jaxrs:providers>
            <ref bean="jsonProvider"/>
