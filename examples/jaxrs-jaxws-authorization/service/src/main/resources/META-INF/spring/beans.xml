@@ -46,7 +46,7 @@
         </jaxws:inInterceptors> 
      </jaxws:endpoint>          
 
-     <bean id="hello-world-bean" class="service.HelloWorldImpl"/>
+     <bean id="hello-world-bean" class="service.authorization.HelloWorldImpl"/>
      
      <bean id="securityContextInterceptor" 
            class="org.apache.cxf.interceptor.security.JAASLoginInterceptor">

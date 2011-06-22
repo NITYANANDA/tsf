@@ -16,9 +16,9 @@ import javax.xml.ws.soap.SOAPFaultException;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 
-import common.HelloWorld;
-import common.User;
-import common.UserImpl;
+import common.authorization.HelloWorld;
+import common.authorization.User;
+import common.authorization.UserImpl;
 
 /**
  * Example showing JAX-RS and JAX-WS proxies making calls to JAX-RS and JAX-WS

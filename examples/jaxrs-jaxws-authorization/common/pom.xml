@@ -32,7 +32,7 @@
 		   javax.xml.bind.annotation.adapters,
 		   *
                         </Import-Package>
-                        <Export-Package>common</Export-Package>
+                        <Export-Package>common.authorization</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

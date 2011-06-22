@@ -1,16 +1,17 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.authorization;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.jws.WebService;
-import common.HelloWorld;
-import common.User;
+import common.authorization.HelloWorld;
+import common.authorization.User;
 
-@WebService(endpointInterface = "common.HelloWorld", serviceName = "HelloWorld")
+@WebService(endpointInterface = "common.authorization.HelloWorld", 
+            serviceName = "HelloWorld")
 public class HelloWorldImpl implements HelloWorld {
     Map<Integer, User> users = new LinkedHashMap<Integer, User>();
 
