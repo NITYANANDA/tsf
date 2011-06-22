@@ -2,7 +2,7 @@
     Copyright (C) 2010 Talend Inc. - www.talend.com
 -->
 <model xmlns="http://cxf.apache.org/jaxrs">
- <resource name="com.example.customerservice.CustomerService" path="customerservice">
+ <resource name="org.example.customers.CustomerService" path="customerservice">
     
     <operation name="updateCustomer" verb="PUT" path="/customer"
                consumes="application/xml">

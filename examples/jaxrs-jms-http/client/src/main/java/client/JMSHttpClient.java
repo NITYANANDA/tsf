@@ -25,7 +25,7 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.jms.JMSUtils;
 
-import common.Book;
+import common.books.Book;
 
 /**
  *  Example showing how CXF JAX-RS WebClient and JMS consumers

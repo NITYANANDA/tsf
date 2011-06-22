@@ -56,5 +56,5 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
         </jaxrs:serviceBeans>
     </jaxrs:server>
 
-    <bean id="store" class="service.JMSHttpBookStore" />
+    <bean id="store" class="service.books.JMSHttpBookStore" />
 </beans>

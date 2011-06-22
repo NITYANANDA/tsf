@@ -1,16 +1,16 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.codefirst;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.jws.WebService;
-import common.HelloWorld;
-import common.User;
+import common.codefirst.HelloWorld;
+import common.codefirst.User;
 
-@WebService(endpointInterface = "common.HelloWorld", serviceName = "HelloWorld")
+@WebService(endpointInterface = "common.codefirst.HelloWorld", serviceName = "HelloWorld")
 public class HelloWorldImpl implements HelloWorld {
     Map<Integer, User> users = new LinkedHashMap<Integer, User>();
 

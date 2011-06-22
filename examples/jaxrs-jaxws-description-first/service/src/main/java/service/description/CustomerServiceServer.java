@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package server;
+package service.description;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.xml.ws.Endpoint;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 
-import com.example.customerservice.CustomerService;
+import org.example.customers.CustomerService;
 
 public class CustomerServiceServer {
 

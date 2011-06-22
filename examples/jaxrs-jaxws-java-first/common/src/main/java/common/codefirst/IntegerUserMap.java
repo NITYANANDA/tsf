@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package common;
+package common.codefirst;
 
 import java.util.ArrayList;
 import java.util.List;

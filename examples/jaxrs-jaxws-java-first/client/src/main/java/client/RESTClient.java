@@ -12,9 +12,9 @@ import javax.xml.ws.soap.SOAPBinding;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 
-import common.HelloWorld;
-import common.User;
-import common.UserImpl;
+import common.codefirst.HelloWorld;
+import common.codefirst.User;
+import common.codefirst.UserImpl;
 
 /**
  * Example showing JAX-RS and JAX-WS proxies making calls to JAX-RS and JAX-WS
@@ -47,7 +47,7 @@ public final class RESTClient {
     }
 
     public void sayHelloRest() throws Exception {
-        final String address = "http://localhost:" + port + "/services/hello-rest";
+        final String address = "http://localhost:" + port + "/services/rest-hello";
 
         System.out.println("Using CXF JAX-RS proxy to invoke on HelloWorld service");
 
@@ -58,7 +58,7 @@ public final class RESTClient {
     public void sayHelloSoap() throws Exception {
         final QName serviceName = new QName("http://hello.com", "HelloWorld");
         final QName portName = new QName("http://hello.com", "HelloWorldPort");
-        final String address = "http://localhost:" + port + "/services/hello-soap";
+        final String address = "http://localhost:" + port + "/services/soap-hello";
 
         System.out.println("Using JAX-WS proxy to invoke on HelloWorld service");
 

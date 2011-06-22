@@ -18,14 +18,14 @@
      <import resource="classpath:META-INF/cxf/cxf.xml" />
      <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-     <jaxrs:server address="/rest" 
-                   modelRef="classpath:/model/CustomerService-jaxrs.xml">
+     <jaxrs:server address="/jaxrs" 
+                   modelRef="classpath:/data/model/CustomerService-jaxrs.xml">
        <jaxrs:serviceBeans>
          <ref bean="customer-bean"/>
        </jaxrs:serviceBeans>
        <jaxrs:providers>
          <ref bean="jaxb-provider"/>
-         <bean class="server.NoCustomerExceptionMapper"/>
+         <bean class="service.description.NoCustomerExceptionMapper"/>
        </jaxrs:providers>		   
      </jaxrs:server>
 
@@ -34,8 +34,8 @@
         <property name="marshallAsJaxbElement" value="true"/>
      </bean>
 
-     <jaxws:endpoint implementor="#customer-bean" address="/soap"/>      
+     <jaxws:endpoint implementor="#customer-bean" address="/jaxws"/>      
 
-     <bean id="customer-bean" class="server.CustomerServiceImpl"/>
+     <bean id="customer-bean" class="service.description.CustomerServiceImpl"/>
 </beans>
 

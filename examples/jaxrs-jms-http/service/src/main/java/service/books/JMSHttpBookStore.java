@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.books;
 
 
 import java.io.ByteArrayOutputStream;
@@ -33,7 +33,7 @@ import org.apache.cxf.jaxrs.ext.Oneway;
 import org.apache.cxf.jaxrs.ext.ProtocolHeaders;
 import org.apache.cxf.transport.jms.JMSUtils;
 
-import common.Book;
+import common.books.Book;
 
 @Path("/")
 @Produces({"text/xml", "application/xml" })

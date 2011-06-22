@@ -19,11 +19,11 @@ import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 
-import com.example.customerservice.Customer;
-import com.example.customerservice.CustomerService;
-import com.example.customerservice.CustomerServiceService;
-import com.example.customerservice.CustomerType;
-import com.example.customerservice.NoSuchCustomerException;
+import org.example.customers.Customer;
+import org.example.customers.CustomerService;
+import org.example.customers.CustomerServiceService;
+import org.example.customers.CustomerType;
+import org.example.customers.NoSuchCustomerException;
 
 public class CustomerServiceClient {
 
@@ -97,8 +97,8 @@ public class CustomerServiceClient {
         });
 
         CustomerService customerService = JAXRSClientFactory
-            .createFromModel("http://localhost:" + port + "/services/rest", CustomerService.class,
-                             "classpath:/model/CustomerService-jaxrs.xml", providers, null);
+            .createFromModel("http://localhost:" + port + "/services/jaxrs", CustomerService.class,
+                             "classpath:/data/model/CustomerService-jaxrs.xml", providers, null);
 
         System.out.println("Using RESTful CustomerService");
 

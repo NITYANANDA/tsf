@@ -1,15 +1,15 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package server;
+package service.description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.customerservice.Customer;
-import com.example.customerservice.CustomerService;
-import com.example.customerservice.NoSuchCustomer;
-import com.example.customerservice.NoSuchCustomerException;
+import org.example.customers.Customer;
+import org.example.customers.CustomerService;
+import org.example.customers.NoSuchCustomer;
+import org.example.customers.NoSuchCustomerException;
 
 public class CustomerServiceImpl implements CustomerService {
 
