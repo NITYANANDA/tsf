@@ -37,11 +37,11 @@
         </cxf:features>
     </cxf:bus>
 
-     <jaxrs:server id="membershipService" address="/">
+     <jaxrs:server id="membershipService" address="/membership">
         <jaxrs:serviceBeans>
            <ref component-id="membershipBean" />
         </jaxrs:serviceBeans>
      </jaxrs:server>
 
-     <bean id="membershipBean" class="service.MembershipServiceImpl"/>
+     <bean id="membershipBean" class="service.intro.MembershipServiceImpl"/>
 </blueprint>

@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package common;
+package common.intro;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

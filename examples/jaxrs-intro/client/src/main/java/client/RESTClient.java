@@ -17,10 +17,11 @@ import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.jaxrs.client.WebClient;
 
-import common.Person;
+import common.intro.Person;
 
 public final class RESTClient {
-    private static String urlStem = "http://localhost:8080/services/members/";
+    private static String urlStem = 
+        "http://localhost:8080/services/membership/members/";
 
     public static void main(String[] args) throws Exception {
         Person p = getMember(1);

@@ -26,7 +26,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Import-Package>*</Import-Package>
-                        <Export-Package>common</Export-Package>
+                        <Export-Package>common.intro</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

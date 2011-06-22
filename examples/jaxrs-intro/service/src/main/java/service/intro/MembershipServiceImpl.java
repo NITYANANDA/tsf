@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2010 Talend Inc. - www.talend.com
  */
-package service;
+package service.intro;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ import javax.ws.rs.WebApplicationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import common.Person;
-import common.MembershipService;
+import common.intro.Person;
+import common.intro.MembershipService;
 
 /**
  * JAX-RS MembershipService root resource

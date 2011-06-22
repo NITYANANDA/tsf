@@ -15,12 +15,12 @@
      <import resource="classpath:META-INF/cxf/cxf.xml" />
      <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-     <jaxrs:server id="membershipService" address="/">
+     <jaxrs:server id="membershipService" address="/membership">
         <jaxrs:serviceBeans>
            <ref bean="membershipBean" />
         </jaxrs:serviceBeans>
      </jaxrs:server>
 
-     <bean id="membershipBean" class="service.MembershipServiceImpl"/>
+     <bean id="membershipBean" class="service.intro.MembershipServiceImpl"/>
 </beans>
 
