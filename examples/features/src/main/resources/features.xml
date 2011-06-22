@@ -64,6 +64,7 @@
      <feature name='tsf-example-jaxrs-jaxws-transformations' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-service/${project.version}</bundle>
+        <bundle>webbundle:mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-war-bundle/${project.version}</bundle>
     </feature>
 
     <feature name='tsf-example-jaxrs-jaxws-java-first' version='${project.version}' resolver='(obr)'>
