@@ -3,27 +3,43 @@
  */
 package client;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-
-import org.apache.cxf.helpers.IOUtils;
-import org.apache.cxf.io.CachedOutputStream;
-import org.apache.cxf.jaxrs.client.WebClient;
 
 import common.intro.Person;
 
-public final class RESTClient {
-    private static String urlStem = 
-        "http://localhost:8080/services/membership/members/";
+import org.apache.cxf.jaxrs.client.WebClient;
 
-    public static void main(String[] args) throws Exception {
+public final class RESTClient {
+    
+    private static final String PORT_PROPERTY = "http.port";
+    private static final int DEFAULT_PORT_VALUE = 8080;
+
+    private static final String HTTP_PORT;
+    static {
+        Properties props = new Properties();
+        try {
+            props.load(RESTClient.class.getResourceAsStream("/client.properties"));
+        } catch (Exception ex) {
+            throw new RuntimeException("client.properties resource is not available");
+        }
+        HTTP_PORT = props.getProperty(PORT_PROPERTY);
+    }
+
+    private String urlStem; 
+    
+    public RESTClient() {
+        this(getPort());
+    }
+
+    public RESTClient(int port) {
+        urlStem = "http://localhost:" + port + "/services/membership/members/";
+    }
+    
+    public void run() throws Exception {
         Person p = getMember(1);
 
         System.out.println("Updating person name using PUT and .../members/1/name URL:");
@@ -72,11 +88,9 @@ public final class RESTClient {
         // reprint of list with latest member removed
         wc.reset();
         getAllMembers(wc);
-        System.out.println("\n");
-        System.exit(0);
     }
 
-    private static Person getMember(int memberNo) throws Exception {
+    private Person getMember(int memberNo) throws Exception {
         WebClient wc = WebClient.create(urlStem);
         wc.path(memberNo);
         Person p = wc.get(Person.class);
@@ -84,19 +98,34 @@ public final class RESTClient {
         return p;
     }
 
-    private static Person getMember(String locationURL) throws Exception {
+    private Person getMember(String locationURL) throws Exception {
         WebClient wc = WebClient.create(locationURL);
         Person p = wc.get(Person.class);
         System.out.println("person ID/Name/Age = " + p.getId() + " / " + p.getName() + " / " + p.getAge());
         return p;
     }
 
-    private static void getAllMembers(WebClient webClient) {
+    private void getAllMembers(WebClient webClient) {
         System.out.println("Retrieving list of all members:");
         List<Person> persons = new ArrayList<Person>(webClient.getCollection(Person.class));
         for (Person person : persons) {
             System.out
                 .println("ID " + person.getId() + ": " + person.getName() + ", age: " + person.getAge());
         }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        new RESTClient().run();
+        System.out.println("\n");
+        System.exit(0);
+    }
+
+    private static int getPort() {
+        try {
+            return Integer.valueOf(HTTP_PORT);
+        } catch (NumberFormatException ex) {
+            // ignore
+        }
+        return DEFAULT_PORT_VALUE;
     }
 }

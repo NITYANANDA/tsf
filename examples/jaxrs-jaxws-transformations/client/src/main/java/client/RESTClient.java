@@ -130,7 +130,7 @@ public class RESTClient {
     public void useOldRESTServiceWithNewClientAndXPath() throws Exception {
         List<Object> providers = createJAXRSProviders();
 
-        String address = "http://localhost:" + 8080 + "/services/direct/rest/customerservice";
+        String address = "http://localhost:" + port + "/services/direct/rest/customerservice";
         WebClient client = WebClient.create(address, providers);
         
         // The outgoing new Customer data needs to be transformed for 

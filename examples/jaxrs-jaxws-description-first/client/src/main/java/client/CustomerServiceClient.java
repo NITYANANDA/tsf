@@ -3,9 +3,7 @@
  */
 package client;
 
-import java.io.File;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -13,12 +11,13 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
+import javax.xml.ws.Service;
+import javax.xml.ws.soap.SOAPBinding;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
-
 import org.example.customers.Customer;
 import org.example.customers.CustomerService;
 import org.example.customers.CustomerServiceService;
@@ -48,26 +47,14 @@ public class CustomerServiceClient {
     }
 
     public void useCustomerServiceSoap(String args[]) throws Exception {
-        CustomerServiceService customerServiceService;
-        if (args.length != 0 && args[0].length() != 0) {
-            File wsdlFile = new File(args[0]);
-            URL wsdlURL;
-            if (wsdlFile.exists()) {
-                wsdlURL = wsdlFile.toURI().toURL();
-            } else {
-                wsdlURL = new URL(args[0]);
-            }
-            // Create the service client with specified wsdlurl
-            customerServiceService = new CustomerServiceService(wsdlURL);
-        } else {
-            // Create the service client with its default wsdlurl
-            customerServiceService = new CustomerServiceService();
-        }
+        final String address = "http://localhost:" + port + "/services/jaxws";
+        System.out.println("Using SOAP CustomerService"); 
+        
+        Service service = Service.create(CustomerServiceService.SERVICE);
+        service.addPort(CustomerServiceService.CustomerServicePort, SOAPBinding.SOAP11HTTP_BINDING, address);
 
-        System.out.println("Using SOAP CustomerService");
-
-        CustomerService customerService = customerServiceService.getCustomerServicePort();
-
+        CustomerService customerService = service.getPort(CustomerService.class);
+                
         Customer customer = createCustomer("Barry");
         customerService.updateCustomer(customer);
         customer = customerService.getCustomerByName("Barry");

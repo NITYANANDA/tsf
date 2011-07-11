@@ -17,6 +17,10 @@
         <version>1.0</version>
     </parent>
 
+    <properties>
+        <http.port>8080</http.port>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.talend.sf.examples.jaxrs-intro-example</groupId>
@@ -45,5 +49,11 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>

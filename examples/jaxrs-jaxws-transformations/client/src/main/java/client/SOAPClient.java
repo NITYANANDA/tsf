@@ -50,7 +50,7 @@ public class SOAPClient {
      * Old SOAP client uses old SOAP service 
      */
     public void useOldSOAPService() throws Exception {
-        URL wsdlURL = getClass().getResource("/model/CustomerService.wsdl");
+        URL wsdlURL = getClass().getResource("/CustomerService.wsdl");
         com.example.customerservice.CustomerServiceService service = 
             new com.example.customerservice.CustomerServiceService(wsdlURL);
         
@@ -69,7 +69,7 @@ public class SOAPClient {
      * New SOAP client uses new SOAP service.
      */
     public void useNewSOAPService(boolean direct) throws Exception {
-        URL wsdlURL = getClass().getResource("/model/CustomerServiceNew.wsdl");
+        URL wsdlURL = getClass().getResource("/CustomerServiceNew.wsdl");
         org.customer.service.CustomerServiceService service = 
             new org.customer.service.CustomerServiceService(wsdlURL);
         
@@ -89,7 +89,7 @@ public class SOAPClient {
      */
     public void useNewSOAPServiceWithOldClient() throws Exception {
         
-        URL wsdlURL = getClass().getResource("/model/CustomerServiceNew.wsdl");
+        URL wsdlURL = getClass().getResource("/CustomerServiceNew.wsdl");
         com.example.customerservice.CustomerServiceService service = 
             new com.example.customerservice.CustomerServiceService(wsdlURL);
         
@@ -114,7 +114,7 @@ public class SOAPClient {
     
     public void useOldSOAPServiceWithNewClient() throws Exception {
         
-        URL wsdlURL = getClass().getResource("/model/CustomerService.wsdl");
+        URL wsdlURL = getClass().getResource("/CustomerService.wsdl");
         org.customer.service.CustomerServiceService service = 
             new org.customer.service.CustomerServiceService(wsdlURL);
         
@@ -143,7 +143,7 @@ public class SOAPClient {
      * on the server side  
      */
     public void useNewSOAPServiceWithOldClientAndRedirection() throws Exception {
-        URL wsdlURL = getClass().getResource("/model/CustomerService.wsdl");
+        URL wsdlURL = getClass().getResource("/CustomerService.wsdl");
         com.example.customerservice.CustomerServiceService service = 
             new com.example.customerservice.CustomerServiceService(wsdlURL);
         
