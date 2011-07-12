@@ -3,12 +3,13 @@
  */
 package demo.interceptors.client;
 
-import java.net.URL;
+import java.util.Properties;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import javax.xml.ws.soap.SOAPBinding;
 
 import com.talend.examples.interceptors.Greeter;
-import com.talend.examples.interceptors.GreeterService;
 
 import demo.interceptors.interceptor.DemoInterceptor;
 
@@ -20,20 +21,33 @@ public final class Client {
                                                         "GreeterService");
     private static final QName PORT_NAME = new QName("http://talend.com/examples/interceptors", "GreeterPort");
 
+    private static final String PORT_PROPERTY = "http.port";
+    private static final int DEFAULT_PORT_VALUE = 8080;
+
+    private static final String HTTP_PORT;
+    static {
+        Properties props = new Properties();
+        try {
+            props.load(Client.class.getResourceAsStream("/interceptors/client.properties"));
+        } catch (Exception ex) {
+            throw new RuntimeException("client.properties resource is not available");
+        }
+        HTTP_PORT = props.getProperty(PORT_PROPERTY);
+    }
+
     public Client() throws Exception {
         this(new String[0]);
     }
 
     public Client(String args[]) throws Exception {
+        
+        final String address = "http://localhost:" + getPort() + "/services/InterceptorExample";
 
-        URL wsdl = null;
-        if (args.length == 0) {
-            wsdl = Client.class.getResource("/interceptors-wsdl/hello_world.wsdl");
-        }
+        Service service = Service.create(SERVICE_NAME);
+        service.addPort(PORT_NAME, SOAPBinding.SOAP11HTTP_BINDING, address);
 
-        GreeterService service = new GreeterService(wsdl, SERVICE_NAME);
-        Greeter greeter = (Greeter)service.getPort(PORT_NAME, Greeter.class);
-
+        Greeter greeter = service.getPort(Greeter.class);
+        
         // Use CXF API's to grab the underlying Client object and add
         // the DemoInterceptor's to it
         org.apache.cxf.endpoint.Client client = ClientProxy.getClient(greeter);
@@ -47,5 +61,14 @@ public final class Client {
     public static void main(String[] args) throws Exception {
         new Client(args);
         System.exit(0);
+    }
+    
+    private static int getPort() {
+        try {
+            return Integer.valueOf(HTTP_PORT);
+        } catch (NumberFormatException ex) {
+            // ignore
+        }
+        return DEFAULT_PORT_VALUE;
     }
 }
