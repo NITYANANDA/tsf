@@ -4,7 +4,7 @@ JAX-RS Intro Example
 The demo lists the Persons who are part of a membership.  It shows basic features of the JAX-RS 1.1 specification[1] and API[2]:
 
 - JAX-RS root resource class (Membership)
-- JAX-RS SubResourses (Person under Membership)
+- JAX-RS SubResources (Person under Membership)
 - GET (to retrieve a single Member and all Members), PUT (for updates - both single-field and multiple-field), POST (for inserts). 
 
 [1] http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html

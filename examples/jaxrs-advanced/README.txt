@@ -8,7 +8,7 @@ The demo shows some of the major features that the JAX-RS 1.1 specification[1] a
 - Resource methods consuming and producing data in different formats (XML and JSON)
 - Various HTTP verbs in action
 - How to use JAX-RS Response[2] to return status, headers and optional entities
-- How to use JAX-RS UriInfo[2] and UriBuilder[2] for returing the links to newly created resources
+- How to use JAX-RS UriInfo[2] and UriBuilder[2] for returning the links to newly created resources
 - JAX-RS ExceptionMappers[2] for handling exceptions thrown from the application code
 
 Additionally the HTTP Centric and Proxy-based Apache CXF JAX-RS client API is demonstrated.
