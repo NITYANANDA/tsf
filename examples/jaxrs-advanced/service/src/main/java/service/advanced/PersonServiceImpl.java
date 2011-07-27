@@ -26,7 +26,7 @@ public class PersonServiceImpl implements PersonService {
     private PersonInfoStorage storage;
 
     /**
-     * Thread-safe JAX-RS UriInfo proxy providing the information about the current request URI, etc
+     * Thread-safe JAX-RS UriInfo proxy providing information about the current request URI, etc
      */
     @Context
     private UriInfo uriInfo;

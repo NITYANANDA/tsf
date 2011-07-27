@@ -14,7 +14,7 @@ import common.advanced.Person;
 import common.advanced.PersonCollection;
 
 /**
- * JAX-RS SerachService root resource
+ * JAX-RS SearchService root resource
  */
 @Path("search")
 public class SearchService {
