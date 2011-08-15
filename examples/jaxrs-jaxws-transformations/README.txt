@@ -14,7 +14,7 @@ Newer endpoints can serve the requests without the middle name being provided.
 Forward compatibility is realistic when it is safe for the older endpoints to ignore the information newer consumers provide. For example,
 older endpoints will operate just fine without Customers having a middle name field populated. However, ignoring the info such as a credit card security code, etc, is not safe. 
 
-CXF 2.4.1 introduces a Transformation feature (http://cxf.apache.org/docs/transformationfeature.html) which makes it easier to handle 
+CXF 2.4.2 introduces a Transformation feature (http://cxf.apache.org/docs/transformationfeature.html) which makes it easier to handle 
 the complex issue of maintaining the compatibility.
 
 Additionally, this demo shows how CXFServlet can redirect requests.

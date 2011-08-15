@@ -5,7 +5,7 @@
 
     <groupId>com.talend.sf</groupId>
     <artifactId>tsf-parent</artifactId>
-    <version>2.4.1.1-SNAPSHOT</version>
+    <version>2.4.2.0</version>
     <name>TSF</name>
     <description>
         Talend Service Factory (TSF) uses the industry leading open source
@@ -43,7 +43,7 @@
     <!-- TODO <ciManagement/> -->
 
     <properties>
-        <cxf.version>2.4.1</cxf.version>
+        <cxf.version>2.4.2</cxf.version>
         <cxf.build-utils.version>2.3.1</cxf.build-utils.version>
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
@@ -51,9 +51,10 @@
 
         <!-- OSGi (Karaf, Felix, Aries) -->
         <aries.version>0.3</aries.version>
+        <aries.bp.version>0.3.1</aries.bp.version>
         <!--felix.fileinstall.version>3.0.2</felix.fileinstall.version>
         <felix.prefs.version>1.0.4</felix.prefs.version-->
-        <karaf.version>2.2.1</karaf.version>
+        <karaf.version>2.2.2</karaf.version>
         <osgi.compendium.version>4.2.0</osgi.compendium.version>
         <osgi.core.version>4.2.0</osgi.core.version>
 
