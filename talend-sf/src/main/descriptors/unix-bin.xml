@@ -156,7 +156,21 @@
             <fileMode>0644</fileMode>
             <directoryMode>755</directoryMode>
         </fileSet>
+
+        <!-- Copy Examples -->
+        <fileSet>
+            <directory>${basedir}/../examples</directory>
+            <outputDirectory>/examples</outputDirectory>
+            <excludes>
+                <exclude>**/target/**</exclude>
+                <exclude>**/.settings/**</exclude>
+                <exclude>**/.project</exclude>
+                <exclude>**/.classpath</exclude>
+            </excludes>
+        </fileSet>
+
     </fileSets>
+
     <files>
         <file>
             <source>${basedir}/target/dependencies/unix/apache-karaf-${karaf.version}/bin/karaf</source>
