@@ -10,26 +10,37 @@ import javax.ws.rs.core.SecurityContext;
 
 import oauth.common.Calendar;
 
-@Path("social")
+@Path("accounts")
 public class SocialService {
 
 	@Context
 	private SecurityContext context;
+	private UserAccounts accounts;
 	
-	private UserAccounts accounts = new UserAccounts();
+	public SocialService() {
+	}
+	
+	public void setAccounts(UserAccounts accounts) {
+		this.accounts = accounts;
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("calendar")
 	public void updateUserCalendar(int hour, String eventDescription) {
-		String userName = context.getUserPrincipal().getName();
-		UserAccount account = accounts.getAccount(userName);
+		UserAccount account = getAccount();
 		account.getCalendar().getEntry(hour).setEventDescription(eventDescription);
 	}
 
 	@GET
 	@Path("calendar")
-	public Calendar getUserCalendar(String userName) {
-		return accounts.getAccount(userName).getCalendar();
+	public Calendar getUserCalendar() {
+		UserAccount account = getAccount();
+		return account.getCalendar();
+	}
+	
+	private UserAccount getAccount() {
+		String userName = context.getUserPrincipal().getName();
+		return accounts.getAccount(userName);
 	}
 }

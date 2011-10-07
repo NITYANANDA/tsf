@@ -8,18 +8,18 @@ import javax.ws.rs.core.SecurityContext;
 
 import oauth.common.Calendar;
 import oauth.common.CalendarEntry;
-import oauth.service.SocialService;
+import oauth.manager.ThirdPartyAccessService;
 
 @Path("reserve")
-public class RestarauntReservationService {
+public class RestaurantReservationService {
 	
 	@Context
 	private SecurityContext sc; 
 	
-    private SocialService socialService;
+    private ThirdPartyAccessService socialService;
     private RestaurantService restaurantService;
     
-	public void setSocialService(SocialService socialService) {
+	public void setSocialService(ThirdPartyAccessService socialService) {
 		this.socialService = socialService;
 	}
 

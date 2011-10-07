@@ -1,25 +1,28 @@
 package oauth.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Calendar {
-    private CalendarEntry[] entries = new CalendarEntry[24];
+    private List<CalendarEntry> entries = new ArrayList<CalendarEntry>(24);
     
     public Calendar() {
     	for (int i = 0; i < 24; i++) {
-    		entries[i] = new CalendarEntry(i, null);
+    		entries.set(0, new CalendarEntry(i, null));
     	}
     }
     
     public void setEntry(CalendarEntry entry) {
     	validateHour(entry.getHour());
-    	entries[entry.getHour()] = entry;
+    	entries.set(entry.getHour(), entry);
     }
     
     public CalendarEntry getEntry(int hour) {
     	validateHour(hour);
-    	return entries[hour];
+    	return entries.get(hour);
     }
     
     private static void validateHour(int hour) {

@@ -1,18 +1,22 @@
 package oauth.service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserAccounts {
 
-	private Map<String, UserAccount> accounts = new HashMap<String, UserAccount>();
+	private ConcurrentHashMap<String, UserAccount> accounts = 
+		new ConcurrentHashMap<String, UserAccount>();
 	
 	public void setAccount(String userName, UserAccount account) {
-		accounts.put(userName, account);
+		accounts.putIfAbsent(userName, account);
 	}
 	
 	public UserAccount getAccount(String name) {
 		return accounts.get(name);
+	}
+	
+	public UserAccount removeAccount(String name) {
+		return accounts.remove(name);
 	}
 	
 }

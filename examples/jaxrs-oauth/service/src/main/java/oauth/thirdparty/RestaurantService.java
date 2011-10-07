@@ -6,7 +6,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-@Path("restaurant")
+@Path("reception")
 public class RestaurantService {
 
 	private AtomicBoolean availableHours[] = new AtomicBoolean[24];

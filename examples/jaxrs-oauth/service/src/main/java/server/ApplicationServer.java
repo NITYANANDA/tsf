@@ -3,6 +3,7 @@
  */
 package server;
 
+import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.RuntimeDelegate;
 
 import org.apache.cxf.endpoint.Server;
@@ -19,26 +20,59 @@ import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
  */
 public class ApplicationServer {
 
-    private static Server server;
+    private Server socialServer;
+    private Server restaurantServer;
+    private Server restaurantReserveServer;
     
-    protected ApplicationServer() throws Exception {
-        OAuthApplication application = new OAuthApplication();
-        RuntimeDelegate delegate = RuntimeDelegate.getInstance();
-
-        JAXRSServerFactoryBean bean = delegate.createEndpoint(application, JAXRSServerFactoryBean.class);
-        bean.setAddress("http://localhost:8080/services" + bean.getAddress());
-        server = bean.create();
-        server.start();
+    private Server thirdPartySocialServer;
+    private Server oauthServer;
+    
+    public void start() throws Exception {
+    	socialServer = startApplication(new SocialApplication());
+    	restaurantReserveServer = startApplication(new RestaurantReserveApplication());
+    	restaurantServer = startApplication(new RestaurantApplication());
+    	
+    	thirdPartySocialServer = startApplication(new ThirdPartyAccessApplication());
+    	oauthServer = startApplication(new OAuthManagerApplication());
     }
+    
+    public void stop() throws Exception {
+    	socialServer.stop();
+    	socialServer.destroy();
+    	
+    	restaurantReserveServer.stop();
+    	restaurantReserveServer.destroy();
+    	
+    	restaurantServer.stop();
+    	restaurantServer.destroy();
+    	
+    	thirdPartySocialServer.stop();
+    	thirdPartySocialServer.destroy();
+    	
+    	oauthServer.stop();
+    	oauthServer.destroy();
+    }
+    
+    private static Server startApplication(Application app) {
+    	RuntimeDelegate delegate = RuntimeDelegate.getInstance();
 
+        JAXRSServerFactoryBean bean = delegate.createEndpoint(app, JAXRSServerFactoryBean.class);
+        bean.setAddress("http://localhost:8080/services" + bean.getAddress());
+        Server server = bean.create();
+        server.start();
+        return server;
+    }
+    
+    
+    
     public static void main(String args[]) throws Exception {
-        new ApplicationServer();
+    	ApplicationServer server = new ApplicationServer();
+    	server.start();
         System.out.println("Server ready...");
 
         Thread.sleep(125 * 60 * 1000);
         System.out.println("Server exiting");
         server.stop();
-        server.destroy();
         System.exit(0);
     }
 }

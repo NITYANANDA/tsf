@@ -9,21 +9,19 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import oauth.thirdparty.RestaurantReservationService;
+
 /*
  * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 
  * runtime about the resources and providers it is supposed to deploy.  See the 
  * ApplicationServer class for more information.  
  */
-@ApplicationPath("/personservice")
-public class OAuthApplication extends Application {
-    @Override
-    public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>();
-    }
-
+@ApplicationPath("/reservations")
+public class RestaurantApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
+        classes.add(new RestaurantReservationService());
         return classes;
     }
 }
