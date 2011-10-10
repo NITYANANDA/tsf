@@ -18,11 +18,14 @@ import org.apache.cxf.jaxrs.ext.form.Form;
 
 public class OAuthClientManager {
 
+	private static final String DEFAULT_CLIENT_ID = "123456789";
+	private static final String DEFAULT_CLIENT_SECRET = "987654321";
+	
 	private WebClient accessTokenService;
     private WebClient requestTokenService;
     private String authorizationServiceURI;
-    private String consumerId;
-    private String consumerSecret;
+    private String consumerId = DEFAULT_CLIENT_ID;
+    private String consumerSecret = DEFAULT_CLIENT_SECRET;
 	
 	public OAuthClientManager() {
 		

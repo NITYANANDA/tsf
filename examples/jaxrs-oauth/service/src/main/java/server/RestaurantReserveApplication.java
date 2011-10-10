@@ -9,19 +9,34 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import oauth.thirdparty.RestaurantService;
+import oauth.thirdparty.OAuthClientManager;
+import oauth.thirdparty.RestaurantReservationService;
+
+import org.apache.cxf.jaxrs.client.WebClient;
 
 /*
  * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 
  * runtime about the resources and providers it is supposed to deploy.  See the 
  * ApplicationServer class for more information.  
  */
-@ApplicationPath("/restaurant")
+@ApplicationPath("/reservations")
 public class RestaurantReserveApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
-        classes.add(new RestaurantService());
+        RestaurantReservationService service = 
+        	new RestaurantReservationService();
+        OAuthClientManager manager = new OAuthClientManager();
+        manager.setAuthorizationURI("http://localhost:8080/services/social/authorize");
+        WebClient rts = 
+        	WebClient.create("http://localhost:8080/services/oauth/initiate");
+        manager.setRequestTokenService(rts);
+        WebClient ats = 
+        	WebClient.create("http://localhost:8080/services/oauth/token");
+        manager.setRequestTokenService(ats);
+        
+        service.setOAuthClientManager(manager);
+        classes.add(service);
         return classes;
     }
 }

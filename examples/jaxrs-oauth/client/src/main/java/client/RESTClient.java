@@ -8,9 +8,13 @@ import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
+import oauth.common.Calendar;
+
 import org.apache.cxf.helpers.IOUtils;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
+import org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData;
 
 /**
  * Example showing the interaction between HTTP-centric and proxy based RESTful clients and JAX-RS server
@@ -42,13 +46,55 @@ public final class RESTClient {
         this.port = port;
     }
 
+    public void registerClientApplication() throws Exception {
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/oauth/registerProvider");
+    	rs.form(new Form().set("appName", "Restaurant Reservations")
+    			          .set("appURI", "http://localhost:" + port + "/services/reservations/reserve")
+    			          .set("password", "987654321"));
+    }
+    
+    public void createUserAccount() throws Exception {
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/social/registerUser");
+    	rs.form(new Form().set("user", "barry@social.com").set("password", "1234"));
+    	
+    	WebClient client = WebClient.create("http://localhost:" + port + "/services/social/calendar");
+    	Calendar calendar = client.get(Calendar.class);
+    	System.out.println(calendar.toString());
+    }
+    
     public void reserveTable() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/reservation/reserve");
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/reservations/reserve");
     	Response r = rs.form(new Form().set("name", "Barry")
     			                       .set("phone", "12345678")
     			                       .set("from", "7")
     			                       .set("to", "9"));
-    	if (200 == r.getStatus()) {
+    	
+    	int status = r.getStatus();
+    	Object locationHeader = r.getMetadata().getFirst("Location");
+    	if (status != 302 || locationHeader == null) {
+    		System.out.println("OAuth flow is broken");
+    	}
+    	JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
+    	bean.setAddress(locationHeader.toString());
+    	bean.setUsername("barry@social.com");
+    	bean.setPassword("1234");
+    	WebClient authorizeClient = bean.createWebClient();
+    	OAuthAuthorizationData data = authorizeClient.get(OAuthAuthorizationData.class);    	
+    	
+    	// get the user confirmation
+    	Form authorizationResult = getAuthorizationResult(data);
+    	authorizeClient.resetQuery();
+    	
+    	Response r2 = authorizeClient.form(authorizationResult);
+    	int status2 = r2.getStatus();
+    	Object locationHeader2 = r.getMetadata().getFirst("Location");
+    	if (status2 != 302 || locationHeader2 == null) {
+    		System.out.println("OAuth flow is broken");
+    	}
+    	WebClient finalClient = WebClient.create(locationHeader2.toString());
+    	Response finalResponse = finalClient.get();
+    	
+    	if (200 == finalResponse.getStatus()) {
     		// now, update the calendar at Social
     		System.out.println("Address: " + IOUtils.readStringFromStream((InputStream)r.getEntity()));
     	} else {
@@ -56,9 +102,15 @@ public final class RESTClient {
     	}
     }
     
+    private Form getAuthorizationResult(OAuthAuthorizationData data) {
+        return new Form();	
+    }
+    
     public static void main(String[] args) throws Exception {
 
         RESTClient client = new RESTClient();
+        client.registerClientApplication();
+        client.createUserAccount();
         client.reserveTable();
     }
 

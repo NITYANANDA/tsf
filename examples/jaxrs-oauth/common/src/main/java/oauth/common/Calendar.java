@@ -31,4 +31,13 @@ public class Calendar {
     	}
     }
     
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	for (int i = 0; i < 24; i++) {
+    		sb.append("Hour: ").append(i).append(", event: ")
+    		    .append(entries.get(i).getEventDescription())
+    		    .append(System.getProperty("line.separator"));
+    	}
+    	return sb.toString();
+    }
 }
