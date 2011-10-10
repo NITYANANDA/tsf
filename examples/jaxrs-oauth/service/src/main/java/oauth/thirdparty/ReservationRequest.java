@@ -2,8 +2,13 @@ package oauth.thirdparty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import oauth.thirdparty.RestaurantReservationService.Token;
+
 @XmlRootElement
 public class ReservationRequest {
+	
+	private Token requestToken;
+	
     private String reserveName;
     private String contactPhone;
     private int fromHour;
@@ -31,5 +36,11 @@ public class ReservationRequest {
 	}
 	public int getToHour() {
 		return toHour;
+	}
+	public void setRequestToken(Token requestToken) {
+		this.requestToken = requestToken;
+	}
+	public Token getRequestToken() {
+		return requestToken;
 	}
 }

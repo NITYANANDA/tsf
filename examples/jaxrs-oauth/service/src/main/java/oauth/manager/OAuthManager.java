@@ -12,8 +12,7 @@ import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
 public class OAuthManager implements OAuthDataProvider {
 
-	public String registerClient(Client c) {
-		return null;
+	public void registerClient(Client c) {
 	}
 	
 	public AccessToken createAccessToken(RequestToken arg0)

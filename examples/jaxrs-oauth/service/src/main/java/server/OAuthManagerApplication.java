@@ -13,7 +13,6 @@ import oauth.manager.OAuthManager;
 import oauth.manager.ThirdPartyRegistrationService;
 
 import org.apache.cxf.rs.security.oauth.services.AccessTokenService;
-import org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService;
 import org.apache.cxf.rs.security.oauth.services.RequestTokenService;
 
 /*
@@ -23,11 +22,13 @@ import org.apache.cxf.rs.security.oauth.services.RequestTokenService;
  */
 @ApplicationPath("/oauth")
 public class OAuthManagerApplication extends Application {
+	
+	private OAuthManager manager;
+	
     @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
         
-        OAuthManager manager = new OAuthManager();
         ThirdPartyRegistrationService thirdPartyService = new ThirdPartyRegistrationService();
         thirdPartyService.setManager(manager);
         
@@ -37,13 +38,13 @@ public class OAuthManagerApplication extends Application {
         AccessTokenService ats = new AccessTokenService();
         ats.setDataProvider(manager);
         
-        AuthorizationRequestService authService = new AuthorizationRequestService();
-        authService.setDataProvider(manager);
-        
         classes.add(thirdPartyService);
         classes.add(rts);
         classes.add(ats);
-        classes.add(authService);
         return classes;
+    }
+    
+    public void setOAuthManager(OAuthManager manager) {
+        this.manager = manager;	
     }
 }

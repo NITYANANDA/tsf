@@ -6,6 +6,8 @@ package server;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.RuntimeDelegate;
 
+import oauth.manager.OAuthManager;
+
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 
@@ -28,12 +30,19 @@ public class ApplicationServer {
     private Server oauthServer;
     
     public void start() throws Exception {
-    	socialServer = startApplication(new SocialApplication());
+    	
+    	OAuthManager manager = new OAuthManager();
+    	SocialApplication socialApp = new SocialApplication();
+    	socialApp.setOAuthManager(manager);
+    	socialServer = startApplication(socialApp);
+    	
     	restaurantReserveServer = startApplication(new RestaurantReserveApplication());
     	restaurantServer = startApplication(new RestaurantApplication());
     	
     	thirdPartySocialServer = startApplication(new ThirdPartyAccessApplication());
-    	oauthServer = startApplication(new OAuthManagerApplication());
+    	OAuthManagerApplication oAuthManagerApp = new OAuthManagerApplication();
+    	oAuthManagerApp.setOAuthManager(manager);
+    	oauthServer = startApplication(oAuthManagerApp);
     }
     
     public void stop() throws Exception {

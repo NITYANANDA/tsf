@@ -1,5 +1,7 @@
 package oauth.manager;
 
+import java.util.UUID;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,8 +18,9 @@ public class ThirdPartyRegistrationService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/")
 	public String register(String appName, String appConnectURI, String password) {
-		Client newClient = new Client(appName, appConnectURI, password);
-		String clientId = manager.registerClient(newClient);
+		String clientId = UUID.randomUUID().toString();
+		Client newClient = new Client(clientId, password, appName, appConnectURI);
+		manager.registerClient(newClient);
 		return clientId;
 	}
 
