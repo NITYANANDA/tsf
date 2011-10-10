@@ -2,7 +2,7 @@ package oauth.thirdparty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import oauth.thirdparty.RestaurantReservationService.Token;
+import oauth.thirdparty.OAuthClientManager.Token;
 
 @XmlRootElement
 public class ReservationRequest {
