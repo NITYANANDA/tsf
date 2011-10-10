@@ -6,18 +6,18 @@
 
    <modelVersion>4.0.0</modelVersion>
    <parent>
-      <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
-      <artifactId>jaxws-ws-trust</artifactId>
+      <groupId>com.talend.sf.examples.jaxws-metro-sts</groupId>
+      <artifactId>jaxws-metro-sts</artifactId>
       <version>1.0</version>
    </parent>
-   <artifactId>jaxws-ws-trust-client</artifactId>
-   <name>CXF WSC for WS-Trust example</name>
+   <artifactId>jaxws-metro-sts-client</artifactId>
+   <name>CXF WSC for Metro STS example</name>
    <packaging>bundle</packaging>
 
    <dependencies>
       <dependency>
-         <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
-         <artifactId>jaxws-ws-trust-common</artifactId>
+         <groupId>com.talend.sf.examples.jaxws-metro-sts</groupId>
+         <artifactId>jaxws-metro-sts-common</artifactId>
          <version>1.0</version>
       </dependency>
    </dependencies>
@@ -40,7 +40,7 @@
             <configuration>
                 <instructions>
                     <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                    <Require-Bundle>jaxws-ws-trust-common</Require-Bundle>
+                    <Require-Bundle>jaxws-metro-sts-common</Require-Bundle>
                 </instructions>
             </configuration>
             </plugin>

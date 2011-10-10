@@ -3,8 +3,8 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
-   <groupId>com.talend.sf.examples.jaxws-ws-trust</groupId>
-   <artifactId>jaxws-ws-trust</artifactId>
+   <groupId>com.talend.sf.examples.jaxws-metro-sts</groupId>
+   <artifactId>jaxws-metro-sts</artifactId>
    <version>1.0</version>
    <name>WS Trust Parent POM</name>
    <packaging>pom</packaging>

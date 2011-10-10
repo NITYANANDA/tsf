@@ -1,4 +1,4 @@
-WS-Trust
+WS-Trust (JAX-WS Metro STS sample)
 =================================
 
 Provides an example of a CXF SOAP client (WSC) accessing a Metro STS for a SAML assertion and then subsequently
@@ -37,21 +37,16 @@ of JAX-WS and JAXB (included in the JAX-WS download) not provided by default
 in Java SE 6.  Download JAX-WS V 2.2.x from http://jax-ws.java.net/ and place the 
 jaxb-api.jar and jaxws-api.jar in your JDK's JDK_HOME/JRE/lib/endorsed folder.
 
-2.) The STS and WSP run on standalone Tomcat Version 7.  If not already done, 
+2.) The STS and WSP run on either Tomcat 7.x (default) or Tomcat 6.x.  If not already done, 
 configure Maven to be able to install 
 and uninstall the WSP and the STS by following this section: 
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also start up Tomcat.
 
-Note: If you wish to use Tomcat 6, the following changes will be needed:
+Note: If you wish to use Tomcat 6, use the -PTomcat6 flag when running the mvn tomcat commands 
+(tomcat:deploy, tomcat:redeploy, tomcat:undeploy).  (-PTomcat7 is active by default so
+does not need to be explicitly specified.)
 
-a.) In the tomcat-maven-plugin in the service-war and sts-war module, change the URL to 
-http://localhost:8080/manager (instead of the http://localhost:8080/manager/text used by 
-Tomcat 7.)
-
-b.) In Tomcat 6's tomcat-users.xml file, instead of giving the tomcat user 
-the "manager-script" and "manager-gui" roles, give him the Tomcat 6-specific "manager" role.
-
-3.) From the root jaxws-ws-trust, folder, run "mvn clean install".  If no errors, can then 
+3.) From the root jaxws-metro-sts folder, run "mvn clean install".  If no errors, can then 
 run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on subsequent runs as appropriate),
 either from the same folder (to deploy the STS and WSP at the same time) or separately, one at a time,
 from the service-war and sts folders.
@@ -69,7 +64,7 @@ CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
    Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
 
    From the OSGi command line, run:
-      karaf@tsf> features:install tsf-example-jaxws-ws-trust-client
+      karaf@tsf> features:install tsf-example-jaxws-metro-sts-client
 
 Either way, you should see the results of three web service calls, with the client using
 UsernameToken in one call, and X.509 in the other to get the SAML Assertion. 

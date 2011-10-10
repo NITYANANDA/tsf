@@ -77,9 +77,9 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-jms-http/jaxrs-jms-http-service/${project.version}</bundle>
     </feature>
 
-    <feature name='tsf-example-jaxws-ws-trust-client' version='${project.version}' resolver='(obr)'>
-        <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-common/${project.version}</bundle>
-        <bundle>mvn:com.talend.sf.examples.jaxws-ws-trust/jaxws-ws-trust-client/${project.version}</bundle>
+    <feature name='tsf-example-jaxws-metro-sts-client' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-metro-sts/jaxws-metro-sts-common/${project.version}</bundle>
+        <bundle>mvn:com.talend.sf.examples.jaxws-metro-sts/jaxws-metro-sts-client/${project.version}</bundle>
     </feature>
 
 </features>
