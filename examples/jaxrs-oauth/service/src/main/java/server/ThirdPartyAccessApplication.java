@@ -19,7 +19,7 @@ import org.apache.cxf.rs.security.oauth.filters.OAuthRequestFilter;
  * runtime about the resources and providers it is supposed to deploy.  See the 
  * ApplicationServer class for more information.  
  */
-@ApplicationPath("/thirdpartyAccess")
+@ApplicationPath("/thirdPartyAccess")
 public class ThirdPartyAccessApplication extends Application {
     @Override
     public Set<Object> getSingletons() {

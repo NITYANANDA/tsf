@@ -11,8 +11,7 @@ public class ReservationRequest {
 	
     private String reserveName;
     private String contactPhone;
-    private int fromHour;
-    private int toHour;
+    private int hour;
 	public void setReserveName(String reserveName) {
 		this.reserveName = reserveName;
 	}
@@ -25,17 +24,11 @@ public class ReservationRequest {
 	public String getContactPhone() {
 		return contactPhone;
 	}
-	public void setFromHour(int fromHour) {
-		this.fromHour = fromHour;
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
-	public int getFromHour() {
-		return fromHour;
-	}
-	public void setToHour(int toHour) {
-		this.toHour = toHour;
-	}
-	public int getToHour() {
-		return toHour;
+	public int getHour() {
+		return hour;
 	}
 	public void setRequestToken(Token requestToken) {
 		this.requestToken = requestToken;

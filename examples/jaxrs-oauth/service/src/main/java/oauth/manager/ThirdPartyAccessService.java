@@ -7,7 +7,7 @@ import javax.ws.rs.QueryParam;
 import oauth.common.Calendar;
 import oauth.service.UserAccounts;
 
-@Path("accounts")
+@Path("/")
 public class ThirdPartyAccessService {
 
     private UserAccounts accounts;

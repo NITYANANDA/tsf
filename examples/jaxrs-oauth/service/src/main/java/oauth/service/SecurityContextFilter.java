@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.common.security.SimplePrincipal;
 import org.apache.cxf.common.util.Base64Exception;
@@ -15,26 +17,39 @@ import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.security.SecurityContext;
 
+@Provider
 public class SecurityContextFilter implements RequestHandler {
 
 	@Context
 	private HttpHeaders headers;
+	@Context
+	private UriInfo ui;
 	
     private UserAccounts accounts;
+	private String userRegistrationPath; 
 	
 	public void setAccounts(UserAccounts accounts) {
 		this.accounts = accounts;
 	}
 	
 	public Response handleRequest(Message message, ClassResourceInfo cri) {
+	
+		if (ui.getAbsolutePath().toString().endsWith(userRegistrationPath)) {
+			return null;
+		}
+		
 		List<String> authValues = headers.getRequestHeader("Authorization");
-		if (authValues.size() < 2 || !"Basic".equals(authValues.get(0))) {
+		if (authValues.size() != 1) {
+			return createFaultResponse();
+		}
+		String[] values = authValues.get(0).split(" ");
+		if (values.length != 2 || !"Basic".equals(values[0])) {
 			return createFaultResponse();
 		}
 		
 		String decodedValue = null;
 		try {
-			decodedValue = new String(Base64Utility.decode(authValues.get(1)));
+			decodedValue = new String(Base64Utility.decode(values[1]));
 		} catch (Base64Exception ex) {
 			return createFaultResponse();
 		}
@@ -64,4 +79,9 @@ public class SecurityContextFilter implements RequestHandler {
 	private Response createFaultResponse() {
 		return Response.status(401).header("WWW-Authenticate", "Basic").build();
 	}
+
+	public void setUserRegistrationPath(String userRegistrationPath) {
+		this.userRegistrationPath = userRegistrationPath;
+	}
+	
 }

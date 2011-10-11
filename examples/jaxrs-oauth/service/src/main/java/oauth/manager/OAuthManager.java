@@ -1,6 +1,8 @@
 package oauth.manager;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
 import org.apache.cxf.rs.security.oauth.data.Client;
@@ -12,51 +14,58 @@ import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
 public class OAuthManager implements OAuthDataProvider {
 
+	private Client client;
+	private RequestToken rt;
+	private AccessToken at;
+	
 	public void registerClient(Client c) {
+	    this.client = c;
 	}
 	
-	public AccessToken createAccessToken(RequestToken arg0)
+	public AccessToken createAccessToken(RequestToken rt) throws OAuthServiceException {
+		String tokenId = UUID.randomUUID().toString();
+		String tokenSecret = UUID.randomUUID().toString();
+		at = new AccessToken(rt.getClient(), tokenId, tokenSecret);
+		rt = null;
+		return at;
+	}
+
+	public RequestToken createRequestToken(RequestTokenRegistration reg)
 			throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		String tokenId = UUID.randomUUID().toString();
+		String tokenSecret = UUID.randomUUID().toString();
+		rt = new RequestToken(reg.getClient(), tokenId, tokenSecret);
+		rt.setCallback(reg.getCallback());
+		return rt;
 	}
 
-	public RequestToken createRequestToken(RequestTokenRegistration arg0)
+	public String createRequestTokenVerifier(RequestToken rt)
 			throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		String verifier = UUID.randomUUID().toString();
+		rt.setOauthVerifier(verifier);
+		return verifier;
 	}
 
-	public String createRequestTokenVerifier(RequestToken arg0)
+	public AccessToken getAccessToken(String tokenId) throws OAuthServiceException {
+		return at == null || !at.getTokenString().equals(tokenId) ? null : at;
+	}
+
+	public Client getClient(String clientId) throws OAuthServiceException {
+		return client == null || !client.getConsumerKey().equals(clientId) ? null : client;
+	}
+
+	public List<OAuthPermission> getPermissionsInfo(List<String> permissions) {
+		return Collections.emptyList();
+	}
+
+	public RequestToken getRequestToken(String tokenId)
 			throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return rt == null || !rt.getTokenString().equals(tokenId) ? null : rt;
 	}
 
-	public AccessToken getAccessToken(String arg0) throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Client getClient(String arg0) throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<OAuthPermission> getPermissionsInfo(List<String> arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public RequestToken getRequestToken(String arg0)
-			throws OAuthServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void removeTokens(String arg0) throws OAuthServiceException {
-		// TODO Auto-generated method stub
-
+	public void removeTokens(String clientId) throws OAuthServiceException {
+		rt = null;
+		at = null;
 	}
 
 }

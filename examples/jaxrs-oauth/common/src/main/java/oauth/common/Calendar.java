@@ -1,17 +1,17 @@
 package oauth.common;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Calendar {
-    private List<CalendarEntry> entries = new ArrayList<CalendarEntry>(24);
+    private List<CalendarEntry> entries = new LinkedList<CalendarEntry>();
     
     public Calendar() {
     	for (int i = 0; i < 24; i++) {
-    		entries.set(0, new CalendarEntry(i, null));
+    		entries.add(new CalendarEntry(i, null));
     	}
     }
     
@@ -34,8 +34,9 @@ public class Calendar {
     public String toString() {
     	StringBuilder sb = new StringBuilder();
     	for (int i = 0; i < 24; i++) {
+    		String event = entries.get(i).getEventDescription();
     		sb.append("Hour: ").append(i).append(", event: ")
-    		    .append(entries.get(i).getEventDescription())
+    		    .append(event == null ? "Not Booked" : event)
     		    .append(System.getProperty("line.separator"));
     	}
     	return sb.toString();

@@ -1,6 +1,7 @@
 package oauth.service;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
@@ -21,7 +22,7 @@ public class UserRegistrationService {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/")
-	public void register(String name, String password) {
+	public void register(@FormParam("user") String name, @FormParam("password") String password) {
 		if (accounts.getAccount(name) != null) {
 			throw new WebApplicationException(400);
 		}

@@ -1,6 +1,7 @@
 package oauth.service;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,7 +28,8 @@ public class SocialService {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("calendar")
-	public void updateUserCalendar(int hour, String eventDescription) {
+	public void updateUserCalendar(@FormParam("hour") int hour, 
+			                       @FormParam("event") String eventDescription) {
 		UserAccount account = getAccount();
 		account.getCalendar().getEntry(hour).setEventDescription(eventDescription);
 	}

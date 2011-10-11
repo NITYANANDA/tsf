@@ -5,7 +5,7 @@ import oauth.common.Calendar;
 public class UserAccount {
     private String name;
     private String password;
-    private Calendar calendar;
+    private Calendar calendar = new Calendar();
 
     public UserAccount(String name, String password) {
     	this.name = name;
@@ -20,10 +20,6 @@ public class UserAccount {
     	return password;
     }
     
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
-	}
-
 	public Calendar getCalendar() {
 		return calendar;
 	}

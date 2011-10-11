@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 
 import oauth.thirdparty.OAuthClientManager;
 import oauth.thirdparty.RestaurantReservationService;
@@ -28,14 +29,23 @@ public class RestaurantReserveApplication extends Application {
         Set<Object> classes = new HashSet<Object>();
         RestaurantReservationService service = 
         	new RestaurantReservationService();
+        
+        WebClient socialService = 
+        	WebClient.create("http://localhost:8080/thirdPartyAccess/calendar");
+        service.setSocialService(socialService);
+        
         OAuthClientManager manager = new OAuthClientManager();
-        manager.setAuthorizationURI("http://localhost:8080/services/social/authorize");
+        manager.setAuthorizationURI("http://localhost:8080/social/authorize");
         WebClient rts = 
-        	WebClient.create("http://localhost:8080/services/oauth/initiate");
+        	WebClient.create("http://localhost:8080/oauth/initiate");
+        rts.accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+        WebClient.getConfig(rts).getHttpConduit().getClient().setReceiveTimeout(1000000L);
         manager.setRequestTokenService(rts);
         WebClient ats = 
-        	WebClient.create("http://localhost:8080/services/oauth/token");
-        manager.setRequestTokenService(ats);
+        	WebClient.create("http://localhost:8080/oauth/token");
+        ats.accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+        WebClient.getConfig(ats).getHttpConduit().getClient().setReceiveTimeout(1000000L);
+        manager.setAccessTokenService(ats);
         
         service.setOAuthClientManager(manager);
         

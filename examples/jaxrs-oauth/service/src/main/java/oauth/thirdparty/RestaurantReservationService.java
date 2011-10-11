@@ -72,15 +72,13 @@ public class RestaurantReservationService {
 		
 		Calendar c = socialService.get(Calendar.class);
 		
-    	for (int i = request.getFromHour(); i < request.getToHour(); i++) {
-    		CalendarEntry entry = c.getEntry(i);
-    		if (entry.getEventDescription() == null 
-    				&& restaurantService.reserveAt(request.getReserveName(), 
-    						                       request.getContactPhone(), 
-    						                       i)) {
-    			return restaurantService.getAddress();
-    		}
-    	}
+    	CalendarEntry entry = c.getEntry(request.getHour());
+		if (entry.getEventDescription() == null 
+				&& restaurantService.reserveAt(request.getReserveName(), 
+						                       request.getContactPhone(), 
+						                       request.getHour())) {
+			return restaurantService.getAddress();
+		}
     	return "No reservation is possible";
     }
 	
@@ -88,18 +86,16 @@ public class RestaurantReservationService {
 	@Path("table")
     public Response reserveTableBetween(@FormParam("name") String name,
     		                            @FormParam("phone") String phone,
-    		                            @FormParam("from") int from, 
-    		                            @FormParam("to") int to) {
+    		                            @FormParam("hour") int hour) {
 		
-		URI callback = ui.getAbsolutePathBuilder().path("complete").build();
+		URI callback = ui.getBaseUriBuilder().path("reserve").path("complete").build();
 		Token requestToken = manager.getRequestToken(callback);
 		
 		String userName = sc.getUserPrincipal().getName();
 		ReservationRequest request = new ReservationRequest();
 		request.setReserveName(name);
 		request.setContactPhone(phone);
-		request.setFromHour(from);
-		request.setToHour(to);
+		request.setHour(hour);
 		request.setRequestToken(requestToken);
 	
 		synchronized (requests) {

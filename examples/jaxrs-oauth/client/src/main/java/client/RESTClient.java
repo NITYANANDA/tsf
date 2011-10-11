@@ -48,27 +48,39 @@ public final class RESTClient {
     }
 
     public void registerClientApplication() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/oauth/registerProvider");
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/oauth/registerProvider");
+    	WebClient.getConfig(rs).getHttpConduit().getClient().setReceiveTimeout(10000000L);
     	rs.form(new Form().set("appName", "Restaurant Reservations")
-    			          .set("appURI", "http://localhost:" + port + "/services/reservations/reserve")
+    			          .set("appURI", "http://localhost:" + port + "/reservations/reserve")
     			          .set("password", "987654321"));
     }
     
     public void createUserAccount() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/social/registerUser");
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/social/registerUser");
+    	WebClient.getConfig(rs).getHttpConduit().getClient().setReceiveTimeout(10000000L);
     	rs.form(new Form().set("user", "barry@social.com").set("password", "1234"));
     	
-    	WebClient client = WebClient.create("http://localhost:" + port + "/services/social/calendar");
+    	printUserCalendar();
+    }
+    
+    private void printUserCalendar() {
+    	WebClient client = createClient("http://localhost:" + port + "/social/accounts/calendar");
     	Calendar calendar = client.get(Calendar.class);
     	System.out.println(calendar.toString());
     }
     
+    private void updateAndGetUserCalendar(int hour, String event) {
+    	WebClient client = createClient("http://localhost:" + port + "/social/accounts/calendar");
+    	Form form = new Form().set("hour", hour).set("event", event);
+    	client.form(form);
+    	printUserCalendar();
+    }
+    
     public void reserveTable() throws Exception {
-    	WebClient rs = createClient("http://localhost:" + port + "/services/reservations/reserve");
+    	WebClient rs = createClient("http://localhost:" + port + "/reservations/reserve/table");
     	Response r = rs.form(new Form().set("name", "Barry")
     			                       .set("phone", "12345678")
-    			                       .set("from", "7")
-    			                       .set("to", "9"));
+    			                       .set("hour", "7"));
     	
     	int status = r.getStatus();
     	Object locationHeader = r.getMetadata().getFirst("Location");
@@ -97,8 +109,9 @@ public final class RESTClient {
     	Response finalResponse = finalClient.get();
     	
     	if (200 == finalResponse.getStatus()) {
+    		String address = IOUtils.readStringFromStream((InputStream)r.getEntity());
     		// now, update the calendar at Social
-    		System.out.println("Address: " + IOUtils.readStringFromStream((InputStream)r.getEntity()));
+    		updateAndGetUserCalendar(7, "Dinner at " + address);
     	} else {
     		System.out.println("Reservation failed");
     	}
@@ -109,7 +122,9 @@ public final class RESTClient {
     	bean.setAddress(address);
     	bean.setUsername("barry@social.com");
     	bean.setPassword("1234");
-    	return bean.createWebClient();
+    	WebClient wc = bean.createWebClient();
+    	WebClient.getConfig(wc).getHttpConduit().getClient().setReceiveTimeout(10000000L);
+    	return wc;
     }
     
     private Form getAuthorizationResult(OAuthAuthorizationData data) {

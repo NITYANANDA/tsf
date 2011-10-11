@@ -64,9 +64,8 @@ public class ApplicationServer {
     
     private static Server startApplication(Application app) {
     	RuntimeDelegate delegate = RuntimeDelegate.getInstance();
-
         JAXRSServerFactoryBean bean = delegate.createEndpoint(app, JAXRSServerFactoryBean.class);
-        bean.setAddress("http://localhost:8080/services" + bean.getAddress());
+        bean.setAddress("http://localhost:8080" + bean.getAddress());
         Server server = bean.create();
         server.start();
         return server;
