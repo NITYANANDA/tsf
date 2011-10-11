@@ -310,17 +310,8 @@
     </wsp:Policy>
 
     <wsdl:service name="SecurityTokenService">
-        <wsdl:port name="UT_Port" binding="tns:UT_Binding">
-            <soap:address location="http://localhost:8080/jaxws-sts/sts" />
-        </wsdl:port>
         <wsdl:port name="X509_Port" binding="tns:X509_Binding">
-            <soap:address location="http://localhost:8080/jaxws-sts/sts" />
-        </wsdl:port>
-        <wsdl:port name="Transport_Port" binding="tns:Transport_Binding">
-            <soap:address location="http://localhost:8080/jaxws-sts/sts" />
-        </wsdl:port>
-        <wsdl:port name="UTEncrypted_Port" binding="tns:UTEncrypted_Binding">
-            <soap:address location="http://localhost:8080/jaxws-sts/sts" />
+            <soap:address location="dummy_address_actual_value_populated_when_sts_deployed" />
         </wsdl:port>
     </wsdl:service>
 
