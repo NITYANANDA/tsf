@@ -3,6 +3,7 @@
  */
 package server;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Application;
 
 import oauth.thirdparty.OAuthClientManager;
 import oauth.thirdparty.RestaurantReservationService;
+import oauth.thirdparty.SecurityContextFilter;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 
@@ -36,7 +38,13 @@ public class RestaurantReserveApplication extends Application {
         manager.setRequestTokenService(ats);
         
         service.setOAuthClientManager(manager);
+        
+        SecurityContextFilter filter = new SecurityContextFilter();
+        filter.setUsers(Collections.singletonMap("barry@social.com", "1234"));
+        
         classes.add(service);
+        classes.add(filter);
+        
         return classes;
     }
 }

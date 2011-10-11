@@ -6,6 +6,7 @@ package client;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.Response;
 
 import oauth.common.Calendar;
@@ -63,7 +64,7 @@ public final class RESTClient {
     }
     
     public void reserveTable() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/reservations/reserve");
+    	WebClient rs = createClient("http://localhost:" + port + "/services/reservations/reserve");
     	Response r = rs.form(new Form().set("name", "Barry")
     			                       .set("phone", "12345678")
     			                       .set("from", "7")
@@ -74,24 +75,25 @@ public final class RESTClient {
     	if (status != 302 || locationHeader == null) {
     		System.out.println("OAuth flow is broken");
     	}
-    	JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
-    	bean.setAddress(locationHeader.toString());
-    	bean.setUsername("barry@social.com");
-    	bean.setPassword("1234");
-    	WebClient authorizeClient = bean.createWebClient();
+    	WebClient authorizeClient = createClient(locationHeader.toString());
     	OAuthAuthorizationData data = authorizeClient.get(OAuthAuthorizationData.class);    	
-    	
-    	// get the user confirmation
+    	Object authenticityCookie = authorizeClient.getResponse().getMetadata().getFirst("Cookie");
+    	    	
     	Form authorizationResult = getAuthorizationResult(data);
-    	authorizeClient.resetQuery();
-    	
+    	authorizeClient.reset();
+    	authorizeClient.to(data.getReplyTo(), false);
+    	if (authenticityCookie != null) {
+    		authorizeClient.cookie(Cookie.valueOf((String)authenticityCookie));
+    	}
     	Response r2 = authorizeClient.form(authorizationResult);
+    	
     	int status2 = r2.getStatus();
     	Object locationHeader2 = r.getMetadata().getFirst("Location");
     	if (status2 != 302 || locationHeader2 == null) {
     		System.out.println("OAuth flow is broken");
     	}
-    	WebClient finalClient = WebClient.create(locationHeader2.toString());
+    	
+    	WebClient finalClient = createClient(locationHeader2.toString());
     	Response finalResponse = finalClient.get();
     	
     	if (200 == finalResponse.getStatus()) {
@@ -102,8 +104,21 @@ public final class RESTClient {
     	}
     }
     
+    private WebClient createClient(String address) {
+    	JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
+    	bean.setAddress(address);
+    	bean.setUsername("barry@social.com");
+    	bean.setPassword("1234");
+    	return bean.createWebClient();
+    }
+    
     private Form getAuthorizationResult(OAuthAuthorizationData data) {
-        return new Form();	
+        Form form = new Form();
+        form.set("oauth_token", data.getOauthToken());
+        // TODO: get the user confirmation, using a popup window or a blocking cmd input
+        form.set("oauthDecision", "allow");
+        form.set("session.authenticity.token", data.getAuthenticityToken());
+        return form;
     }
     
     public static void main(String[] args) throws Exception {
