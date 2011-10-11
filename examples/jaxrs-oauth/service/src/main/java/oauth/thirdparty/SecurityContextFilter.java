@@ -24,7 +24,7 @@ public class SecurityContextFilter implements RequestHandler {
 	
 	public void setUsers(Map<String, String> users) {
 		this.users = users;
-	}
+	} 
 	
 	
 	public Response handleRequest(Message message, ClassResourceInfo cri) {
