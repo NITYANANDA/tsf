@@ -7,9 +7,12 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.RuntimeDelegate;
 
 import oauth.manager.OAuthManager;
+import oauth.service.UserAccounts;
 
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.transport.http_jetty.JettyHTTPDestination;
+import org.apache.cxf.transport.http_jetty.JettyHTTPServerEngine;
 
 /* 
  * This class is currently activated only if you use the mvn test -Pserver command
@@ -30,16 +33,21 @@ public class ApplicationServer {
     private Server oauthServer;
     
     public void start() throws Exception {
-    	
+
+    	UserAccounts accounts = new UserAccounts();
     	OAuthManager manager = new OAuthManager();
     	SocialApplication socialApp = new SocialApplication();
+    	socialApp.setAccounts(accounts);
     	socialApp.setOAuthManager(manager);
     	socialServer = startApplication(socialApp);
     	
     	restaurantReserveServer = startApplication(new RestaurantReserveApplication());
     	restaurantServer = startApplication(new RestaurantApplication());
     	
-    	thirdPartySocialServer = startApplication(new ThirdPartyAccessApplication());
+    	ThirdPartyAccessApplication thirdPartyAccessApp = new ThirdPartyAccessApplication();
+    	thirdPartyAccessApp.setAccounts(accounts);
+    	thirdPartyAccessApp.setOAuthManager(manager);
+    	thirdPartySocialServer = startApplication(thirdPartyAccessApp);
     	OAuthManagerApplication oAuthManagerApp = new OAuthManagerApplication();
     	oAuthManagerApp.setOAuthManager(manager);
     	oauthServer = startApplication(oAuthManagerApp);
@@ -65,8 +73,16 @@ public class ApplicationServer {
     private static Server startApplication(Application app) {
     	RuntimeDelegate delegate = RuntimeDelegate.getInstance();
         JAXRSServerFactoryBean bean = delegate.createEndpoint(app, JAXRSServerFactoryBean.class);
+        
+        
+        
         bean.setAddress("http://localhost:8080" + bean.getAddress());
+        bean.setStart(false);
         Server server = bean.create();
+        JettyHTTPDestination dest = (JettyHTTPDestination)server.getDestination();
+        JettyHTTPServerEngine engine = (JettyHTTPServerEngine)dest.getEngine();
+        engine.setSessionSupport(true);
+        
         server.start();
         return server;
     }

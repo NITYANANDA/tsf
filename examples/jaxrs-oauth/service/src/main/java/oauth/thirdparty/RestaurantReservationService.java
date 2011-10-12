@@ -8,6 +8,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -20,6 +21,7 @@ import oauth.common.CalendarEntry;
 import oauth.thirdparty.OAuthClientManager.Token;
 
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.ext.form.Form;
 
 @Path("reserve")
 public class RestaurantReservationService {
@@ -33,7 +35,7 @@ public class RestaurantReservationService {
 	    HashMap<String, Map<String, ReservationRequest>>();
 	
 	private WebClient socialService;
-    private RestaurantService restaurantService;
+    private WebClient restaurantService;
     
     private OAuthClientManager manager;
     
@@ -45,12 +47,13 @@ public class RestaurantReservationService {
 		this.socialService = socialService;
 	}
     
-    public void setRestaurantService(RestaurantService restaurantService) {
+    public void setRestaurantService(WebClient restaurantService) {
 		this.restaurantService = restaurantService;
 	}
 
 	@GET
 	@Path("complete")
+	@Produces("text/plain")
     public String completeReservation(@QueryParam("oauth_token") String token,
     		                          @QueryParam("oauth_verifier") String verifier) {
 		
@@ -73,13 +76,14 @@ public class RestaurantReservationService {
 		Calendar c = socialService.get(Calendar.class);
 		
     	CalendarEntry entry = c.getEntry(request.getHour());
-		if (entry.getEventDescription() == null 
-				&& restaurantService.reserveAt(request.getReserveName(), 
-						                       request.getContactPhone(), 
-						                       request.getHour())) {
-			return restaurantService.getAddress();
+		if (entry.getEventDescription() == null) { 
+			return restaurantService.post(new Form().set("name", request.getReserveName()) 
+					                     .set("phone", request.getContactPhone()) 
+					                     .set("hour", request.getHour()),
+					                      String.class);
+		} else {
+		    return null;
 		}
-    	return "No reservation is possible";
     }
 	
 	@POST
@@ -109,8 +113,7 @@ public class RestaurantReservationService {
 		
 		
     	// Create a request token request and redirect
-		return Response.status(302).header("Location", 
-				manager.getAuthorizationServiceURI(requestToken.getToken())).build();
+		return Response.seeOther(manager.getAuthorizationServiceURI(requestToken.getToken())).build();
     }
     
 	

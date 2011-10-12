@@ -3,15 +3,14 @@
  */
 package client;
 
-import java.io.InputStream;
 import java.util.Properties;
 
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.Response;
 
 import oauth.common.Calendar;
 
-import org.apache.cxf.helpers.IOUtils;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
@@ -84,33 +83,32 @@ public final class RESTClient {
     	
     	int status = r.getStatus();
     	Object locationHeader = r.getMetadata().getFirst("Location");
-    	if (status != 302 || locationHeader == null) {
+    	if (status != 303 || locationHeader == null) {
     		System.out.println("OAuth flow is broken");
     	}
     	WebClient authorizeClient = createClient(locationHeader.toString());
     	OAuthAuthorizationData data = authorizeClient.get(OAuthAuthorizationData.class);    	
-    	Object authenticityCookie = authorizeClient.getResponse().getMetadata().getFirst("Cookie");
+    	Object authenticityCookie = authorizeClient.getResponse().getMetadata().getFirst("Set-Cookie");
     	    	
     	Form authorizationResult = getAuthorizationResult(data);
     	authorizeClient.reset();
     	authorizeClient.to(data.getReplyTo(), false);
     	if (authenticityCookie != null) {
-    		authorizeClient.cookie(Cookie.valueOf((String)authenticityCookie));
+    		authorizeClient.header("Cookie", (String)authenticityCookie);
     	}
     	Response r2 = authorizeClient.form(authorizationResult);
     	
     	int status2 = r2.getStatus();
-    	Object locationHeader2 = r.getMetadata().getFirst("Location");
-    	if (status2 != 302 || locationHeader2 == null) {
+    	Object locationHeader2 = r2.getMetadata().getFirst("Location");
+    	if (status2 != 303 || locationHeader2 == null) {
     		System.out.println("OAuth flow is broken");
     	}
     	
     	WebClient finalClient = createClient(locationHeader2.toString());
-    	Response finalResponse = finalClient.get();
+    	finalClient.accept("text/plain");
+    	String address = finalClient.get(String.class);
     	
-    	if (200 == finalResponse.getStatus()) {
-    		String address = IOUtils.readStringFromStream((InputStream)r.getEntity());
-    		// now, update the calendar at Social
+    	if (address != null) {
     		updateAndGetUserCalendar(7, "Dinner at " + address);
     	} else {
     		System.out.println("Reservation failed");
@@ -122,8 +120,13 @@ public final class RESTClient {
     	bean.setAddress(address);
     	bean.setUsername("barry@social.com");
     	bean.setPassword("1234");
+    	
+    	bean.getOutInterceptors().add(new LoggingOutInterceptor());
+    	bean.getInInterceptors().add(new LoggingInInterceptor());
+    	
     	WebClient wc = bean.createWebClient();
     	WebClient.getConfig(wc).getHttpConduit().getClient().setReceiveTimeout(10000000L);
+    	
     	return wc;
     }
     
@@ -132,7 +135,7 @@ public final class RESTClient {
         form.set("oauth_token", data.getOauthToken());
         // TODO: get the user confirmation, using a popup window or a blocking cmd input
         form.set("oauthDecision", "allow");
-        form.set("session.authenticity.token", data.getAuthenticityToken());
+        form.set("session_authenticity_token", data.getAuthenticityToken());
         return form;
     }
     

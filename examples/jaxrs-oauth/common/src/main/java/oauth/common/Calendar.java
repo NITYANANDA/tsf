@@ -15,6 +15,14 @@ public class Calendar {
     	}
     }
     
+    public List<CalendarEntry> getEntries() {
+    	return entries;
+    }
+    
+    public void setEntries(List<CalendarEntry> entries) {
+    	this.entries = entries;
+    }
+    
     public void setEntry(CalendarEntry entry) {
     	validateHour(entry.getHour());
     	entries.set(entry.getHour(), entry);
