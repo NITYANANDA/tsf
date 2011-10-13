@@ -32,7 +32,7 @@ public class ThirdPartyRegistrationService {
 		return DEFAULT_CLIENT_ID;
 	}
 	
-	public void setManager(OAuthManager manager) {
+	public void setDataProvider(OAuthManager manager) {
 		this.manager = manager;
 	}
 }

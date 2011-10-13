@@ -44,7 +44,7 @@ public class ThirdPartyAccessApplication extends Application {
         classes.add(thirdPartyAccessService);
         
         OAuthRequestFilter filter = new OAuthRequestFilter();
-        filter.setOAuthDataProvider(manager);
+        filter.setDataProvider(manager);
         classes.add(filter);
         
         return classes;

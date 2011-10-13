@@ -30,7 +30,7 @@ public class OAuthManagerApplication extends Application {
         Set<Object> classes = new HashSet<Object>();
         
         ThirdPartyRegistrationService thirdPartyService = new ThirdPartyRegistrationService();
-        thirdPartyService.setManager(manager);
+        thirdPartyService.setDataProvider(manager);
         
         RequestTokenService rts = new RequestTokenService(); 
         rts.setDataProvider(manager);

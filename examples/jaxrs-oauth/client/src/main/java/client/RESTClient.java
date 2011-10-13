@@ -47,15 +47,15 @@ public final class RESTClient {
     }
 
     public void registerClientApplication() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/oauth/registerProvider");
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/oauth/registerProvider");
     	WebClient.getConfig(rs).getHttpConduit().getClient().setReceiveTimeout(10000000L);
     	rs.form(new Form().set("appName", "Restaurant Reservations")
-    			          .set("appURI", "http://localhost:" + port + "/reservations/reserve")
+    			          .set("appURI", "http://localhost:" + port + "/services/reservations/reserve")
     			          .set("password", "987654321"));
     }
     
     public void createUserAccount() throws Exception {
-    	WebClient rs = WebClient.create("http://localhost:" + port + "/social/registerUser");
+    	WebClient rs = WebClient.create("http://localhost:" + port + "/services/social/registerUser");
     	WebClient.getConfig(rs).getHttpConduit().getClient().setReceiveTimeout(10000000L);
     	rs.form(new Form().set("user", "barry@social.com").set("password", "1234"));
     	
@@ -63,20 +63,20 @@ public final class RESTClient {
     }
     
     private void printUserCalendar() {
-    	WebClient client = createClient("http://localhost:" + port + "/social/accounts/calendar");
+    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar");
     	Calendar calendar = client.get(Calendar.class);
     	System.out.println(calendar.toString());
     }
     
     private void updateAndGetUserCalendar(int hour, String event) {
-    	WebClient client = createClient("http://localhost:" + port + "/social/accounts/calendar");
+    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar");
     	Form form = new Form().set("hour", hour).set("event", event);
     	client.form(form);
     	printUserCalendar();
     }
     
     public void reserveTable() throws Exception {
-    	WebClient rs = createClient("http://localhost:" + port + "/reservations/reserve/table");
+    	WebClient rs = createClient("http://localhost:" + port + "/services/reservations/reserve/table");
     	Response r = rs.form(new Form().set("name", "Barry")
     			                       .set("phone", "12345678")
     			                       .set("hour", "7"));
