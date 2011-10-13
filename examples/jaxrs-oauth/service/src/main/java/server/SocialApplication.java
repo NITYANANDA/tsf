@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Talend Inc. - www.talend.com
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
  */
 package server;
 
@@ -27,12 +27,15 @@ import oauth.service.UserRegistrationService;
 public class SocialApplication extends Application {
 	
 	private OAuthManager manager;
+	private UserAccounts accounts;
+	
+	public void setAccounts(UserAccounts accounts) {
+		this.accounts = accounts;
+	}
 	
     @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
-        
-        UserAccounts accounts = new UserAccounts();
         
         SocialService socialService = new SocialService();
         socialService.setAccounts(accounts);

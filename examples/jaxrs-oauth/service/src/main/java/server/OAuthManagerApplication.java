@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Talend Inc. - www.talend.com
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
  */
 package server;
 
@@ -30,7 +30,7 @@ public class OAuthManagerApplication extends Application {
         Set<Object> classes = new HashSet<Object>();
         
         ThirdPartyRegistrationService thirdPartyService = new ThirdPartyRegistrationService();
-        thirdPartyService.setManager(manager);
+        thirdPartyService.setDataProvider(manager);
         
         RequestTokenService rts = new RequestTokenService(); 
         rts.setDataProvider(manager);

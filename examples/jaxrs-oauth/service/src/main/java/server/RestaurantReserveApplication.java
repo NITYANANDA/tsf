@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Talend Inc. - www.talend.com
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
  */
 package server;
 
@@ -27,12 +27,11 @@ public class RestaurantReserveApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
-        RestaurantReservationService service = 
+        RestaurantReservationService reserveService = 
         	new RestaurantReservationService();
-        
         WebClient socialService = 
         	WebClient.create("http://localhost:8080/thirdPartyAccess/calendar");
-        service.setSocialService(socialService);
+        reserveService.setSocialService(socialService);
         
         OAuthClientManager manager = new OAuthClientManager();
         manager.setAuthorizationURI("http://localhost:8080/social/authorize");
@@ -47,12 +46,17 @@ public class RestaurantReserveApplication extends Application {
         WebClient.getConfig(ats).getHttpConduit().getClient().setReceiveTimeout(1000000L);
         manager.setAccessTokenService(ats);
         
-        service.setOAuthClientManager(manager);
+        reserveService.setOAuthClientManager(manager);
         
         SecurityContextFilter filter = new SecurityContextFilter();
         filter.setUsers(Collections.singletonMap("barry@social.com", "1234"));
         
-        classes.add(service);
+        WebClient restaurantService = 
+        	WebClient.create("http://localhost:8080/restaurant/reception");
+        restaurantService.accept(MediaType.TEXT_PLAIN_TYPE).type(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+        reserveService.setRestaurantService(restaurantService);
+        
+        classes.add(reserveService);
         classes.add(filter);
         
         return classes;

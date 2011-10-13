@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
+ */
 package oauth.service;
 
 import java.util.concurrent.ConcurrentHashMap;

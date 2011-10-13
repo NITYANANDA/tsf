@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
+ */
 package oauth.manager;
 
 import javax.ws.rs.Consumes;
@@ -29,7 +32,7 @@ public class ThirdPartyRegistrationService {
 		return DEFAULT_CLIENT_ID;
 	}
 	
-	public void setManager(OAuthManager manager) {
+	public void setDataProvider(OAuthManager manager) {
 		this.manager = manager;
 	}
 }

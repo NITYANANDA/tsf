@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
+ */
 package oauth.common;
 
 import java.util.LinkedList;
@@ -13,6 +16,14 @@ public class Calendar {
     	for (int i = 0; i < 24; i++) {
     		entries.add(new CalendarEntry(i, null));
     	}
+    }
+    
+    public List<CalendarEntry> getEntries() {
+    	return entries;
+    }
+    
+    public void setEntries(List<CalendarEntry> entries) {
+    	this.entries = entries;
     }
     
     public void setEntry(CalendarEntry entry) {
