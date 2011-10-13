@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
+ */
 package oauth.thirdparty;
 
 import java.util.concurrent.atomic.AtomicBoolean;

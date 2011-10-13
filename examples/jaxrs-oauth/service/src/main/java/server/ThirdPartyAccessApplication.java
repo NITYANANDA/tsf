@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Talend Inc. - www.talend.com
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
  */
 package server;
 
@@ -23,19 +23,18 @@ import org.apache.cxf.rs.security.oauth.filters.OAuthRequestFilter;
 @ApplicationPath("/thirdPartyAccess")
 public class ThirdPartyAccessApplication extends Application {
     
-	private OAuthManager manager;
+    private OAuthManager manager;
     private UserAccounts accounts;
-	
-	public void setAccounts(UserAccounts accounts) {
-		this.accounts = accounts;
-	}
-	
-	public void setOAuthManager(OAuthManager manager) {
+
+    public void setAccounts(UserAccounts accounts) {
+        this.accounts = accounts;
+    }
+
+    public void setOAuthManager(OAuthManager manager) {
         this.manager = manager;	
     }
-	
-	
-	@Override
+
+    @Override
     public Set<Object> getSingletons() {
         Set<Object> classes = new HashSet<Object>();
         
