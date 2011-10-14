@@ -21,10 +21,10 @@ import javax.ws.rs.core.UriInfo;
 
 import oauth.common.Calendar;
 import oauth.common.CalendarEntry;
-import oauth.thirdparty.OAuthClientManager.Token;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport.Token;
 
 @Path("reserve")
 public class RestaurantReservationService {

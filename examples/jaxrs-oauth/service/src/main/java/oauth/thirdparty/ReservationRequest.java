@@ -5,7 +5,7 @@ package oauth.thirdparty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import oauth.thirdparty.OAuthClientManager.Token;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport.Token;
 
 @XmlRootElement
 public class ReservationRequest {
