@@ -10,9 +10,14 @@
         <bundle>mvn:com.talend.sf.examples.jaxrs-intro-example/jaxrs-intro-service-bundle/${project.version}</bundle>
     </feature>
 
-    <feature name='tsf-example-jaxrs-advanced' version='${project.version}' resolver='(obr)'>
+    <feature name='tsf-example-jaxrs-advanced-server' version='${project.version}' resolver='(obr)'>
         <bundle>mvn:com.talend.sf.examples.jaxrs-advanced-example/jaxrs-advanced-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-advanced-example/jaxrs-advanced-service-bundle/${project.version}</bundle>
+    </feature>
+
+    <feature name='tsf-example-jaxrs-advanced-client' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxrs-advanced-example/jaxrs-advanced-common/${project.version}</bundle>
+        <bundle>mvn:com.talend.sf.examples.jaxrs-advanced-example/jaxrs-advanced-client/${project.version}</bundle>
     </feature>
 
     <feature name='tsf-example-jaxws-ws-secpol-server' version='${project.version}' resolver='(obr)'>

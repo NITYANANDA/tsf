@@ -4,19 +4,17 @@
 package service.advanced;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import common.advanced.Person;
-import common.advanced.PersonService;
 import common.advanced.PersonCollection;
+import common.advanced.PersonService;
 
 /**
  * JAX-RS PersonService root resource

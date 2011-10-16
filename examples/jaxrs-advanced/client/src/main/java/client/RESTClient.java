@@ -4,10 +4,7 @@
 package client;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -209,7 +206,6 @@ public final class RESTClient {
      * also be checked. HTTP response errors can be converted into typed exceptions.
      */
     public void useSimpleProxy() {
-        System.out.println("Using a simple JAX-RS proxy to get all the persons...");
         ResponseReader reader = new ResponseReader();
         reader.setEntityClass(PersonCollection.class);
 
@@ -217,20 +213,10 @@ public final class RESTClient {
         PersonService proxy = JAXRSClientFactory.create(webAppAddress, PersonService.class,
                                                         Collections.singletonList(reader));
 
-        // getPersons(a, b): a is zero-based start index, b is number of records
-        // to return (-1 for all)
-        Response resp = proxy.getPersons(0, -1);
-        if (resp.getStatus() == 200) {
-            PersonCollection personColl = (PersonCollection)resp.getEntity();
-            List<Person> persons = personColl.getList();
-            for (Iterator<Person> it = persons.iterator(); it.hasNext();) {
-                Person person = it.next();
-                System.out.println("ID " + person.getId() + " : " + person.getName() + ", age : "
-                                   + person.getAge());
-            }
-        }
+        new PersonServiceProxyClient(proxy).useService();
     }
-
+    
+    
     private Person getPerson(WebClient wc) {
         Person person = wc.get(Person.class);
         System.out.println("ID " + person.getId() + " : " + person.getName() + ", age : " + person.getAge());
