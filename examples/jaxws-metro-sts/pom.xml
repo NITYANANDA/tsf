@@ -17,8 +17,10 @@
    </modules>
 
    <properties>
+      <cxf.version>2.5.0-SNAPSHOT</cxf.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
+   
 
    <build>
       <plugins>
@@ -42,10 +44,6 @@
       </plugins>
    </build>
 
-   <properties>
-      <cxf.version>2.5.0-SNAPSHOT</cxf.version>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-   </properties>
    <dependencies>
       <dependency>
          <groupId>org.apache.cxf</groupId>
