@@ -42,15 +42,15 @@ public class OAuthManager implements OAuthDataProvider {
 		return rt;
 	}
 
-	public String createRequestTokenVerifier(RequestToken rt)
+	public String setRequestTokenVerifier(RequestToken rt)
 			throws OAuthServiceException {
 		String verifier = UUID.randomUUID().toString();
-		rt.setOauthVerifier(verifier);
+		rt.setVerifier(verifier);
 		return verifier;
 	}
 
 	public AccessToken getAccessToken(String tokenId) throws OAuthServiceException {
-		return at == null || !at.getTokenString().equals(tokenId) ? null : at;
+		return at == null || !at.getTokenKey().equals(tokenId) ? null : at;
 	}
 
 	public Client getClient(String clientId) throws OAuthServiceException {
@@ -63,7 +63,7 @@ public class OAuthManager implements OAuthDataProvider {
 
 	public RequestToken getRequestToken(String tokenId)
 			throws OAuthServiceException {
-		return rt == null || !rt.getTokenString().equals(tokenId) ? null : rt;
+		return rt == null || !rt.getTokenKey().equals(tokenId) ? null : rt;
 	}
 
 	public void removeTokens(String clientId) throws OAuthServiceException {

@@ -6,9 +6,9 @@ package oauth.thirdparty;
 import java.net.URI;
 
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport;
-import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport.Consumer;
-import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport.Token;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Consumer;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Token;
 
 public class OAuthClientManager {
 
@@ -25,19 +25,19 @@ public class OAuthClientManager {
 	}
 	
 	public URI getAuthorizationServiceURI(String token) {
-	    return OAuthClientSupport.getAuthorizationServiceURI(authorizationServiceURI, token);
+	    return OAuthClientUtils.getAuthorizationURI(authorizationServiceURI, token);
 	}
 	
 	public Token getRequestToken(URI callback) {
-	    return OAuthClientSupport.getRequestToken(requestTokenService, consumer, callback, null);
+	    return OAuthClientUtils.getRequestToken(requestTokenService, consumer, callback, null);
 	}
 	
 	public Token getAccessToken(Token requestToken, String verifier) {
-	    return OAuthClientSupport.getAccessToken(accessTokenService, consumer, requestToken, verifier);
+	    return OAuthClientUtils.getAccessToken(accessTokenService, consumer, requestToken, verifier);
 	}
 	
 	public String createAuthorizationHeader(Token token, String method, String requestURI) {
-		return OAuthClientSupport.createAuthorizationHeader(consumer, token, method, requestURI);
+		return OAuthClientUtils.createAuthorizationHeader(consumer, token, method, requestURI);
 	}
 	
 	public void setAccessTokenService(WebClient ats) {

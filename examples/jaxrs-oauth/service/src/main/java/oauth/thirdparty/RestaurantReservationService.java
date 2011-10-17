@@ -24,7 +24,7 @@ import oauth.common.CalendarEntry;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
-import org.apache.cxf.rs.security.oauth.client.OAuthClientSupport.Token;
+import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Token;
 
 @Path("reserve")
 public class RestaurantReservationService {
