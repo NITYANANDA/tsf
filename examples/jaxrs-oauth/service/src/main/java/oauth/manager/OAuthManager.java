@@ -12,6 +12,7 @@ import org.apache.cxf.rs.security.oauth.data.Client;
 import org.apache.cxf.rs.security.oauth.data.OAuthPermission;
 import org.apache.cxf.rs.security.oauth.data.RequestToken;
 import org.apache.cxf.rs.security.oauth.data.RequestTokenRegistration;
+import org.apache.cxf.rs.security.oauth.data.Token;
 import org.apache.cxf.rs.security.oauth.provider.OAuthDataProvider;
 import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
@@ -66,9 +67,12 @@ public class OAuthManager implements OAuthDataProvider {
 		return rt == null || !rt.getTokenKey().equals(tokenId) ? null : rt;
 	}
 
-	public void removeTokens(String clientId) throws OAuthServiceException {
-		rt = null;
-		at = null;
+	public void removeToken(Token token) throws OAuthServiceException {
+	    if (token instanceof RequestToken) {
+		    rt = null;
+	    } else {
+		    at = null;
+	    }
 	}
 
 }
