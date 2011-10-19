@@ -1,5 +1,4 @@
-<%@ page import="javax.servlet.http.HttpServletRequest, oauth.manager.ConsumerRegistration" %>
-
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%
     String basePath = request.getContextPath() + request.getServletPath();
 %>
@@ -14,8 +13,11 @@
 Congratulations! You have successfully registered with Social.com</p>
 </p>
 <p>
-Our partner, Restaraunt Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant. Please follow this <a href="<%= basePath %>forms/reservation.jsp">link</a> to find out more. 
+Our partner, Restaraunt Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant. 
 </p>
-
+<br/>
+<p>
+Please follow this <a href="<%= basePath %>forms/reservation.jsp">link</a> to find out more.
+</p>
 </body>
 </html>

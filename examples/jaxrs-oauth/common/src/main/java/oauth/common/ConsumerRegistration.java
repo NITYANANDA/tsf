@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2011 Talend Inc. - www.talend.com
+ */
 package oauth.common;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,8 +15,8 @@ public class ConsumerRegistration {
     }
     
     public ConsumerRegistration(String id, String secret) {
-        this.setId(id);
-        this.setSecret(secret);
+        this.id = id;
+        this.secret = secret;
     }
 
     public void setId(String id) {

@@ -10,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import oauth.common.UserRegistration;
+
 @Path("registerUser")
 public class UserRegistrationService {
 
@@ -25,10 +27,11 @@ public class UserRegistrationService {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/")
-	public void register(@FormParam("user") String name, @FormParam("password") String password) {
+	public UserRegistration register(@FormParam("user") String name, @FormParam("password") String password) {
 		if (accounts.getAccount(name) != null) {
 			throw new WebApplicationException(400);
 		}
 		accounts.setAccount(name, new UserAccount(name, password));
+		return new UserRegistration(name);
 	}
 }

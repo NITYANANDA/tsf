@@ -46,7 +46,7 @@
          </property>
          <property name="beanNames">
             <map>
-              <entry key="org.apache.cxf.rt.rs.security.oauth.data.OAuthAuthorizationData" value="data"/>
+              <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="data"/>
             </map>
          </property>
      </bean>

@@ -1,4 +1,4 @@
-<%@ page import="javax.servlet.http.HttpServletRequest, org.apache.cxf.rs.security.oauth.OAuthAuthorizationData" %>
+<%@ page import="javax.servlet.http.HttpServletRequest, org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" %>
 
 <%
     OAuthAuthorizationData data = (OAuthAuthorizationData)request.getAttribute("data");
@@ -13,7 +13,8 @@
 <table align="center">
        <tr align="center">
                 <td>
-                    <form action="<%= data.replyTo %>" method="POST">
+
+                    <form action="<%= data.getReplyTo() %>" method="POST">
                         <input type="hidden" name="oauth_token"
                                value="<%= data.getOauthToken() %>"/>
                         <input type="hidden"
@@ -25,8 +26,8 @@
                             to be able to read your Calendar at Social.com
                             <br/></p>
                         <br/>
-                        <button name="<%=org.apache.cxf.rs.security.oauth.utils.OAuthConstants
-                            .AUTHORIZATION_DECISION_KEY%>"
+                        <button name="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
+                            .AUTHORIZATION_DECISION_KEY %>"
                                 type="submit"
                                 value="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
                                     .AUTHORIZATION_DECISION_DENY %>">
