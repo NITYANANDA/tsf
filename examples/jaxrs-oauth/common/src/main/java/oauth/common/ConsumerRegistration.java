@@ -1,0 +1,34 @@
+package oauth.common;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class ConsumerRegistration {
+    private String id;
+    private String secret;
+    
+    public ConsumerRegistration() {
+        
+    }
+    
+    public ConsumerRegistration(String id, String secret) {
+        this.setId(id);
+        this.setSecret(secret);
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+}

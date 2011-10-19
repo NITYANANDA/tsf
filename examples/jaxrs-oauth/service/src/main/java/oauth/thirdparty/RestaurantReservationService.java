@@ -21,6 +21,7 @@ import javax.ws.rs.core.UriInfo;
 
 import oauth.common.Calendar;
 import oauth.common.CalendarEntry;
+import oauth.common.ReservationConfirmation;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
@@ -56,8 +57,8 @@ public class RestaurantReservationService {
 
 	@GET
 	@Path("complete")
-	@Produces("text/plain")
-    public String completeReservation(@QueryParam("oauth_token") String token,
+	@Produces({"text/html", "application/xml;q=0.9" })
+	public ReservationConfirmation completeReservation(@QueryParam("oauth_token") String token,
     		                          @QueryParam("oauth_verifier") String verifier) {
 		
 		String userName = sc.getUserPrincipal().getName();
@@ -80,10 +81,11 @@ public class RestaurantReservationService {
 		
     	CalendarEntry entry = c.getEntry(request.getHour());
 		if (entry.getEventDescription() == null) { 
-			return restaurantService.post(new Form().set("name", request.getReserveName()) 
+			String address = restaurantService.post(new Form().set("name", request.getReserveName()) 
 					                     .set("phone", request.getContactPhone()) 
 					                     .set("hour", request.getHour()),
 					                      String.class);
+			return new ReservationConfirmation(address, request.getHour());
 		} else {
 		    return null;
 		}

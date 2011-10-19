@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.ws.rs.core.Response;
 
 import oauth.common.Calendar;
+import oauth.common.ReservationConfirmation;
 
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
@@ -50,8 +51,7 @@ public final class RESTClient {
     	WebClient rs = WebClient.create("http://localhost:" + port + "/services/oauth/registerProvider");
     	WebClient.getConfig(rs).getHttpConduit().getClient().setReceiveTimeout(10000000L);
     	rs.form(new Form().set("appName", "Restaurant Reservations")
-    			          .set("appURI", "http://localhost:" + port + "/services/reservations/reserve")
-    			          .set("password", "987654321"));
+    			          .set("appURI", "http://localhost:" + port + "/services/reservations/reserve"));
     }
     
     public void createUserAccount() throws Exception {
@@ -105,11 +105,11 @@ public final class RESTClient {
     	}
     	
     	WebClient finalClient = createClient(locationHeader2.toString());
-    	finalClient.accept("text/plain");
-    	String address = finalClient.get(String.class);
+    	finalClient.accept("application/xml");
+    	ReservationConfirmation confirm = finalClient.get(ReservationConfirmation.class);
     	
-    	if (address != null) {
-    		updateAndGetUserCalendar(7, "Dinner at " + address);
+    	if (confirm != null) {
+    		updateAndGetUserCalendar(7, "Dinner at " + confirm.getAddress());
     	} else {
     		System.out.println("Reservation failed");
     	}

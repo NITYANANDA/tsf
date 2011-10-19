@@ -21,7 +21,15 @@
     <servlet>
         <servlet-name>RESTServlet</servlet-name>
         <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <init-param>
+    	   <param-name>redirects-list</param-name>
+	   <param-value>/forms/.*</param-value>
+	</init-param>
+	<init-param>
+    	   <param-name>redirect-servlet-name</param-name>
+	   <param-value>jsp</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>RESTServlet</servlet-name>
