@@ -37,11 +37,11 @@
          <property name="userRegistrationPath" value="registerUser"/>
      </bean>
      
-     <bean id="views" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
-         <property name="resourcePaths">
+     <bean id="socialViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+         <property name="classResources">
             <map>
-              <entry key="/social/authorize" value="/forms/oauthAuthorize.jsp"/>
-              <entry key="/social/registerUser" value="/forms/registerUserConfirm.jsp"/>
+              <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="/forms/oauthAuthorize.jsp"/>
+              <entry key="oauth.common.UserRegistration" value="/forms/registerUserConfirm.jsp"/>
             </map>
          </property>
          <property name="beanNames">
@@ -59,7 +59,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
            <ref bean="socialSecurityContext"/>
-           <ref bean="views"/>
+           <ref bean="socialViews"/>
         </jaxrs:providers>
      </jaxrs:server>
      
@@ -171,9 +171,15 @@
          </property>
      </bean>
      
-     <bean id="reserveRegistrationConfirmView" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
-         <property name="resourcePath" value="/forms/reservationConfirm.jsp"/>
-         <property name="beanName" value="confirm"/>
+     
+     <bean id="reserveRegistrationViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+         <property name="resourcePaths">
+            <map>
+              <entry key="/reservations/reserve/complete" value="/forms/reservationConfirm.jsp"/>
+              <entry key="/reservations/reserve/failure" value="/forms/reservationFailure.jsp"/>
+            </map>
+         </property>
+         <property name="beanName" value="data"/>
      </bean>
      
      <jaxrs:server id="reservationsServer" address="/reservations">
@@ -182,7 +188,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
            <ref bean="thirdPartySecurityContext"/>
-           <ref bean="reserveRegistrationConfirmView"/>
+           <ref bean="reserveRegistrationViews"/>
         </jaxrs:providers>
      </jaxrs:server>
      

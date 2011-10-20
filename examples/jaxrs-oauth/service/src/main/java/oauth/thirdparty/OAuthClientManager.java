@@ -9,6 +9,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils;
 import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Consumer;
 import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Token;
+import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
 public class OAuthClientManager {
 
@@ -29,11 +30,19 @@ public class OAuthClientManager {
 	}
 	
 	public Token getRequestToken(URI callback) {
-	    return OAuthClientUtils.getRequestToken(requestTokenService, consumer, callback, null);
+	    try {
+	        return OAuthClientUtils.getRequestToken(requestTokenService, consumer, callback, null);
+	    } catch (OAuthServiceException ex) {
+            return null;
+        }    
 	}
 	
 	public Token getAccessToken(Token requestToken, String verifier) {
-	    return OAuthClientUtils.getAccessToken(accessTokenService, consumer, requestToken, verifier);
+	    try {
+	        return OAuthClientUtils.getAccessToken(accessTokenService, consumer, requestToken, verifier);
+	    } catch (OAuthServiceException ex) {
+	        return null;
+	    }
 	}
 	
 	public String createAuthorizationHeader(Token token, String method, String requestURI) {
