@@ -1,20 +1,27 @@
-JAX-RS Advanced Example 
+JAX-RS OAuth Example 
 ===========================
 
-The demo shows some of the major features that the JAX-RS 1.1 specification[1] and API[2] provide:
+Introduction
+---------------------------------------
 
-- Multiple JAX-RS root resource classes
-- Recursive JAX-RS sub-resources
-- Resource methods consuming and producing data in different formats (XML and JSON)
-- Various HTTP verbs in action
-- How to use JAX-RS Response[2] to return status, headers and optional entities
-- How to use JAX-RS UriInfo[2] and UriBuilder[2] for returning the links to newly created resources
-- JAX-RS ExceptionMappers[2] for handling exceptions thrown from the application code
+The demo demonstrates the complete OAuth 1.0 flow as described at [1].
+Here is the shorter and slightly modified version of the Abstract section [1]:
 
-Additionally the HTTP Centric and Proxy-based Apache CXF JAX-RS client API is demonstrated.
+"OAuth provides a method for clients to access server resources on
+ behalf of an end-user. It also provides a process for end-users to authorize third-
+ party access to their server resources without sharing their
+ credentials (typically, a username and password pair), using user-
+ agent redirections." 
 
-[1] http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html
-[2] https://jsr311.dev.java.net/nonav/releases/1.1/index.html
+This demo show a simple Social.com social application which mantains a calendar for every registered user. Effectively, a user's calendar is the private resource which only this user can access.
+
+Social.com has a partner, Restaraunt Reservations, which offers an online service to Social.com users which can be used to book a dinner at a specific hour. In order to be able to complete the reservation, this third-party service needs to check a user calendar to make sure that the user is actually free at the requested hour at the moment of making the booking. 
+
+Social.com is OAuth-protected and thus the user has to explicitly authorize this service for it to be able to read the calendar. After the third-party service gets the confirmation it can access the user's calendar and interact with its own partner, Restaurant service, in order to make the booking.
+
+Please see the "Demo Description" section below for more information. 
+
+[1] http://tools.ietf.org/html/rfc5849 
 
 Building the Demo
 ---------------------------------------
@@ -23,13 +30,11 @@ This sample consists of 3 parts:
 common/   - This directory contains the code that is common
             to both the client and the server. 
             
-service/  - This is the JAX-RS service with multiple root resources packaged as an OSGi bundle.
+service/  - This module contains the code for Social.com, Restaurant Registration and Restaurant services.
              
 war/      - This module creates a WAR archive containing the code from common and service modules.   
 
-client/   - This is a sample client application that uses
-            the CXF JAX-RS API to create HTTP-centric and proxy clients and
-	    makes several calls with them.
+client/   - This is a sample client application which emulates the typical OAuth flow with the end user confirmation encoded in the code. 
 
 
 From the base directory of this sample (i.e., where this README file is
@@ -52,17 +57,6 @@ Starting the service
  * In the servlet container
 
     cd war; mvn jetty:run
-
- * From within the Talend Service Factory OSGi container:
-
-   Install and start the demo server bundle:
-   karaf@tsf> features:install tsf-example-jaxrs-advanced
-
-   (Make sure you've first installed the examples features repository as described in the
-   parent README.)
-
- * From the command line :
-   cd service; mvn -Pserver
     
 Running the client
 ---------------------------------------
@@ -77,50 +71,34 @@ is listening on an alternative port then you can use an 'http.port' system prope
    
 - mvn install -Dhttp.port=8181
 
+* From the browser
+
+- Go to "http://localhost:8080/services/forms/registerApp.jsp". It is a Consumer Application Registration Form. Press "Register Your Application" button.
+- Follow the link in the bottom of the returned Consumer Application Registration Confirmation page in order to register a user with Social.com.
+- The Social.com User Registration Form asks for a user name and password. At the moment only a user name "barry@social.com" with the "1234" password is supported - press "Register With Social.com" to complete the reservation.
+- Follow the link in the bottom of the returned User Registration Confirmation page in order to try the online Restaurant Reservations service.
+- The Restaurant Reservations Form offers an option to book a restaurant table at a specific hour, press Reserve to start the process. 
+- When asked please authenticate with the service using the "barry@social.com" and "1234" pair.
+See the demo description for more information about this authentication step.
+- The Third Party Authorization Form will ask if the Restaurant Reservations can read the calendar of its owner, "barry@social.com".
+- Press "Deny", and after receiving the Restaurant Failure Report page, please follow the link at the bottom of the page to start the reservation again.
+- Press Reserve at The Restaurant Reservations Form and this time choose "Allow" at the The Third Party Authorization Form.
+- The Restaurant Reservation Confirmation form will be returned confirming the reservation at the required hour.
+
+
 Demo Desciption
 ---------------
 
-The JAX-RS Server provides two services via the registration of multiple (two) root resource classes, 
-PersonService and SearchService with both services sharing the data storage.
+The description of how to interact with the demo application using a browser in the previous section provides an overview of a typical complete OAuth 1.0 flow.
 
-PersonService provides information about all the persons it knows about, about individual persons and their relatives:
-- ancestors - parents, grandparents, etc.
-- descendants - children, etc
-- partners
+For the third-party Restaurant Reservations service be able to request an access to a Social.com user's calendar, it has to register itself first with the OAuth server which protects Social.com. Typically this is done out of band and is only demonstrated here to highlight the fact that the third-party must register to be able to participate in OAuth flows. When the registration is complete, the third-party service gets back a consumer id and password pair which it will use later on, when signing OAuth requests. oauth.manager.ThirdPartyRegistrationService is used to emulate this process.
 
-Additionally it can help with adding the information about new children 
-to existing persons and update the age of the current Person.
+Social.com application keeps a list of registered users and their calendars. Two JAX-RS services are used to implement it, oauth.service.UserRegistrationService which manages the registration requests and oauth.service.SocialService which lets registered users access or update their private calendars.
 
-SearchService is a simple service which shares the information about Persons with the PersonService. 
-It lets users search for individual people by specifying one or more names as query parameters. The interaction with 
-this service also verifies that the JAX-RS server is capable of supporting 
-multiple root resource classes.
+// TODO: more to follow
 
-Note that :
+  
 
-- Person class can act as either a JAXB bean or a JAX-RS sub-resource.
-For example, a method such as Person.getMother() is a sub-resource locator because it delegates
-to the actual resource method Person.getState() by returning a Person sub-resource instance.
-Person.getState() will return a Person JAXB bean instance.
 
-- Person class has a class-level JAX-RS Produces annotation which means that all the JAX-RS resource 
-methods will inherit it unless they provide their own Produces annotation.
 
-- PersonServiceImpl and Person return explicit collections while SearchService returns
-PersonCollection wrappers.
-
-- Person.updateAge method may throw a PersonUpdateException which will be caught by 
-JAX-RS PersonExceptionMapper provider and translated into an HTTP 400 status.
-
-- PersonApplication is a JAX-RS Application implementation and it also has an AppPath annotation.
-It is used for starting a service from the command line.
- 
-
-The RESTful client uses CXF's JAX-RS WebClient to traverse all the information about an individual Person and also adds a new child.
-It also shows how to use a simple proxy.
-
-Finally a simple proxy is created and is used to make the calls.
-
-Please check the comments in the code for a detailed description on how client calls are made and 
-how they are processed on the server side. 
 
