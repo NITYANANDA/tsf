@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2011 Talend Inc. - www.talend.com
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+         http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+     <bean id="userAccounts" class="oauth.service.UserAccounts"/>
+     <bean id="oauthProvider" class="oauth.manager.OAuthManager"/>
+     
+     
+</beans>
+

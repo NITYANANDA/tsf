@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2011 Talend Inc. - www.talend.com
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+      xsi:schemaLocation="
+         http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://cxf.apache.org/jaxrs
+         http://cxf.apache.org/schemas/jaxrs.xsd">
+
+     
+     <!-- Restaurant Reservations Application -->
+     <bean id="socialServiceClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
+         <constructor-arg type="java.lang.String" value="http://localhost:8080/services/thirdPartyAccess/calendar"/>
+     </bean>
+     
+     <bean id="rtServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
+         <property name="address" value="http://localhost:8080/services/oauth/initiate"/>
+         <property name="headers">
+            <map>
+               <entry key="Accept" value="application/x-www-form-urlencoded"/>
+            </map>
+         </property>
+     </bean>
+     
+     <bean id="rtServiceClient" factory-bean="rtServiceClientFactory" factory-method="createWebClient"/>
+     
+     <bean id="atServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
+         <property name="address" value="http://localhost:8080/services/oauth/token"/>
+         <property name="headers">
+            <map>
+               <entry key="Accept" value="application/x-www-form-urlencoded"/>
+            </map>
+         </property>
+     </bean>
+     
+     <bean id="atServiceClient" factory-bean="atServiceClientFactory" factory-method="createWebClient"/>
+     
+     <bean id="restaurantServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
+         <property name="address" value="http://localhost:8080/services/restaurant/reception"/>
+         <property name="headers">
+            <map>
+               <entry key="Content-Type" value="application/x-www-form-urlencoded"/>
+               <entry key="Accept" value="text/plain"/>
+            </map>
+         </property>
+     </bean>
+     
+     <bean id="restaurantServiceClient" factory-bean="restaurantServiceClientFactory" factory-method="createWebClient"/>
+     
+     <bean id="oauthClient" class="oauth.thirdparty.OAuthClientManager">
+         <property name="authorizationURI" value="http://localhost:8080/services/social/authorize"/>
+         <property name="requestTokenService" ref="rtServiceClient"/>
+         <property name="accessTokenService" ref="atServiceClient"/>
+     </bean>
+     
+     <bean id="restaurantReserveService" class="oauth.thirdparty.RestaurantReservationService">
+         <property name="oAuthClientManager" ref="oauthClient"/>
+         <property name="socialService" ref="socialServiceClient"/>
+         <property name="restaurantService" ref="restaurantServiceClient"/>
+     </bean>
+     
+     <bean id="thirdPartySecurityContext" class="oauth.thirdparty.SecurityContextFilter">
+         <property name="users">
+            <map>
+              <entry key="barry@social.com" value="1234"/>
+            </map>
+         </property>
+     </bean>
+     
+     
+     <bean id="reserveRegistrationViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+         <property name="resourcePaths">
+            <map>
+              <entry key="/reservations/reserve/complete" value="/forms/reservationConfirm.jsp"/>
+              <entry key="/reservations/reserve/failure" value="/forms/reservationFailure.jsp"/>
+            </map>
+         </property>
+         <property name="beanName" value="data"/>
+     </bean>
+     
+     <jaxrs:server id="reservationsServer" address="/reservations">
+        <jaxrs:serviceBeans>
+           <ref bean="restaurantReserveService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+           <ref bean="thirdPartySecurityContext"/>
+           <ref bean="reserveRegistrationViews"/>
+        </jaxrs:providers>
+     </jaxrs:server>
+     
+          
+</beans>
+

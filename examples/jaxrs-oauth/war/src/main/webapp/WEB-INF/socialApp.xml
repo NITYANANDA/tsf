@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2011 Talend Inc. - www.talend.com
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+      xsi:schemaLocation="
+         http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://cxf.apache.org/jaxrs
+         http://cxf.apache.org/schemas/jaxrs.xsd">
+
+     
+     <import resource="common.xml" />
+     
+     <!-- Social Application -->
+     
+     <bean id="socialService" class="oauth.service.SocialService">
+         <property name="accounts" ref="userAccounts"/>
+     </bean>
+     
+     <bean id="userRegistrationService" class="oauth.service.UserRegistrationService">
+         <property name="accounts" ref="userAccounts"/>
+     </bean>
+
+     <bean id="oauthAuthorizeService" class="org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService">
+         <property name="dataProvider" ref="oauthProvider"/>
+     </bean> 
+
+     <bean id="socialSecurityContext" class="oauth.service.SecurityContextFilter">
+         <property name="accounts" ref="userAccounts"/>
+         <property name="userRegistrationPath" value="registerUser"/>
+     </bean>
+     
+     <bean id="socialViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+         <property name="classResources">
+            <map>
+              <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="/forms/oauthAuthorize.jsp"/>
+              <entry key="oauth.common.UserRegistration" value="/forms/registerUserConfirm.jsp"/>
+            </map>
+         </property>
+         <property name="beanNames">
+            <map>
+              <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="data"/>
+            </map>
+         </property>
+     </bean>
+     
+     <jaxrs:server id="socialServer" address="/social">
+        <jaxrs:serviceBeans>
+           <ref bean="socialService"/>
+           <ref bean="userRegistrationService"/>
+           <ref bean="oauthAuthorizeService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+           <ref bean="socialSecurityContext"/>
+           <ref bean="socialViews"/>
+        </jaxrs:providers>
+     </jaxrs:server>
+     
+          
+</beans>
+
