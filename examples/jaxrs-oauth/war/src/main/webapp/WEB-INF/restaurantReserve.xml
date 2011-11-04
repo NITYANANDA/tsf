@@ -13,10 +13,21 @@
 
      
      <!-- Restaurant Reservations Application -->
+     
+     <!-- 
+         WebClient which Restaurant Reservations uses to access Social.com users' calendars at Social.com.
+         Note that the Social.com address provided to this service is different from
+         the one used by Social.com users themselves, which is "http://localhost:8080/services/social/calendar".
+         Social.com is OAuth-protected at "http://localhost:8080/services/thirdPartyAccess/calendar" while
+         "http://localhost:8080/services/social/calendar" is protected by a Basic Authentication filter.
+     -->
+     
      <bean id="socialServiceClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
          <constructor-arg type="java.lang.String" value="http://localhost:8080/services/thirdPartyAccess/calendar"/>
      </bean>
      
+     <!-- WebClient for requesting a temporarily Request OAuth token -->
+      
      <bean id="rtServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/oauth/initiate"/>
          <property name="headers">
@@ -28,6 +39,8 @@
      
      <bean id="rtServiceClient" factory-bean="rtServiceClientFactory" factory-method="createWebClient"/>
      
+     <!-- WebClient for requesting a temporarily Access OAuth token -->
+     
      <bean id="atServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/oauth/token"/>
          <property name="headers">
@@ -38,6 +51,8 @@
      </bean>
      
      <bean id="atServiceClient" factory-bean="atServiceClientFactory" factory-method="createWebClient"/>
+     
+     <!-- WebClient for talking to a partner Restaurant application -->
      
      <bean id="restaurantServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/restaurant/reception"/>
@@ -51,18 +66,25 @@
      
      <bean id="restaurantServiceClient" factory-bean="restaurantServiceClientFactory" factory-method="createWebClient"/>
      
+     <!-- 
+       Utility class which encapsulates the interaction with CXF OAuthClientUtils
+     -->  
+     
      <bean id="oauthClient" class="oauth.thirdparty.OAuthClientManager">
          <property name="authorizationURI" value="http://localhost:8080/services/social/authorize"/>
          <property name="requestTokenService" ref="rtServiceClient"/>
          <property name="accessTokenService" ref="atServiceClient"/>
      </bean>
      
+     <!-- Restaurant Reservations Service Bean -->     
      <bean id="restaurantReserveService" class="oauth.thirdparty.RestaurantReservationService">
          <property name="oAuthClientManager" ref="oauthClient"/>
          <property name="socialService" ref="socialServiceClient"/>
          <property name="restaurantService" ref="restaurantServiceClient"/>
      </bean>
      
+     <!-- The security filter for Restaurant Reservations -->
+     <!-- It's a primitive implementation which only recognizes a single user, to be improved... -->
      <bean id="thirdPartySecurityContext" class="oauth.thirdparty.SecurityContextFilter">
          <property name="users">
             <map>
@@ -71,7 +93,19 @@
          </property>
      </bean>
      
-     
+     <!-- The Restaurant Reservations View Support
+         Responses to requests with URIs ending with /reservations/reserve/complete and
+         /reservations/reserve/failure will be redirected to "/forms/reservationConfirm.jsp"
+         and "/forms/reservationFailure.jsp" respectively.
+         
+         In both cases the response beans (oauth.common.ReservationConfirmation and oauth.common.ReservationFailure)
+         will be available to view handlers as HttpServletRequest "data" attribute. 
+         
+         Note that restaurantReserveService will use JAX-RS Response.seeOther() call to redirect a user
+         to a failure handler if a /complete reservation requests fails for whatever reasons 
+         (no authorization key is available after the authorization service redirects the user back to it, no
+         access token can be obtained, etc)   
+     --> 
      <bean id="reserveRegistrationViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
          <property name="resourcePaths">
             <map>
@@ -82,6 +116,7 @@
          <property name="beanName" value="data"/>
      </bean>
      
+     <!-- Restaurant Reservations Service Endpoint --> 
      <jaxrs:server id="reservationsServer" address="/reservations">
         <jaxrs:serviceBeans>
            <ref bean="restaurantReserveService"/>

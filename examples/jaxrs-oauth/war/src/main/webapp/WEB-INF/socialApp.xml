@@ -16,23 +16,46 @@
      
      <!-- Social Application -->
      
-     <bean id="socialService" class="oauth.service.SocialService">
-         <property name="accounts" ref="userAccounts"/>
-     </bean>
-     
+     <!-- Manages the registration of new users -->
      <bean id="userRegistrationService" class="oauth.service.UserRegistrationService">
          <property name="accounts" ref="userAccounts"/>
      </bean>
 
+     <!-- Lets registered users access and update their calendars --> 
+     <bean id="socialService" class="oauth.service.SocialService">
+         <property name="accounts" ref="userAccounts"/>
+     </bean>
+     
+     <!-- When Social.com user requests the Restaurant Registrations service to book a table,
+          the latter will obtain a request token from OAuth RequestService and redirect the user
+          to this service to get the token authorized in order to read this user's calendar.
+          
+          This service will return an authorization form to a user and then will redirect the user
+          back to the Restaurant Registrations service to a callback address which was provided 
+          to OAuth provider during the request token request, including the authorization key if the user approves. 
+     -->      
      <bean id="oauthAuthorizeService" class="org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService">
          <property name="dataProvider" ref="oauthProvider"/>
      </bean> 
 
+     <!-- Security filter which enforces that only registered Social.com users
+          can access their calendars with a public Social.com address.
+          This filter lets the user registration requests to pass through.
+     -->
      <bean id="socialSecurityContext" class="oauth.service.SecurityContextFilter">
          <property name="accounts" ref="userAccounts"/>
          <property name="userRegistrationPath" value="registerUser"/>
      </bean>
      
+     <!-- Social.com HTML View support. RequestDispatcherProvider is configured such that 
+          it will redirect to the /forms/oauthAuthorize.jsp handler if it is asked to write OAuthAuthorizationData 
+          which is what oauthAuthorizeService relies upon in order to return an authorization form
+          to the user. OAuthAuthorizationData will be available as the HttpServletRequest "data" attribute.
+          
+          It will also redirect the UserRegistration bean to "/forms/registerUserConfirm.jsp" which is
+          a response from UserRegistrationService. This bean will be available as the HttpServletRequest 
+          "oauth.common.UserRegistration" attribute
+     --> 
      <bean id="socialViews" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
          <property name="classResources">
             <map>
@@ -47,6 +70,9 @@
          </property>
      </bean>
      
+     <!-- 
+         Social.com service endpoint which consists of 3 JAX-RS root resources
+     -->
      <jaxrs:server id="socialServer" address="/social">
         <jaxrs:serviceBeans>
            <ref bean="socialService"/>
