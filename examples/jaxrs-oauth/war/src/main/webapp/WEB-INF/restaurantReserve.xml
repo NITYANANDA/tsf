@@ -26,7 +26,10 @@
          <constructor-arg type="java.lang.String" value="http://localhost:8080/services/thirdPartyAccess/calendar"/>
      </bean>
      
-     <!-- WebClient for requesting a temporarily Request OAuth token -->
+     <!-- WebClient for requesting a temporarily Request OAuth token, it is used when a Social.com
+          user submits an initial request, after getting a request token back the user is redirected back to
+          the authorization service (in socialApp context)     
+     -->
       
      <bean id="rtServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/oauth/initiate"/>
@@ -39,7 +42,11 @@
      
      <bean id="rtServiceClient" factory-bean="rtServiceClientFactory" factory-method="createWebClient"/>
      
-     <!-- WebClient for requesting a temporarily Access OAuth token -->
+     <!-- WebClient for requesting a temporarily Access OAuth token, 
+          it is used after the authorization service (in socialApp context) redirects the user back
+          to the callback URI. Once the access token is obtained, the service uses it to access the user's
+          calendar 
+     -->
      
      <bean id="atServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/oauth/token"/>
@@ -52,7 +59,9 @@
      
      <bean id="atServiceClient" factory-bean="atServiceClientFactory" factory-method="createWebClient"/>
      
-     <!-- WebClient for talking to a partner Restaurant application -->
+     <!-- WebClient for talking to a partner Restaurant application,
+          it is used after a user calendar's has been checked 
+     -->
      
      <bean id="restaurantServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
          <property name="address" value="http://localhost:8080/services/restaurant/reception"/>
@@ -67,7 +76,7 @@
      <bean id="restaurantServiceClient" factory-bean="restaurantServiceClientFactory" factory-method="createWebClient"/>
      
      <!-- 
-       Utility class which encapsulates the interaction with CXF OAuthClientUtils
+       Utility OAuthClientManager which encapsulates the interaction with the OAuth Server
      -->  
      
      <bean id="oauthClient" class="oauth.thirdparty.OAuthClientManager">

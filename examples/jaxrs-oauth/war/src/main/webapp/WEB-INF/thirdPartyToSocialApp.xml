@@ -16,6 +16,9 @@
      
      <!-- Third Party Access to Social Application -->
      
+     <!-- 
+         Provides an access Social.com users' calendars from 3rd-party services
+     -->      
      <bean id="thirdPartyAccessService" class="oauth.manager.ThirdPartyAccessService">
          <property name="accounts" ref="userAccounts"/>
      </bean>
@@ -24,6 +27,9 @@
          <property name="dataProvider" ref="oauthProvider"/>
      </bean>
 
+    <!-- ThirdPartyAccessService service endpoint.
+         Only third-party cconsumers which have valid OAuth Access tokens will be able to use it.
+    -->
      <jaxrs:server id="thirdPartyAccessServer" address="/thirdPartyAccess">
         <jaxrs:serviceBeans>
            <ref bean="thirdPartyAccessService"/>
