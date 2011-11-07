@@ -6,6 +6,7 @@ package oauth.thirdparty;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -31,6 +32,8 @@ import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Token;
 @Path("reserve")
 public class RestaurantReservationService {
 	
+    private static final Logger LOG = Logger.getLogger(RestaurantReservationService.class.getName());
+    
     private static final String NO_VERIFIER = "noverifier";
     private static final String NO_REQUEST = "norequest";
     private static final String NO_REQUEST_FOR_TOKEN = "norequesttoken";
@@ -89,6 +92,8 @@ public class RestaurantReservationService {
     @Path("failure")
     @Produces({"text/html", "application/xml;q=0.9" })
     public ReservationFailure handleReservationFailure(@QueryParam("code") String errorCode) {
+        LOG.info("Handling the reservation failure");
+        
         String message = ERROR_DESCRIPTIONS.get(errorCode);
         return new ReservationFailure(message);
     }
@@ -99,6 +104,7 @@ public class RestaurantReservationService {
 	public Response completeReservation(@QueryParam("oauth_token") String token,
     		                          @QueryParam("oauth_verifier") String verifier) {
 		
+	    
 	    String userName = sc.getUserPrincipal().getName();
 		Map<String, ReservationRequest> userRequests = requests.get(userName);
 		if (userRequests == null) {
@@ -113,11 +119,14 @@ public class RestaurantReservationService {
             return redirectToFailureHandler(NO_VERIFIER);
         }
         
+		LOG.info("Requesting OAuth server to replace an authorized request token with an access token");
 		Token accessToken = manager.getAccessToken(request.getRequestToken(), verifier);
 		if (accessToken == null) {
 		    return redirectToFailureHandler(NO_OAUTH_ACCESS_TOKEN);
 		}
 		
+		LOG.info("Completing the reservation request for a user: " + request.getReserveName());
+        
 		socialService.replaceQueryParam("user", userName);
         
 		String authHeader = manager.createAuthorizationHeader(accessToken, "GET",
@@ -149,11 +158,15 @@ public class RestaurantReservationService {
     		                     @FormParam("phone") String phone,
     		                     @FormParam("hour") int hour) {
 		
+	    LOG.info("Reservation request from a user " + name + " has been received");
+	    
+	    LOG.info("Requesting a temporarily token from the OAuth server");
 		URI callback = getBaseUriBuilder().path("complete").build();
 		Token requestToken = manager.getRequestToken(callback);
 		if (requestToken == null) {
             return redirectToFailureHandler(NO_OAUTH_REQUEST_TOKEN);
         }
+		
 		String userName = sc.getUserPrincipal().getName();
 		ReservationRequest request = new ReservationRequest();
 		request.setReserveName(name);
@@ -170,6 +183,8 @@ public class RestaurantReservationService {
 			userRequests.put(requestToken.getToken(), request);
 		}
 		
+		LOG.info("Persisting the reservation details and redirecting"
+		        + " the current user to OAuth Authorization endpoint");
 		
     	// Create a request token request and redirect
 		return Response.seeOther(manager.getAuthorizationServiceURI(requestToken.getToken())).build();
