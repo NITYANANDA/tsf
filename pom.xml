@@ -43,7 +43,7 @@
     <!-- TODO <ciManagement/> -->
 
     <properties>
-        <cxf.version>2.5.0-SNAPSHOT</cxf.version>
+        <cxf.version>2.5.0</cxf.version>
         <cxf.build-utils.version>2.4.0</cxf.build-utils.version>
         <spring.version>3.0.6.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
@@ -54,7 +54,7 @@
         <aries.bp.version>0.3.1</aries.bp.version>
         <!--felix.fileinstall.version>3.0.2</felix.fileinstall.version>
         <felix.prefs.version>1.0.4</felix.prefs.version-->
-        <karaf.version>2.2.4-SNAPSHOT</karaf.version>
+        <karaf.version>2.2.4</karaf.version>
         <osgi.compendium.version>4.2.0</osgi.compendium.version>
         <osgi.core.version>4.2.0</osgi.core.version>
 

@@ -44,9 +44,8 @@
      <bean id="clientRegistrationConfirmView" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
          <property name="resourcePath" value="/forms/registerAppConfirm.jsp"/>
          <property name="beanName" value="newClient"/>
-         <!--  
          <property name="logRedirects" value="true"/>
-         -->
+         
      </bean>
 
      <!-- OAuthManager service endpoint, consists of 3 JAX-RS root resources --> 
