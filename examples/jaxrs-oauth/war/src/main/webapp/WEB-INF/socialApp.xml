@@ -68,7 +68,9 @@
               <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="data"/>
             </map>
          </property>
+         <!--
          <property name="logRedirects" value="true"/>
+         -->
           
      </bean>
      
