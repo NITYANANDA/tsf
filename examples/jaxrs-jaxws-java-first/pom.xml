@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <cxf.version>2.5.0-SNAPSHOT</cxf.version>
+        <cxf.version>2.5.1-SNAPSHOT</cxf.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
