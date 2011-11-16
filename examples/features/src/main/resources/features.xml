@@ -87,4 +87,12 @@
         <bundle>mvn:com.talend.sf.examples.jaxws-metro-sts/jaxws-metro-sts-client/${project.version}</bundle>
     </feature>
 
+    <feature name='tsf-example-jaxws-cxf-sts-client' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-cxf-sts/jaxws-cxf-sts-client/${project.version}</bundle>
+    </feature>
+
+    <feature name='tsf-example-jaxws-cxf-sts-service' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-cxf-sts/jaxws-cxf-sts-wsp/${project.version}</bundle>
+    </feature>
+
 </features>
