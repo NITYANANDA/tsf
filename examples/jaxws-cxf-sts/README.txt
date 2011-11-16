@@ -74,7 +74,9 @@ the following steps:
 
 The WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl)
 must also be updated before invoking on the WSP to
-"http://localhost:9000/doubleit/services/doubleit".
+"http://localhost:9000/doubleit/services/doubleit". This is because the WSP
+runs on port 9000 when run in a standalone manner, or in Karaf, to avoid 
+clashing with the port that Tomcat is using (8080).
 
 For DEBUGGING:
 
