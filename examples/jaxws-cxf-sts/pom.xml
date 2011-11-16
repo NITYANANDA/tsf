@@ -13,6 +13,7 @@
 
     <modules>
         <module>service</module>
+        <module>war</module>
         <module>client</module>
         <module>sts</module>
     </modules>

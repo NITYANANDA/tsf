@@ -29,15 +29,15 @@ install the Unlimited Strength encryption libraries.
 
 How to Deploy:
 
-1.) The STS runs on either Tomcat 7.x (default) or Tomcat 6.x. If not
-already done, configure Maven to be able to install and uninstall the STS by 
-following this section: 
+1.) The STS and WSP run on either Tomcat 7.x (default) or Tomcat 6.x. If not
+already done, configure Maven to be able to install and uninstall the WSP and
+the STS by following this section:
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat. Also
 start up Tomcat.
 
-Note: If you wish to use Tomcat 6, use the -PTomcat6 flag when running the
-mvn tomcat commands (tomcat:deploy, tomcat:redeploy, tomcat:undeploy).
-(-PTomcat7 is active by default so does not need to be explicitly specified.)
+Note: If you wish to use Tomcat 6, use the -PTomcat6 flag when running the mvn
+tomcat commands (tomcat:deploy, tomcat:redeploy, tomcat:undeploy). (-PTomcat7
+is active by default so does not need to be explicitly specified.)
 
 2.) From the root jaxws-cxf-sts folder, run "mvn clean install". If no errors,
 run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on
@@ -46,18 +46,7 @@ subsequent runs as appropriate) in the "sts" folder to deploy the STS.
 Before proceeding to the next step, make sure you can view the following WSDL:
 CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 
-3.) Navigate to the service (WSP) folder:
-
- * To run the WSP in a standalone manner, run mvn clean install exec:java.
- * Alternatively, it is possible to run the WSP from within the OSGi
-   container. One thing to be aware of is that the default port for Tomcat
-   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
-   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
-
-   From the OSGi command line, run:
-      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-service
-
-4.) Navigate to the client folder:
+3.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
  * Alternatively, it is possible to run the client from within the OSGi
@@ -69,6 +58,23 @@ CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-client
 
 You should see the results of the web service call. 
+
+4.) It is also possible to deploy the WSP in embedded Jetty or Karaf using
+the following steps:
+
+ * To run the service in a standalone manner, run mvn clean install exec:java
+   from the service folder.
+ * Alternatively, it is possible to run the WSP from within the OSGi
+   container. One thing to be aware of is that the default port for Tomcat
+   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
+   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+
+   From the OSGi command line, run:
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-service
+
+The WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl)
+must also be updated before invoking on the WSP to
+"http://localhost:9000/doubleit/services/doubleit".
 
 For DEBUGGING:
 
