@@ -19,7 +19,7 @@
           <entry key="ws-security.callback-handler" value="service.ServiceKeystorePasswordCallback"/>
           <entry key="ws-security.signature.properties" value="serviceKeystore.properties"/>
           <entry key="ws-security.ut.validator">
-              <bean class="org.apache.cxf.ws.security.trust.STSTokenValidator"/>
+              <bean class="service.UTValidator"/>
           </entry>
          
           <entry key="ws-security.sts.client">
@@ -28,6 +28,8 @@
                    <property name="wsdlLocation" value="WEB-INF/wsdl/DoubleItSTSService.wsdl"/>
                    <property name="serviceName" value="{http://docs.oasis-open.org/ws-sx/ws-trust/200512/}DoubleItSTSService"/>
                    <property name="endpointName" value="{http://docs.oasis-open.org/ws-sx/ws-trust/200512/}DoubleItSTSPort"/>
+                   <property name="tokenType" 
+                       value="http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0"/>
                    <property name="properties">
                        <map>
                            <entry key="ws-security.signature.username" value="myservicekey"/>

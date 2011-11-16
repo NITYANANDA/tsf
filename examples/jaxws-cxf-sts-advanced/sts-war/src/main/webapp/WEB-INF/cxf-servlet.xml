@@ -38,11 +38,25 @@ http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
     <bean id="x509ValidateDelegate" class="org.apache.cxf.sts.operation.TokenValidateOperation">
         <property name="tokenValidators" ref="x509UsernameTokenValidator" />
+        <property name="tokenProviders" ref="x509SAMLTokenProvider" />
         <property name="stsProperties" ref="x509STSProperties" />
     </bean>
 
     <bean id="x509UsernameTokenProvider" class="sts.UsernameTokenProvider"/>
-
+    
+    <bean id="x509SAMLTokenProvider"
+        class="org.apache.cxf.sts.token.provider.SAMLTokenProvider">
+        <property name="attributeStatementProviders" ref="attributeStatementProvidersList" />
+    </bean>
+    
+    <util:list id="attributeStatementProvidersList">
+        <ref bean="customAttributeProvider"/>
+    </util:list>
+    
+    <bean id="customAttributeProvider"
+        class="sts.RoleAttributeProvider">
+    </bean>
+    
     <bean id="x509UsernameTokenValidator"
         class="org.apache.cxf.sts.token.validator.UsernameTokenValidator"/>
 
