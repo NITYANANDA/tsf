@@ -9,7 +9,8 @@ import org.example.contract.doubleit.DoubleItPortType;
 @WebService(targetNamespace = "http://www.example.org/contract/DoubleIt", 
             portName="DoubleItPort",
             serviceName="DoubleItService", 
-            endpointInterface="org.example.contract.doubleit.DoubleItPortType")
+            endpointInterface="org.example.contract.doubleit.DoubleItPortType",
+            wsdlLocation = "classpath:/DoubleIt.wsdl")
 public class DoubleItPortTypeImpl implements DoubleItPortType {
 
     public int doubleIt(int numberToDouble) {

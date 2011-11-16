@@ -57,6 +57,7 @@ README file from the download for installation instructions.)
 Alternatively, you can change to using a lower end encyption algorithm by
 editing the security policies in:
 
+client/src/main/resources/DoubleIt.wsdl
 client/src/main/resources/DoubleItSTSService.wsdl 
 service/src/main/resources/DoubleIt.wsdl
 service/src/main/resources/DoubleItSTSService.wsdl
@@ -88,11 +89,29 @@ Before proceeding to the next step, make sure you can view the following WSDLs:
 CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 
-4.) Navigate to the client folder:
+3.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
+ * Alternatively, it is possible to run the client from within the OSGi
+   container. One thing to be aware of is that the default port for Tomcat
+   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
+   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+
+   From the OSGi command line, run:
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-client
 
 You should see the results of the web service call. 
+
+4.) It is also possible to deploy the WSP in Karaf using the following steps:
+
+ * From the OSGi command line, run:
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-service
+
+The WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl)
+must also be updated before invoking on the WSP to
+"http://localhost:9000/doubleit/services/doubleit". This is because the WSP
+runs on port 9000 when run in Karaf, to avoid clashing with the port that Tomcat 
+is using (8080).
 
 For DEBUGGING:
 
