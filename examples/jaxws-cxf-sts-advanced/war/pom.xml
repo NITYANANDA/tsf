@@ -6,13 +6,22 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.talend.sf.examples.jaxws-cxf-sts</groupId>
-        <artifactId>jaxws-cxf-sts</artifactId>
+        <groupId>com.talend.sf.examples.jaxws-cxf-sts-advanced</groupId>
+        <artifactId>jaxws-cxf-sts-advanced</artifactId>
         <version>1.0</version>
     </parent>
-    <artifactId>jaxws-cxf-sts-stswar</artifactId>
-    <name>CXF STS</name>
+    <artifactId>jaxws-cxf-sts-advanced-wspwar</artifactId>
+    <name>WSP WAR for CXF STS advanced example</name>
     <packaging>war</packaging>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.talend.sf.examples.jaxws-cxf-sts-advanced</groupId>
+            <artifactId>jaxws-cxf-sts-advanced-wsp</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <profile>
@@ -32,20 +41,6 @@
         </profile>
     </profiles>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.cxf.services.sts</groupId>
-            <artifactId>cxf-services-sts-core</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.6.1</version>
-            <scope>runtime</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -58,9 +53,24 @@
                     <path>/${project.build.finalName}</path>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <webResources>
+                        <resource>
+                            <directory>../service/src/main/resources</directory>
+                            <targetPath>WEB-INF/wsdl</targetPath>
+                            <includes>
+                                <include>*.wsdl</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
         </plugins>
         <!-- Name of the generated WAR file -->
-        <finalName>DoubleItSTS</finalName>
+        <finalName>doubleit</finalName>
     </build>
 </project>
-
