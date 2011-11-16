@@ -9,14 +9,14 @@ regardless of the platform on which it is running.  It will run on
 stand-alone JVM applications, as part of a servlet container such as 
 Tomcat, within a JEE server, or in an OSGi container such as Equinox.  
 
-CXF supports Web Services using 
-SOAP with full WS-*functionality including support for WS-Addressing,
-WS-Reliable Messaging, and WS-Security over both HTTP and JMS transports.
-CXF's elegantly simple architecture allows declarative, policy-centric 
-support of these qualities of service through configuration rather than 
-code.  It also supports non-SOAP bindings including REST.  CXF open 
-standards and portability enable you to deliver interoperability for 
-your applications to maximize the value of your application to your users.
+CXF supports Web Services using SOAP with full WS-*functionality including 
+support for WS-Addressing, WS-Reliable Messaging, and WS-Security over 
+both HTTP and JMS transports.  CXF's elegantly simple architecture allows 
+declarative, policy-centric support of these qualities of service through 
+configuration rather than code.  It also supports non-SOAP bindings 
+including REST.  CXF open standards and portability enable you to deliver 
+interoperability for your applications to maximize the value of your 
+application to your users.  
 
 The Talend Service Factory CE distribution supplements the Apache CXF 
 core with support for OSGi containers along with illustrative examples 
