@@ -17,7 +17,7 @@
    </modules>
 
    <properties>
-      <cxf.version>2.5.1-SNAPSHOT</cxf.version>
+      <cxf.version>2.5.0</cxf.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
    
@@ -64,11 +64,6 @@
          <groupId>org.apache.cxf</groupId>
          <artifactId>cxf-rt-ws-policy</artifactId>
          <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.16</version>
       </dependency>
    </dependencies>
 </project>

@@ -43,7 +43,7 @@
                     <Require-Bundle>jaxws-metro-sts-common</Require-Bundle>
                 </instructions>
             </configuration>
-            </plugin>
+         </plugin>
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
