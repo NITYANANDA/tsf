@@ -50,7 +50,7 @@ http://www.springframework.org/schema/util/spring-util-2.0.xsd">
     </bean>
 
     <util:list id="x509Endpoints">
-        <value>http://localhost:8080/doubleit/services/doubleit.*</value>
+        <value>http://localhost:(8080|9000)/doubleit/services/doubleit.*</value>
     </util:list>
 
     <bean id="x509STSProperties" class="org.apache.cxf.sts.StaticSTSProperties">

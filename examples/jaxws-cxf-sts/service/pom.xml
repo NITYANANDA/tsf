@@ -12,7 +12,7 @@
     </parent>
     <artifactId>jaxws-cxf-sts-wsp</artifactId>
     <name>CXF WSP for CXF STS example</name>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -78,16 +78,43 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>2.3.5</version>
-                    <extensions>true</extensions>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <configuration>
+                        <mainClass>service.Server</mainClass>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
-        <!-- Name of the generated WAR file -->
-        <finalName>doubleit</finalName>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-addr</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-policy</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
 

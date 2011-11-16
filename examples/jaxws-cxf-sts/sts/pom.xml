@@ -10,7 +10,7 @@
         <artifactId>jaxws-cxf-sts</artifactId>
         <version>1.0</version>
     </parent>
-    <artifactId>jaxws-cxf-sts-stswar</artifactId>
+    <artifactId>jaxws-cxf-sts-sts</artifactId>
     <name>CXF STS</name>
     <packaging>war</packaging>
 

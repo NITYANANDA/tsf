@@ -13,21 +13,34 @@
     </parent>
     <artifactId>jaxws-cxf-sts-client</artifactId>
     <name>CXF WSC for CXF STS example</name>
-    <packaging>jar</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.talend.sf.examples.jaxws-cxf-sts</groupId>
-            <artifactId>jaxws-cxf-sts-wsp</artifactId>
-            <!-- Classifier below used with Maven Assembly Plugin to specify 
-                subset of above artifact needed. -->
-            <classifier>jaxws</classifier>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
+    <packaging>bundle</packaging>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <sourceRoot>
+                                ${basedir}/target/generated-sources
+                           </sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/src/main/resources/DoubleIt.wsdl
+                                 </wsdl>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -56,5 +69,34 @@
             </plugin>
         </plugins>
     </build>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-addr</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-policy</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+    </dependencies>
+    
 </project>
 
