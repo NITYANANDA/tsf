@@ -12,14 +12,10 @@ public class WSClient {
         DoubleItPortType port = service.getDoubleItPort();           
 
         doubleIt(port, 10);
-        doubleIt(port, 0);
-        doubleIt(port, -10);
     } 
     
-    public static void doubleIt(DoubleItPortType port, 
-            int numToDouble) {
+    public static void doubleIt(DoubleItPortType port, int numToDouble) {
         int resp = port.doubleIt(numToDouble);
-        System.out.println("The number " + numToDouble + " doubled is " 
-            + resp);
+        System.out.println("The number " + numToDouble + " doubled is " + resp);
     }
 }

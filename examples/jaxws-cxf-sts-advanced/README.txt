@@ -1,5 +1,24 @@
-WS-Trust (JAX-WS CXF STS sample)
+WS-Trust (JAX-WS CXF STS Advanced sample)
 =================================
+
+This sample illustrates some advanced concepts involving the STS. The basic scenario is the same as the
+jaxws-cxf-sts sample, where a CXF SOAP Client (WSC) invokes on a CXF web service provider (WSP). The more
+advanced concepts are given as follows:
+
+1.) The WSDL of the WSP (service/src/main/resources/DoubleIt.wsdl) defines an IssuedToken policy that the 
+WSC uses to obtain a security token from the STS to access the WSP. The IssuedToken policy is defined
+as a "SignedEncryptedSupportingTokens", meaning that the security token issued from the STS must be
+signed and encrypted by the WSC, using the Symmetric binding given. Secondly, the TokenType of the 
+IssuedToken requires a wsse UsernameToken to access the WSP.
+
+2.) The WSC uses the Asymmetric binding to communicate with the STS, as defined in the WSDL of the STS 
+(sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl). The second advanced concept is that the STS
+does not ship with a TokenProvider to issue UsernameTokens, as required by the WSP. A UsernameTokenProvider
+is provided and installed in the list of TokenProviders of the STS. It uses the subject DN of the WSC
+certificate as the username of the token, and a CallbackHandler provides the corresponding password.
+
+3.) Once the WSP receives the WSC request, and decrypts and verifies the UsernameToken, it dispatches it
+for validation to the STS. It does this 
 
 Provides an example of a CXF SOAP client (WSC) accessing a CXF STS for a SAML assertion and then subsequently
 making a call to a CXF web service provider (WSP).  X.509 authentication is used for the WSC->STS call.
@@ -18,7 +37,8 @@ Alternatively, you can change to using a lower end encyption algorithm by editin
 the security policies in:
 
 client/src/main/resources/DoubleItSTSService.wsdl 
-service/src/main/resources/DoubleIt.wsdl 
+service/src/main/resources/DoubleIt.wsdl
+service/src/main/resources/DoubleItSTSService.wsdl
 sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl 
 
 to change from "Basic256" to "Basic128".   If you receive an error like 
@@ -36,7 +56,7 @@ Note: If you wish to use Tomcat 6, use the -PTomcat6 flag when running the mvn t
 (tomcat:deploy, tomcat:redeploy, tomcat:undeploy).  (-PTomcat7 is active by default so
 does not need to be explicitly specified.)
 
-2.) From the root jaxws-cxf-sts folder, run "mvn clean install".  If no errors, can then 
+2.) From the root jaxws-cxf-sts-advanced folder, run "mvn clean install".  If no errors, can then 
 run "mvn tomcat:deploy" (or tomcat:undeploy or tomcat:redeploy on subsequent runs as appropriate),
 either from the same folder (to deploy the STS and WSP at the same time) or separately, one at a time,
 from the war and sts folders.
@@ -49,19 +69,13 @@ CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
 
-You should see the results of three web service calls, with the client using
-X.509 authentication in the other to get the SAML Assertion. 
+You should see the results of the web service call. 
 
 For DEBUGGING:
 
-1.) Activate client-side logging by uncommenting the logging feature in the client's resources/cxf.xml file.
-The log4j.properties file in the same folder can be used to adjust the amount of logging received.
-
-2.) Activate service-side logging by editing the log4j.properties file in the war's WEB-INF folder.
-
-3.) Check the logs directory under your Tomcat folder (cataling.log, catalina(date).log in particular) for
+1.) Check the logs directory under your Tomcat folder (cataling.log, catalina(date).log in particular) for
 any errors reported by the WSP or the STS.
 
-4.) Use Wireshark to view messages:
+2.) Use Wireshark to view messages:
 http://www.jroller.com/gmazza/entry/soap_calls_over_wireshark
 

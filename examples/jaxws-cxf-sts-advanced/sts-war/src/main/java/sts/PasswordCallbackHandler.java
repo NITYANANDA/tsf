@@ -9,6 +9,9 @@ import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import org.apache.ws.security.WSPasswordCallback;
 
+/**
+ * A CallbackHandler used by the STS to provide passwords.
+ */
 public class PasswordCallbackHandler implements CallbackHandler {
 
     public void handle(Callback[] callbacks) throws IOException,

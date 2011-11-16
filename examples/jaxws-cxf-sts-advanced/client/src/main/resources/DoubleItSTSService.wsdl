@@ -216,7 +216,7 @@
                         </sp:RecipientToken>
                         <sp:AlgorithmSuite>
                             <wsp:Policy>
-                                <sp:TripleDesRsa15 />
+                                <sp:Basic256 />
                             </wsp:Policy>
                         </sp:AlgorithmSuite>
                         <sp:Layout>
