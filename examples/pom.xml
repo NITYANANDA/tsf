@@ -25,6 +25,7 @@
         <module>interceptors</module>
         <module>jaxws-cxf-sts</module>
         <module>jaxws-metro-sts</module>
+        <module>jaxws-metro-sts-advanced</module>
         <module>jaxws-ws-secpol</module>
         <module>features</module>
     </modules>

@@ -95,4 +95,12 @@
         <bundle>mvn:com.talend.sf.examples.jaxws-cxf-sts/jaxws-cxf-sts-wsp/${project.version}</bundle>
     </feature>
 
+    <feature name='tsf-example-jaxws-cxf-sts-advanced-client' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-cxf-sts-advanced/jaxws-cxf-sts-advanced-client/${project.version}</bundle>
+    </feature>
+
+    <feature name='tsf-example-jaxws-cxf-sts-advanced-service' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:com.talend.sf.examples.jaxws-cxf-sts-advanced/jaxws-cxf-sts-advanced-wsp/${project.version}</bundle>
+    </feature>
+
 </features>
