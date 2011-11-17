@@ -49,10 +49,13 @@ CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 3.) Next we need to deploy the WSP, for which three options are provided:
 
  * To run the service in a standalone manner on port 9000, run mvn exec:java
-   from the service folder.
+   from the service folder.  Make sure you can view the WSP WSDL at
+   http://localhost:9000/doubleit/services/doubleit?wsdl before proceeding.
 
  * To run the service from Tomcat, go to the WAR folder and run mvn tomcat:deploy
    (can also use mvn tomcat:undeploy and mvn tomcat:redeploy for subsequent installs)
+   Make sure you can view the WSP WSDL at
+   http://localhost:8080/doubleit/services/doubleit?wsdl before proceeding.
 
  * To run the WSP from within the OSGi container. One thing to be aware of is 
    that the default port for Tomcat (8080) will conflict with Karaf's OPS4J Pax Web - 

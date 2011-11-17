@@ -13,13 +13,13 @@ Here is the shorter and slightly modified version of the Abstract section [1]:
  credentials (typically, a username and password pair), using user-
  agent redirections." 
 
-This demo show a simple Social.com social application which mantains a 
+This demo shows a simple Social.com social application which maintains a 
 calendar for every registered user.  Effectively, a user's calendar is the 
 private resource which only this user can access.  
 
-Social.com has a partner, Restaraunt Reservations, which offers an online 
+Social.com has a partner, Restaurant Reservations, which offers an online 
 service to Social.com users which can be used to book a dinner at a 
-specific hour.  In order to be able to complete the reservation, this 
+specific hour.  In order to be able to complete the reservation this 
 third-party service needs to check a user calendar to make sure that the 
 user is actually free at the requested hour at the moment of making the 
 booking.  

@@ -15,8 +15,19 @@ but they are also all setup to be run in the Talend Service Factory CE
 OSGi container that can be obtained from:
 http://www.talend.com/download.php#SF
 
-jaxws-ws-trust: demonstrates having a SOAP client use CXF's stsclient 
-to make a call to a Metro Secure Token Service (STS) and subsequently 
+jaxws-cxf-sts: demonstrates having a SOAP client use CXF's stsclient 
+to make a call to a Tomcat-hosted CXF Security Token Service (STS) and 
+subsequently using the SAML token received to make a web service call to a CXF
+web service provider.  Both standalone and OSGi-based clients are shown,
+as well as standalone, Tomcat-based, and OSGi-based web service provider
+options given.
+
+jaxws-cxf-sts-advanced: More advanced version of the above showing OSGi
+deployment of the STS, token providers, token validation, and WSP 
+authorization based on attributes within the SAML token.
+
+jaxws-metro-sts: demonstrates having a SOAP client use CXF's stsclient 
+to make a call to a Metro Security Token Service (STS) and subsequently 
 using the SAML token received to make a web service call to a CXF
 web service provider.
 
@@ -62,6 +73,9 @@ corresponding endpoints.
 
 jaxrs-jms-http: demonstrates how a JAX-RS HTTP server can be enhanced
 to receive JMS messages.
+
+jaxrs-oath: provides an example of a REST application protected using
+OAuth security.
 
 jaxrs-transformations: demonstrates how CXF can help with maintaining
 backward and forward compatibility between JAX-RS and JAX-WS consumers
