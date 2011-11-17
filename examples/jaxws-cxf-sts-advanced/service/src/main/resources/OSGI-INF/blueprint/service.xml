@@ -23,7 +23,7 @@
     <jaxws:server id="DoubleIt"
         xmlns:ns1="http://www.example.org/contract/DoubleIt"
         endpointName="ns1:DoubleItPort"
-        address="http://localhost:9000/doubleit/services/doubleit"
+        address="http://localhost:8080/doubleit/services/doubleit"
         serviceClass="service.DoubleItPortTypeImpl">
         <jaxws:properties>
             <entry key="ws-security.callback-handler" value="service.ServiceKeystorePasswordCallback"/>

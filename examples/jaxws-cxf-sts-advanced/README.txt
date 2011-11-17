@@ -61,7 +61,7 @@ client/src/main/resources/DoubleIt.wsdl
 client/src/main/resources/DoubleItSTSService.wsdl 
 service/src/main/resources/DoubleIt.wsdl
 service/src/main/resources/DoubleItSTSService.wsdl
-sts-war/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl 
+sts/src/main/webapp/WEB-INF/wsdl/DoubleItSTSService.wsdl 
 
 to change from "Basic256" to "Basic128".   If you receive an error like 
 "Illegal key length" when running the demo, you need to change to Basic128 or
@@ -69,9 +69,10 @@ install the Unlimited Strength encryption libraries.
 
 How to Deploy:
 
-1.) The STS and WSP run on either Tomcat 7.x (default) or Tomcat 6.x.  If not
-already done, configure Maven to be able to install and uninstall the WSP and
-the STS by following this section: 
+1.) The STS and WSP can be deployed on either Tomcat (7.x or 6.x) or Karaf.
+
+1.1) Tomcat: If not already done, configure Maven to be able to install and
+uninstall the WSP and the STS by following this section: 
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also
 start up Tomcat.
 
@@ -79,8 +80,8 @@ Note: If you wish to use Tomcat 6, use the -PTomcat6 flag when running the mvn
 tomcat commands (tomcat:deploy, tomcat:redeploy, tomcat:undeploy).  (-PTomcat7
 is active by default so does not need to be explicitly specified.)
 
-2.) From the root jaxws-cxf-sts-advanced folder, run "mvn clean install". If
-no errors, can then run "mvn tomcat:deploy" (or tomcat:undeploy or
+From the root jaxws-cxf-sts-advanced folder, run "mvn clean install". If no
+errors, can then run "mvn tomcat:deploy" (or tomcat:undeploy or
 tomcat:redeploy on subsequent runs as appropriate), either from the same
 folder (to deploy the STS and WSP at the same time) or separately, one at a
 time, from the war and sts folders.
@@ -89,7 +90,17 @@ Before proceeding to the next step, make sure you can view the following WSDLs:
 CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
 
-3.) Navigate to the client folder:
+1.2) Karaf: First run "mvn clean install" from the root jaxws-cxf-sts-advanced
+folder. One thing to be aware of is that the default port for Tomcat (8080)
+will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
+Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+
+   From the OSGi command line, run:
+      karaf@tsf> features:install cxf-sts
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-sts
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-service
+
+2.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
  * Alternatively, it is possible to run the client from within the OSGi
@@ -101,17 +112,6 @@ CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-client
 
 You should see the results of the web service call. 
-
-4.) It is also possible to deploy the WSP in Karaf using the following steps:
-
- * From the OSGi command line, run:
-      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-service
-
-The WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl)
-must also be updated before invoking on the WSP to
-"http://localhost:9000/doubleit/services/doubleit". This is because the WSP
-runs on port 9000 when run in Karaf, to avoid clashing with the port that Tomcat 
-is using (8080).
 
 For DEBUGGING:
 

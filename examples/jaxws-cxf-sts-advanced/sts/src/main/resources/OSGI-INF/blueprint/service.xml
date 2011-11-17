@@ -27,15 +27,36 @@
     </bean>
 
     <bean id="x509IssueDelegate" class="org.apache.cxf.sts.operation.TokenIssueOperation">
-        <property name="tokenProviders" ref="x509UsernameTokenProvider" />
-        <property name="services" ref="x509Service" />
+        <property name="tokenProviders">
+            <list>
+                <ref component-id="x509UsernameTokenProvider"/>
+            </list>
+        </property>
+        <property name="services">
+            <list>
+                <ref component-id="x509Service"/>
+            </list>
+        </property>
         <property name="stsProperties" ref="x509STSProperties" />
         <property name="returnReferences" value="false" />
     </bean>
 
     <bean id="x509ValidateDelegate" class="org.apache.cxf.sts.operation.TokenValidateOperation">
-        <property name="tokenValidators" ref="x509UsernameTokenValidator" />
-        <property name="tokenProviders" ref="x509SAMLTokenProvider" />
+        <property name="tokenValidators">
+            <list>
+                <ref component-id="x509UsernameTokenValidator"/>
+            </list>
+        </property>
+        <property name="tokenProviders">
+            <list>
+                <ref component-id="x509SAMLTokenProvider"/>
+            </list>
+        </property>
+        <property name="services">
+            <list>
+                <ref component-id="x509Service"/>
+            </list>
+        </property>
         <property name="stsProperties" ref="x509STSProperties" />
     </bean>
 
@@ -45,7 +66,7 @@
         class="org.apache.cxf.sts.token.provider.SAMLTokenProvider">
         <property name="attributeStatementProviders">
             <list>
-                <value-ref component-id="customAttributeProvider"/>
+                <ref component-id="customAttributeProvider"/>
             </list>
         </property>
     </bean>
@@ -60,7 +81,7 @@
     <bean id="x509Service" class="org.apache.cxf.sts.service.StaticService">
         <property name="endpoints">
             <list>
-                <value>http://localhost:(8080|9000)/doubleit/services/doubleit.*"</value>
+                <value>http://localhost:(8080|9000)/doubleit/services/doubleit.*</value>
             </list>
         </property>
     </bean>
@@ -72,8 +93,8 @@
         <property name="issuer" value="DoubleItSTSIssuer" />
     </bean>
 
-    <jaxws:server id="X509STS" implementor="#x509STSProviderBean"
-        address="http://localhost:9000/DoubleItSTS/X509" wsdlLocation="DoubleItSTSService.wsdl"
+    <jaxws:endpoint id="X509STS" implementor="#x509STSProviderBean"
+        address="http://localhost:8080/DoubleItSTS/X509" wsdlLocation="DoubleItSTSService.wsdl"
         xmlns:ns1="http://docs.oasis-open.org/ws-sx/ws-trust/200512/"
         serviceName="ns1:SecurityTokenService" endpointName="ns1:X509_Port">
         <jaxws:properties>
@@ -83,6 +104,6 @@
             <entry key="ws-security.signature.username" value="mystskey" />
             <entry key="ws-security.encryption.username" value="useReqSigCert" />
         </jaxws:properties>
-    </jaxws:server>
+    </jaxws:endpoint>
   
 </blueprint>
