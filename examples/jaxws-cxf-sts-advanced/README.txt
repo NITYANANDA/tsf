@@ -3,7 +3,7 @@ WS-Trust (JAX-WS CXF STS Advanced sample)
 
 This sample illustrates some advanced concepts involving the STS. The basic
 scenario is the same as the jaxws-cxf-sts sample, where a CXF SOAP Client (WSC)
-invokes on a CXF web service provider (WSP). Sample keystores and truststores
+invokes a CXF web service provider (WSP). Sample keystores and truststores
 for the WSC, WSP, and STS are provided in this project but are of course not
 meant for production use. The more advanced concepts are given as follows:
 
@@ -67,11 +67,16 @@ to change from "Basic256" to "Basic128".   If you receive an error like
 "Illegal key length" when running the demo, you need to change to Basic128 or
 install the Unlimited Strength encryption libraries.
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
+
 How to Deploy:
 
 1.) The STS and WSP can be deployed on either Tomcat (7.x or 6.x) or Karaf.
 
-1.1) Tomcat: If not already done, configure Maven to be able to install and
+Tomcat deployment: If not already done, configure Maven to be able to install and
 uninstall the WSP and the STS by following this section: 
 http://www.jroller.com/gmazza/entry/web_service_tutorial#maventomcat.  Also
 start up Tomcat.
@@ -86,27 +91,29 @@ tomcat:redeploy on subsequent runs as appropriate), either from the same
 folder (to deploy the STS and WSP at the same time) or separately, one at a
 time, from the war and sts folders.
 
-Before proceeding to the next step, make sure you can view the following WSDLs:
-CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
-CXF WSP: http://localhost:8080/doubleit/services/doubleitUT?wsdl
-
-1.2) Karaf: First run "mvn clean install" from the root jaxws-cxf-sts-advanced
-folder. One thing to be aware of is that the default port for Tomcat (8080)
-will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
-Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+OSGi deployment: First run "mvn clean install" from the root jaxws-cxf-sts-advanced
+folder. Also, stop the OPS4J Pax Web - Jetty bundle loaded by Talend Service Factory's
+OSGi container (as the STS and Service use the same port 8080 by default.)
 
    From the OSGi command line, run:
       karaf@tsf> features:install cxf-sts
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-sts
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-service
 
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
+
+For either Tomcat or OSGi deployment, before proceeding to the next step, 
+make sure you can view the following WSDLs:
+CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
+CXF WSP: http://localhost:8080/doubleit/services/doubleit?wsdl
+
 2.) Navigate to the client folder:
 
  * To run the client in a standalone manner, run mvn clean install exec:exec.
+
  * Alternatively, it is possible to run the client from within the OSGi
-   container. One thing to be aware of is that the default port for Tomcat
-   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
-   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+   container.
 
    From the OSGi command line, run:
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-advanced-client
@@ -115,9 +122,9 @@ You should see the results of the web service call.
 
 For DEBUGGING:
 
-1.) Check the logs directory under your Tomcat folder (catalina.log,
-catalina(date).log in particular) for any errors reported by the WSP or the
-STS.
+1.) Check the logs directory under your Tomcat (catalina.log,
+catalina(date).log in particular) or Karaf (data/log) folder for any errors 
+reported by the WSP or the STS.
 
 2.) Use Wireshark to view messages:
 http://www.jroller.com/gmazza/entry/soap_calls_over_wireshark
