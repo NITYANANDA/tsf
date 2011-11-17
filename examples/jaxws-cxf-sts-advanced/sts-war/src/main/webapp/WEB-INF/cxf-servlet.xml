@@ -76,7 +76,7 @@ http://www.springframework.org/schema/util/spring-util-2.0.xsd">
     </bean>
 
     <jaxws:endpoint id="X509STS" implementor="#x509STSProviderBean"
-        address="/X509" wsdlLocation="/WEB-INF/wsdl/DoubleItSTSService.wsdl"
+        address="/X509" wsdlLocation="WEB-INF/wsdl/DoubleItSTSService.wsdl"
         xmlns:ns1="http://docs.oasis-open.org/ws-sx/ws-trust/200512/"
         serviceName="ns1:SecurityTokenService" endpointName="ns1:X509_Port">
         <jaxws:properties>

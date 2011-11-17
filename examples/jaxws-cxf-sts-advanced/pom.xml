@@ -15,6 +15,7 @@
         <module>service</module>
         <module>service-war</module>
         <module>client</module>
+        <module>sts</module>
         <module>sts-war</module>
     </modules>
 
