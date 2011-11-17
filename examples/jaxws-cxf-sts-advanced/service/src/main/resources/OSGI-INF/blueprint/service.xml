@@ -52,20 +52,17 @@
                </bean>            
           </entry> 
         </jaxws:properties>
-        <!-- 
         <jaxws:inInterceptors>
-           <ref bean="authorizationInterceptor"/>
+           <ref component-id="authorizationInterceptor"/>
        </jaxws:inInterceptors>
-       --> 
     </jaxws:server>
     
     <bean id="authorizationInterceptor" class="service.SAML2AuthorizingInterceptor">
-         <!-- <property name="methodRolesMap" ref="rolesMap"/>-->
+        <property name="methodRolesMap">
+           <map>
+              <entry value="doubleit-user" key="doubleIt"/>
+           </map>
+        </property>
     </bean>
-    <!-- 
-    <bean id="rolesMap" class="java.util.HashMap">
-        <entry key="doubleIt" value="doubleit-user"/>
-    </bean>
-    -->
     
 </blueprint>
