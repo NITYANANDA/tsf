@@ -46,37 +46,37 @@ subsequent runs as appropriate) in the "sts" folder to deploy the STS.
 Before proceeding to the next step, make sure you can view the following WSDL:
 CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 
-3.) Navigate to the client folder:
+3.) Next we need to deploy the WSP, for which three options are provided:
 
- * To run the client in a standalone manner, run mvn clean install exec:exec.
- * Alternatively, it is possible to run the client from within the OSGi
-   container. One thing to be aware of is that the default port for Tomcat
-   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
-   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
-
-   From the OSGi command line, run:
-      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-client
-
-You should see the results of the web service call. 
-
-4.) It is also possible to deploy the WSP in embedded Jetty or Karaf using
-the following steps:
-
- * To run the service in a standalone manner, run mvn clean install exec:java
+ * To run the service in a standalone manner on port 9000, run mvn exec:java
    from the service folder.
- * Alternatively, it is possible to run the WSP from within the OSGi
-   container. One thing to be aware of is that the default port for Tomcat
-   (8080) will conflict with the OPS4J Pax Web - Jetty bundle loaded by Karaf.
-   Therefore, start Karaf, and stop the Pax Jetty bundle before starting Tomcat.
+
+ * To run the service from Tomcat, go to the WAR folder and run mvn tomcat:deploy
+   (can also use mvn tomcat:undeploy and mvn tomcat:redeploy for subsequent installs)
+
+ * To run the WSP from within the OSGi container. One thing to be aware of is 
+   that the default port for Tomcat (8080) will conflict with Karaf's OPS4J Pax Web - 
+   Jetty bundle. Therefore, best to stop Tomcat, start Karaf, and stop Karaf's 
+   Pax Jetty bundle before restarting Tomcat (to activate the STS).
 
    From the OSGi command line, run:
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-service
 
-The WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl)
-must also be updated before invoking on the WSP to
-"http://localhost:9000/doubleit/services/doubleit". This is because the WSP
-runs on port 9000 when run in a standalone manner, or in Karaf, to avoid 
-clashing with the port that Tomcat is using (8080).
+4.) Navigate to the client folder:
+
+Note: If you've selected standalone or OSGi deployment of the WSP in the preceding
+step, the WSP address in the client WSDL (client/src/main/resources/DoubleIt.wsdl) 
+must be updated before invoking the WSP to "http://localhost:9000/doubleit/services/doubleit". 
+This is because the WSP runs on port 9000 when run in a standalone manner, 
+or in Karaf, to avoid clashing with the port that Tomcat is using (8080).
+
+ * To run the client in a standalone manner, run mvn clean install exec:exec.
+
+ * From the OSGi command line, run:
+      karaf@tsf> features:install tsf-example-jaxws-cxf-sts-client
+
+You should see the results of the web service call. 
+
 
 For DEBUGGING:
 
@@ -84,8 +84,9 @@ For DEBUGGING:
 client's resources/cxf.xml file. The logging.properties file in the same
 folder can be used to adjust the amount of logging received.
 
-2.) Check the logs directory under your Tomcat folder (catalina.log,
-catalina(date).log in particular) for any errors reported by the STS.
+2.) Check the logs directory under your Tomcat (catalina.log,
+catalina(date).log in particular) or Karaf (data/log) folder 
+for any errors reported by the STS.
 
 3.) Use Wireshark to view messages:
 http://www.jroller.com/gmazza/entry/soap_calls_over_wireshark
