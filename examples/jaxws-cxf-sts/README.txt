@@ -27,6 +27,11 @@ to change from "Basic256" to "Basic128".   If you receive an error like
 "Illegal key length" when running the demo, you need to change to Basic128 or
 install the Unlimited Strength encryption libraries.
 
+Usage
+===============================================================================
+Note: Please follow the parent README.txt first for common build and container 
+setup instructions.
+
 How to Deploy:
 
 1.) The STS and WSP run on either Tomcat 7.x (default) or Tomcat 6.x. If not
@@ -64,6 +69,12 @@ CXF STS WSDL located at: http://localhost:8080/DoubleItSTS/X509?wsdl
 
    From the OSGi command line, run:
       karaf@tsf> features:install tsf-example-jaxws-cxf-sts-service
+
+   (Make sure you've first installed the examples features repository as described in the
+   parent README.)
+
+   Make sure you can view the WSP WSDL at
+   http://localhost:9000/doubleit/services/doubleit?wsdl before proceeding.
 
 4.) Navigate to the client folder:
 
