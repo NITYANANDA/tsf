@@ -122,19 +122,22 @@ Demo Desciption
 
 The description of how to interact with the demo application using a 
 browser in the previous section provides an overview of a typical complete 
-OAuth 1.0 flow.  
+OAuth 1.0 flow.  (Also review the IETF example at 
+http://tools.ietf.org/html/rfc5849#section-1.2 to see sample OAuth
+HTTP requests and responses.)
 
-For the third-party Restaurant Reservations service be able to request an 
-access to a Social.com user's calendar, it has to register itself first 
-with the OAuth server which protects Social.com.  Typically this is done 
-out of band and is only demonstrated here to highlight the fact that the 
-third-party must register to be able to participate in OAuth flows.  When 
-the registration is complete, the third-party service gets back a consumer 
+For the third-party Restaurant Reservations service (the "client", 
+in OAuth terminology) to be able to request access to a Social.com user's
+calendar, it has to register itself first with the OAuth server which
+protects Social.com.  Typically this is done out of band and is only
+demonstrated here to highlight the fact that the third-party must
+register to be able to participate in OAuth flows.  When the 
+registration is complete, the third-party service gets back a consumer 
 id and secret pair which it will use later on, when signing OAuth 
-requests.  oauth.manager.ThirdPartyRegistrationService is used to emulate 
-this process.  
+requests.  oauth.manager.ThirdPartyRegistrationService is used to 
+emulate this process.  
 
-Social.com application keeps a list of registered users and their 
+The Social.com application keeps a list of registered users and their 
 calendars.  Two JAX-RS services are used to implement it, 
 oauth.service.UserRegistrationService which manages the user registration 
 requests and oauth.service.SocialService which lets registered users 
@@ -143,17 +146,17 @@ access or update their private calendars.
 Social.com also relies on 
 org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService 
 which will be used to ask a Social.com user to authorize the third-party, 
-more on it below.  
+more on this below.  
 
 Access to UserRegistrationService and SocialService, as well as to 
-(CXF)AuthorizationRequestService is protected by a filter 
-(oauth.service.SecurityContextFilter) enforcing that a currently logged in 
-user is a valid Social.com user.  
+CXF's AuthorizationRequestService is protected by a filter 
+(oauth.service.SecurityContextFilter) enforcing that a currently 
+logged in user is a valid Social.com user.  
 
 When the registered Social.com user accesses the online Restaurant 
 Reservations service in order to book a table, this service 
 (oauth.thirdparty.RestaurantReservationService) initiates the OAuth flow 
-in order to get a permission to access a current user's calendar.  But 
+in order to get permission to access a current user's calendar.  But 
 first, it requires the user to login.  
 
 In a real world application, one would expect a user to register with the 
@@ -162,13 +165,13 @@ a token such as OpenID identifier may be used to login.
 
 In this demo the user uses the same name and password to login to 
 Restaurant Reservations it also uses to login to Social.com.  This is only 
-to simpilfy the demo itself as well as to emulate a single sign-on.  The 
+to simplify the demo itself as well as to emulate a single sign-on.  The 
 demo will be enhanced in time to show a more realistic approach with 
 respect to authenticating with multiple services.  
 
 Now, once the user has logged in to Restaurant Reservations, the service 
-does initiate a temporarily OAuth token request.  It creates HTTP 
-Authorization header as required by OAuth and signs it using a consumer 
+initiates a temporary OAuth token request.  It creates an HTTP 
+Authorization header as required by OAuth and signs it using the client 
 key and secret it obtained during the earlier registration.  It also 
 includes a callback URI - this is where an authorization key will be 
 delivered to - more on it below.  Note that this happens in the scope of 
@@ -176,15 +179,15 @@ processing a current user's request.  An instance of
 org.apache.cxf.rs.security.oauth.services.RequestTokenService processes 
 this request.  
 
-After getting a temporarily token and secret back, the third-party service 
+After getting a temporary token and secret back, the third-party service 
 needs to get the temp token key authorized by the current user.  The 
 service redirects the user back to the 
 org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService 
 endpoint available at Social.com and appends a temporarily token as a 
 query parameter to the URI of AuthorizationRequestService.  
 
-Now the user is being redirected back to Social.com.  As mentioned above, 
-AuthorizationRequestService is protected by a filter which checks that a 
+Now the user is being redirected back to Social.com.  As mentioned earlier, 
+the AuthorizationRequestService is protected by a filter which checks that a 
 user is logged in and is a valid Social.com user.  We do not use a SSO 
 solution but during the demo you will see that you won't be asked to log 
 in again after you have logged in to Restaraunt Reservations service.  The 
@@ -203,7 +206,7 @@ will be done in time.
 So, the end user is now being redirected to CXF 
 AuthorizationRequestService.  The service uses the temp token passed along 
 to retrieve the information about Restaraunt Reservations and returns an 
-authorization form to the user.  This form will include a random generated 
+authorization form to the user.  This form will include a randomly generated 
 key in a hidden field to prevent a so called Cross-Site Request Forgery 
 attack: http://tools.ietf.org/html/rfc5849#section-4.13.  
 
@@ -212,18 +215,18 @@ one stored in the current HTTP session instance.
 
 The user has a choice to Deny or Allow the access to its calendar.  If 
 Allow is pressed then Authorization service will append a temp token and a 
-random generated authorization key as query parameters to the callback URI 
-provided by Restaraunt Reservations and will redirect the user back to the 
-third-party service listening on the callback URI.  
+randomly generated authorization key as query parameters to the callback URI 
+provided by Restaurant Reservations and will redirect the user back to the 
+client (the Reservation Service) listening on the callback URI.  
 
-Now, the third-party service has got a confirmation that it can attemt to 
-access the current user's calendar, it has the temp token and the 
+Now, the client has got a confirmation that it is allowed to access
+the current user's calendar, it has the temporary token and the 
 authorization key.  It now exchanges this pair for an access token by 
 sending an OAuth request to an instance of 
 org.apache.cxf.rs.security.oauth.services.AccessTokenService.  The access 
-token request is similar to the temporarily token one, except that the 
-temp token and authorization key pair is also included in Authorization 
-header and consumer key + secret and access token + secret pairs are used 
+token request is similar to the temporary token one, except that the 
+temp token and authorization key pair is also included in the Authorization 
+header and client key + secret and access token + secret pairs are used 
 to sign the request.  
 
 After an access token key and secret is received back, Restaurant 
@@ -231,7 +234,7 @@ Reservations requests a current user's calendar in order to verify the
 user is actually free at the requested hour.  It signs all the requests 
 using its consumer key + secret and access token + secret pairs.  
 
-It raises a design challenge of its own.  We have a Social.com application 
+This raises a design challenge of its own.  We have a Social.com application 
 and the registered users can access their own calendars.  The security 
 filter ensures that the users are valid Social.com users.  And now we have 
 a third party service being granted a permission to access a given user's 
@@ -240,37 +243,37 @@ that the regular Social.com users use to access their calendars ?  For
 example, should both Social.com users and third-party services be allowed 
 to do "GET http://localhost:8080/services/social/calendar" ?  
 
-That is possible in which case the security filter has to be smarter in a 
+That is possible in which case the security filter has to be smarter in the 
 way it processes Authorization requests.  If it is "Authorization: Basic 
 ..." then it must be a regular user, and if it is "Authorization: OAuth 
-..." then proceed with checking the OAuth request.  This approach can be 
+..." then proceed with first checking the OAuth request.  This approach can be 
 implemented by having a demo Social.com security filter extending 
 org.apache.cxf.rs.security.oauth.filters.OAuthRequestFilter and delegating 
 to it if it's an OAuth request and proceeding as usual otherwise.  But 
-other challenges such as how to prevent the third party users from 
+other challenges such as how to prevent third party users from 
 executing updates such as "POST 
 http://localhost:8080/services/social/calendar" have to be addressed in 
-such cases - given that only a read access has been granted by the user - 
-please consult the CXF documentation on how to handle such and other 
+such cases - given that only read access has been granted by the user - 
+please consult the CXF documentation on how to handle this and other 
 possible issues.  
 
 In this demo a much simpler yet valid option has been chosen.  Social.com 
-decided to provide a JAX-RS service dedicated to handling the third-party 
+decided to provide a JAX-RS service dedicated to handling the OAuth client 
 requests only, oauth.manager.ThirdPartyAccessService.  It only supports 
-GET requestd, for example, "GET 
-http://localhost:8080/services/thirdparty/calendar?user=barry".  It makes 
-it simple security-wise, as only the registered third-party services 
+GET requests, for example, "GET 
+http://localhost:8080/services/thirdparty/calendar?user=barry".  This makes 
+it simple security-wise, as only registered OAuth clients 
 having a valid access token can go via this route and thus 
 org.apache.cxf.rs.security.oauth.filters.OAuthRequestFilter can be used to 
-protect Social.com here, while only registered Social.com users can access 
-or update their calendars using 
+protect the resource owner's Social.com data, while only registered Social.com
+users can access or update their calendars using 
 "http://localhost:8080/services/social/calendar" URI which can be 
 protected by a regular Social.com filter.  
 
-So Restaraunt Reservations service has finally managed to get to a current 
+So Restaurant Reservations service has finally managed to get to a current 
 user's calendar via oauth.manager.ThirdPartyAccessService.  It gets a 
 Calendar back, checks if a user is free at a given hour and if yes then it 
-asks its private partner, Restaraunt Service to get a table reserved for a 
+asks its private partner, Restaurant Service to get a table reserved for a 
 user and returns a confirmation page with the address of the restaurant.  
 
 Note that if the user decided to Deny the calendar access request earlier 
@@ -295,37 +298,21 @@ OAuthDataProvider implementation and also manages the third-party
 application registration.  
 
 
-Toward Reducing the complexity
--------------------------------------------
+CXF's efforts to reduce OAuth complexity
+----------------------------------------
 
 As you can see from the demo description, OAuth can be quite elaborate 
-though the end user should not be affected in anyway, the main burden 
-being on OAuth developers.  CXF strives to make as straightforward as 
-possible to get a quality OAuth server being implemented - please check 
-the demo code and see and it is indeed the case - there's virtually no 
-OAuth-related code in the demo itself except for the custom 
-org.apache.cxf.rs.security.oauth.provider.OAuthDataProvider implementation 
-which needs to be there.  Note oauth.thirdparty.OAuthClientManager - it 
-uses CXF OAuth client utility code to completely encapsulate the 
-complexities of OAuth from the implementation of the Restaurant 
-Reservations application.  
+though the end user should not be affected in any way, the main burden 
+being on OAuth developers.  CXF strives to make producing a quality
+OAuth server as straightforward as possible - please check 
+the demo code to confirm that is indeed the case - there's virtually no 
+OAuth-related code in the demo itself except for the required custom 
+org.apache.cxf.rs.security.oauth.provider.OAuthDataProvider implementation. 
+Note the oauth.thirdparty.OAuthClientManager uses CXF OAuth client utility
+code to completely encapsulate the complexities of OAuth from the 
+implementation of the Restaurant Reservations application.  
 
 With OAuth 2.0 the process will become even simpler.  Effectively, the 
 steps involving the temporarily request and access token keys will be 
 dropped and only the user authorization step will be needed.  
-
-  
-
- 
-
- 
-
-
-
-
-
-  
-
-
-
 
