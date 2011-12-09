@@ -97,7 +97,7 @@
      <bean id="thirdPartySecurityContext" class="oauth.thirdparty.SecurityContextFilter">
          <property name="users">
             <map>
-              <entry key="barry@social.com" value="1234"/>
+              <entry key="barry@social.com" value="5678"/>
             </map>
          </property>
      </bean>

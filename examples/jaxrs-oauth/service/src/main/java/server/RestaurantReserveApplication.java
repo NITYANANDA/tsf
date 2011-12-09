@@ -49,7 +49,7 @@ public class RestaurantReserveApplication extends Application {
         reserveService.setOAuthClientManager(manager);
         
         SecurityContextFilter filter = new SecurityContextFilter();
-        filter.setUsers(Collections.singletonMap("barry@social.com", "1234"));
+        filter.setUsers(Collections.singletonMap("barry@social.com", "5678"));
         
         WebClient restaurantService = 
         	WebClient.create("http://localhost:8080/restaurant/reception");

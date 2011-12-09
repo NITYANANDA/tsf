@@ -72,6 +72,6 @@ public class SecurityContextFilter implements RequestHandler {
 	}
 
 	private Response createFaultResponse() {
-		return Response.status(401).header("WWW-Authenticate", "Basic").build();
+		return Response.status(401).header("WWW-Authenticate", "Basic realm=\"Reservations\"").build();
 	}
 }

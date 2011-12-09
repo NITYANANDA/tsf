@@ -104,8 +104,11 @@ file. If the server is listening on an alternative port then you can use an
 - The Restaurant Reservations Form offers an option to book a restaurant 
   table at a specific hour, press Reserve to start the process.  
 - When asked please authenticate with the service using the 
-  "barry@social.com" and "1234" pair.  See the demo description for more 
+  "barry@social.com" and "5678" pair.  See the demo description for more 
   information about this authentication step.
+- The Restaurant Reservations will redirect to the Authorization service
+  protecting Social.com; when asked please authenticate with the service using the 
+  "barry@social.com" and "1234" pair.
 - The Third Party Authorization Form will ask if the Restaurant 
   Reservations can read the calendar of its owner, "barry@social.com".  
 - Press "Deny", and after receiving the Restaurant Failure Report page, 
@@ -163,11 +166,12 @@ In a real world application, one would expect a user to register with the
 third-party service such as Restaurant Reservations first.  Alternatively 
 a token such as OpenID identifier may be used to login.  
 
-In this demo the user uses the same name and password to login to 
-Restaurant Reservations it also uses to login to Social.com.  This is only 
-to simplify the demo itself as well as to emulate a single sign-on.  The 
-demo will be enhanced in time to show a more realistic approach with 
-respect to authenticating with multiple services.  
+In this demo the user uses the same name to login to 
+Restaurant Reservations it uses to login to Social.com.  This is only 
+to simplify the demo itself for Restaurant Reservations be able to indicate to Social.com at the resource request time which account it needs to access.  
+
+The demo will be enhanced in time to show a more realistic approach with 
+respect to authenticating with multiple services and avoiding reusing the same username across multiple services.  
 
 Now, once the user has logged in to Restaurant Reservations, the service 
 initiates a temporary OAuth token request.  It creates an HTTP 
