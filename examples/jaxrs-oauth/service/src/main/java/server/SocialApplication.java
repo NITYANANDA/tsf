@@ -9,14 +9,14 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService;
-
 import oauth.manager.OAuthManager;
 import oauth.manager.ThirdPartyAccessService;
 import oauth.service.SecurityContextFilter;
 import oauth.service.SocialService;
 import oauth.service.UserAccounts;
 import oauth.service.UserRegistrationService;
+
+import org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService;
 
 /*
  * Class that can be used (instead of XML-based configuration) to inform the JAX-RS 

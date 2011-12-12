@@ -190,25 +190,7 @@ org.apache.cxf.rs.security.oauth.services.AuthorizationRequestService
 endpoint available at Social.com and appends a temporarily token as a 
 query parameter to the URI of AuthorizationRequestService.  
 
-Now the user is being redirected back to Social.com.  As mentioned earlier, 
-the AuthorizationRequestService is protected by a filter which checks that a 
-user is logged in and is a valid Social.com user.  We do not use a SSO 
-solution but during the demo you will see that you won't be asked to log 
-in again after you have logged in to Restaraunt Reservations service.  The 
-reason is simple: after the user has been redirected back to Social.com, 
-the filter replies with 401 but given that both Restaraunt Reservations 
-and Social.com endpoints listen on localhost and the same port and no 
-realm value is used during the authentication challenges, the browser 
-assumes that the cached login to Restaraunt Reservations can be attempted 
-again and returns the same "barry@social.com" and "1234" pair to the 
-filter.  
-
-As noted earlier this is not a realistic way to get the authentication 
-credentials shared and is done to emulate an SSO; the due enhancements 
-will be done in time.  
-
-So, the end user is now being redirected to CXF 
-AuthorizationRequestService.  The service uses the temp token passed along 
+The service uses the temp token passed along 
 to retrieve the information about Restaraunt Reservations and returns an 
 authorization form to the user.  This form will include a randomly generated 
 key in a hidden field to prevent a so called Cross-Site Request Forgery 
@@ -265,7 +247,7 @@ In this demo a much simpler yet valid option has been chosen.  Social.com
 decided to provide a JAX-RS service dedicated to handling the OAuth client 
 requests only, oauth.manager.ThirdPartyAccessService.  It only supports 
 GET requests, for example, "GET 
-http://localhost:8080/services/thirdparty/calendar?user=barry".  This makes 
+http://localhost:8080/services/thirdparty/calendar".  This makes 
 it simple security-wise, as only registered OAuth clients 
 having a valid access token can go via this route and thus 
 org.apache.cxf.rs.security.oauth.filters.OAuthRequestFilter can be used to 

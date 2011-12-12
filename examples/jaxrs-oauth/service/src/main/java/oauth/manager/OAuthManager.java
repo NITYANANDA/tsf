@@ -30,6 +30,7 @@ public class OAuthManager implements OAuthDataProvider {
 		String tokenId = UUID.randomUUID().toString();
 		String tokenSecret = UUID.randomUUID().toString();
 		at = new AccessToken(rt.getClient(), tokenId, tokenSecret);
+		at.setSubject(rt.getSubject());
 		rt = null;
 		return at;
 	}

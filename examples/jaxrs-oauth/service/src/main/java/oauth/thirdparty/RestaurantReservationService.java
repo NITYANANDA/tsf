@@ -25,6 +25,7 @@ import oauth.common.CalendarEntry;
 import oauth.common.ReservationConfirmation;
 import oauth.common.ReservationFailure;
 
+import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.form.Form;
 import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils.Token;
@@ -40,6 +41,7 @@ public class RestaurantReservationService {
     private static final String NO_RESERVATION = "noreserve";
     private static final String NO_OAUTH_REQUEST_TOKEN = "nooauthrequest";
     private static final String NO_OAUTH_ACCESS_TOKEN = "nooauthaccess";
+    private static final String CALENDAR_ACCESS_PROBLEM = "calendar_forbidden";
     
     private static final Map<String, String> ERROR_DESCRIPTIONS;
     static {
@@ -60,6 +62,8 @@ public class RestaurantReservationService {
         ERROR_DESCRIPTIONS.put(NO_OAUTH_ACCESS_TOKEN,
                 "Problem replacing your authorization key for OAuth access token" 
                 + ", please report to Social.com admin");
+        ERROR_DESCRIPTIONS.put(CALENDAR_ACCESS_PROBLEM, 
+                               "Social.com refused to return a calendar, please try again");
     }
     
     
@@ -127,13 +131,15 @@ public class RestaurantReservationService {
 		
 		LOG.info("Completing the reservation request for a user: " + request.getReserveName());
         
-		socialService.replaceQueryParam("user", userName);
-        
 		String authHeader = manager.createAuthorizationHeader(accessToken, "GET",
 				socialService.getCurrentURI().toString());
 		socialService.replaceHeader("Authorization", authHeader);
-		
-		Calendar c = socialService.get(Calendar.class);
+		Calendar c = null;
+		try {
+		    c = socialService.get(Calendar.class);
+		} catch (ServerWebApplicationException ex) {
+		    return redirectToFailureHandler(CALENDAR_ACCESS_PROBLEM);
+		}
 		
     	CalendarEntry entry = c.getEntry(request.getHour());
 		if (entry.getEventDescription() == null) { 
