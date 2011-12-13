@@ -1,9 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Consumer Application Registration Form</title>
+    <title>Client Application Registration Form</title>
 </head>
 <body>
-<h1>Consumer Application Registration Form</h1>
+<h1>Client Application Registration Form</h1>
 <em></em>
 <p>
  <table>

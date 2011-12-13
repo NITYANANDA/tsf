@@ -13,7 +13,7 @@
 Congratulations! You have successfully registered with Social.com</p>
 </p>
 <p>
-Our partner, Restaraunt Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant. 
+Our partner, Restaurant Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant.
 </p>
 <br/>
 <p>
