@@ -18,8 +18,7 @@ import org.apache.cxf.jaxrs.ext.form.Form;
 import org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData;
 
 /**
- * Example showing the interaction between HTTP-centric and proxy based RESTful clients and JAX-RS server
- * providing multiple services (PersonService and SearchService)
+ * OAuth demo client
  */
 public final class RESTClient {
 
@@ -63,20 +62,20 @@ public final class RESTClient {
     }
     
     private void printUserCalendar() {
-    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar");
+    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar", "1234");
     	Calendar calendar = client.get(Calendar.class);
     	System.out.println(calendar.toString());
     }
     
     private void updateAndGetUserCalendar(int hour, String event) {
-    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar");
+    	WebClient client = createClient("http://localhost:" + port + "/services/social/accounts/calendar", "1234");
     	Form form = new Form().set("hour", hour).set("event", event);
     	client.form(form);
     	printUserCalendar();
     }
     
     public void reserveTable() throws Exception {
-    	WebClient rs = createClient("http://localhost:" + port + "/services/reservations/reserve/table");
+    	WebClient rs = createClient("http://localhost:" + port + "/services/reservations/reserve/table", "5678");
     	Response r = rs.form(new Form().set("name", "Barry")
     			                       .set("phone", "12345678")
     			                       .set("hour", "7"));
@@ -86,7 +85,7 @@ public final class RESTClient {
     	if (status != 303 || locationHeader == null) {
     		System.out.println("OAuth flow is broken");
     	}
-    	WebClient authorizeClient = createClient(locationHeader.toString());
+    	WebClient authorizeClient = createClient(locationHeader.toString(), "1234");
     	OAuthAuthorizationData data = authorizeClient.get(OAuthAuthorizationData.class);    	
     	Object authenticityCookie = authorizeClient.getResponse().getMetadata().getFirst("Set-Cookie");
     	    	
@@ -104,7 +103,7 @@ public final class RESTClient {
     		System.out.println("OAuth flow is broken");
     	}
     	
-    	WebClient finalClient = createClient(locationHeader2.toString());
+    	WebClient finalClient = createClient(locationHeader2.toString(), "5678");
     	finalClient.accept("application/xml");
     	ReservationConfirmation confirm = finalClient.get(ReservationConfirmation.class);
     	
@@ -115,19 +114,16 @@ public final class RESTClient {
     	}
     }
     
-    private WebClient createClient(String address) {
+    private WebClient createClient(String address, String password) {
     	JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
     	bean.setAddress(address);
     	bean.setUsername("barry@social.com");
-    	bean.setPassword("1234");
+    	bean.setPassword(password);
     	
     	bean.getOutInterceptors().add(new LoggingOutInterceptor());
     	bean.getInInterceptors().add(new LoggingInInterceptor());
     	
-    	WebClient wc = bean.createWebClient();
-    	WebClient.getConfig(wc).getHttpConduit().getClient().setReceiveTimeout(10000000L);
-    	
-    	return wc;
+    	return bean.createWebClient();
     }
     
     private Form getAuthorizationResult(OAuthAuthorizationData data) {
