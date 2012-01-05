@@ -17,7 +17,7 @@
         <tr>
             <td>Application Domain:</td>
             <td>
-              <input type="text" name="appURI" value="http://localhost:8080/services/reservations"/>
+              <input type="text" name="appURI" value="http://localhost:${http.port}/services/reservations"/>
             </td>
         </tr>
         <tr>

@@ -27,6 +27,9 @@ public class Calendar {
     }
     
     public void setEntry(CalendarEntry entry) {
+        if (entry == null) {
+            return;
+        }   
     	validateHour(entry.getHour());
     	entries.set(entry.getHour(), entry);
     }

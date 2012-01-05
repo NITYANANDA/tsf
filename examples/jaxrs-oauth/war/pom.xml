@@ -17,6 +17,10 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <properties>
+        <http.port>8080</http.port>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.talend.sf.examples.jaxrs-oauth-example</groupId>
@@ -49,9 +53,25 @@
 					<!--url>Place URL if different from http://localhost:8080/manager</url -->
                 </configuration>
             </plugin>
-        </plugins>
-
-    </build>
-
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+         <configuration>
+          <webResources>
+            <resource>
+              <!-- this is relative to the pom.xml directory -->
+              <directory>src/main/webapp</directory>
+              <filtering>true</filtering>
+              <includes>
+                  <include>**/restaurantReserve.xml</include>
+                  <include>**/registerApp.jsp</include>
+              </includes>  
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 

@@ -17,13 +17,13 @@
      <!-- 
          WebClient which Restaurant Reservations uses to access Social.com users' calendars at Social.com.
          Note that the Social.com address provided to this service is different from
-         the one used by Social.com users themselves, which is "http://localhost:8080/services/social/calendar".
-         Social.com is OAuth-protected at "http://localhost:8080/services/thirdPartyAccess/calendar" while
-         "http://localhost:8080/services/social/calendar" is protected by a Basic Authentication filter.
+         the one used by Social.com users themselves, which is "http://localhost:${http.port}/services/social/calendar".
+         Social.com is OAuth-protected at "http://localhost:${http.port}/services/thirdPartyAccess/calendar" while
+         "http://localhost:${http.port}/services/social/calendar" is protected by a Basic Authentication filter.
      -->
      
      <bean id="socialServiceClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
-         <constructor-arg type="java.lang.String" value="http://localhost:8080/services/thirdPartyAccess/calendar"/>
+         <constructor-arg type="java.lang.String" value="http://localhost:${http.port}/services/thirdPartyAccess/calendar"/>
      </bean>
      
      <!-- WebClient for requesting a temporarily Request OAuth token, it is used when a Social.com
@@ -32,7 +32,7 @@
      -->
       
      <bean id="rtServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
-         <property name="address" value="http://localhost:8080/services/oauth/initiate"/>
+         <property name="address" value="http://localhost:${http.port}/services/oauth/initiate"/>
          <property name="headers">
             <map>
                <entry key="Accept" value="application/x-www-form-urlencoded"/>
@@ -49,7 +49,7 @@
      -->
      
      <bean id="atServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
-         <property name="address" value="http://localhost:8080/services/oauth/token"/>
+         <property name="address" value="http://localhost:${http.port}/services/oauth/token"/>
          <property name="headers">
             <map>
                <entry key="Accept" value="application/x-www-form-urlencoded"/>
@@ -64,7 +64,7 @@
      -->
      
      <bean id="restaurantServiceClientFactory" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">
-         <property name="address" value="http://localhost:8080/services/restaurant/reception"/>
+         <property name="address" value="http://localhost:${http.port}/services/restaurant/reception"/>
          <property name="headers">
             <map>
                <entry key="Content-Type" value="application/x-www-form-urlencoded"/>
@@ -80,7 +80,7 @@
      -->  
      
      <bean id="oauthClient" class="oauth.thirdparty.OAuthClientManager">
-         <property name="authorizationURI" value="http://localhost:8080/services/social/authorize"/>
+         <property name="authorizationURI" value="http://localhost:${http.port}/services/social/authorize"/>
          <property name="requestTokenService" ref="rtServiceClient"/>
          <property name="accessTokenService" ref="atServiceClient"/>
      </bean>
