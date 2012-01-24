@@ -51,7 +51,7 @@
 
      <bean id="authorizationFilter" 
           class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
-         <property name="methodRolesMap" ref="rolesMap"/>
+         <property name="interceptor" ref="authorizationInterceptor"/>
      </bean>
 
      <util:map id="rolesMap">
