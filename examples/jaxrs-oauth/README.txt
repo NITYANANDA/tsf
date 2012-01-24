@@ -68,7 +68,7 @@ Starting the service
 ---------------------------------------
  * In the servlet container
 
-    cd war; mvn jetty:run
+    cd war; mvn jetty:run-war
     
 Running the client
 ---------------------------------------
