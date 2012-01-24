@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -196,8 +197,8 @@ public class SOAPClient {
         
         // this configuration can be provided externally
         
-        Map<String, String> newToOldTransformMap = 
-            Collections.singletonMap("{http://customer/v2}*", "{http://customer/v1}*");
+        Map<String, String> newToOldTransformMap = new HashMap<String, String>();
+        newToOldTransformMap.put("{http://customer/v2}*", "{http://customer/v1}*");
         Map<String, String> oldToNewTransformMap = 
             Collections.singletonMap("{http://customer/v1}*", "{http://customer/v2}*");
         
@@ -206,8 +207,9 @@ public class SOAPClient {
                                               : oldToNewTransformMap);
         
         if (newClient) {
-            outTransform.setOutDropElements(
-                Collections.singletonList("{http://customer/v2}briefDescription"));    
+            newToOldTransformMap.put("{http://customer/v2}briefDescription", "");
+            //outTransform.setOutDropElements(
+            //    Collections.singletonList("{http://customer/v2}briefDescription"));    
         }
         
         TransformInInterceptor inTransform =  new TransformInInterceptor();
