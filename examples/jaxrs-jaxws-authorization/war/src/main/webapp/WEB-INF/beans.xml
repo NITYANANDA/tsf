@@ -19,7 +19,6 @@
          http://cxf.apache.org/schemas/jaxws.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
      <jaxrs:server id="hello_rest" address="/hello-rest">
        <jaxrs:serviceBeans>

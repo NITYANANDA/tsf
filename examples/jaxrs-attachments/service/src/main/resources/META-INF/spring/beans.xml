@@ -13,7 +13,6 @@
          http://cxf.apache.org/schemas/jaxrs.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
 
      <!-- JAX-RS endpoint -->
      <jaxrs:server id="attachmentService" 

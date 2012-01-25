@@ -15,7 +15,6 @@ http://cxf.apache.org/jaxrs
 http://cxf.apache.org/schemas/jaxrs.xsd">
     
   <import resource="classpath:META-INF/cxf/cxf.xml" />
-  <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
   <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
   	p:brokerURL="tcp://localhost:61616"/>

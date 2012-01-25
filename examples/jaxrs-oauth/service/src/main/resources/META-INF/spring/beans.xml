@@ -13,7 +13,6 @@
          http://cxf.apache.org/schemas/jaxrs.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
 
      <bean id="userAccounts" class="oauth.service.UserAccounts"/>
      <bean id="oauthProvider" class="oauth.manager.OAuthManager"/>

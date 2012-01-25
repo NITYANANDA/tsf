@@ -16,7 +16,6 @@
          http://cxf.apache.org/schemas/jaxws.xsd">
 
      <import resource="classpath:META-INF/cxf/cxf.xml" />
-     <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
 
      <jaxrs:server address="/jaxrs" 
                    modelRef="classpath:/data/model/CustomerService-jaxrs.xml">
