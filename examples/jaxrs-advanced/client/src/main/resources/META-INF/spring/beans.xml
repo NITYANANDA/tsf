@@ -12,7 +12,7 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
     <import resource="classpath:META-INF/cxf/cxf.xml" />
 
     <jaxrs:client id="restClient"
-         address="http://localhost:8080/services/personservice"
+         address="http://localhost:${http.port}/services/personservice"
          serviceClass="common.advanced.PersonService">
          <jaxrs:headers>
              <entry key="Accept" value="application/xml"/>

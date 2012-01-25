@@ -44,7 +44,8 @@ Starting the service
 
     cd war; mvn jetty:run
 
- * Copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc
+ * Check if $KARAF_HOME/etc/users.properties file exists. If no then copy service-jaas/src/main/resources/users.properties to $KARAF_HOME/etc, otherwise add the content of service-jaas/src/main/resources/users.properties to the existing user.properties file.
+
  * From within the Talend Service Factory OSGi container:
 
    karaf@tsf> features:install tsf-example-jaxrs-jaxws-authorization
