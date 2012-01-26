@@ -69,9 +69,10 @@ Running the client
 
 By default, the client will use the http port 8080 for constructing the URIs.
 This port value is set during the build in the client.properties resource file. 
-If the server is listening on the alternative port then you can use an 'http.port' system property during the build:
+If the server is listening on the alternative port then you can use an 'http.port' system property when running the client:
    
-- mvn install -Dhttp.port=8181
+- mvn -Pjaxws -Dhttp.port=8181
+- mvn -Pjaxrs -Dhttp.port=8181
 
 Demo Desciption
 ---------------
