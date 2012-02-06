@@ -20,7 +20,7 @@
      <jaxrs:server id="hello_rest" address="/rest-hello">
        <jaxrs:serviceBeans>
          <ref bean="hello-world-bean"/>
-       </jaxrs:serviceBeans>		   
+       </jaxrs:serviceBeans>
      </jaxrs:server>
 
      <jaxws:endpoint xmlns:s="http://hello.com"
@@ -32,4 +32,3 @@
 
      <bean id="hello-world-bean" class="service.codefirst.HelloWorldImpl"/>
 </beans>
-

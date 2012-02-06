@@ -18,6 +18,14 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>2.4.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -26,13 +34,6 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Import-Package>
-		   javax.xml.bind,
-		   javax.xml.bind.annotation,
-		   javax.xml.bind.annotation.adapters,
-		   *
-                        </Import-Package>
-                        <Export-Package>org.example.customers,data.model</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

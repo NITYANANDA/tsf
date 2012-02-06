@@ -34,10 +34,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                         <Require-Bundle>org.apache.cxf.bundle,org.springframework.beans,jaxrs-jaxws-java-first-common</Require-Bundle>
-                        <Export-Package>
-                   service
-                        </Export-Package>
+                        <Require-Bundle>org.springframework.beans, org.apache.cxf.bundle</Require-Bundle>
                     </instructions>
                 </configuration>
             </plugin>
