@@ -4,6 +4,10 @@
 package oauth.thirdparty;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
+import oauth.common.OAuthConstants;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.rs.security.oauth.client.OAuthClientUtils;
@@ -29,9 +33,19 @@ public class OAuthClientManager {
 	    return OAuthClientUtils.getAuthorizationURI(authorizationServiceURI, token);
 	}
 	
-	public Token getRequestToken(URI callback) {
+	public Token getRequestToken(URI callback, ReservationRequest request) {
 	    try {
-	        return OAuthClientUtils.getRequestToken(requestTokenService, consumer, callback, null);
+	        // This is an optional step. Without requesting this extra scope
+	        // the client will not be able to update the user's calendar.
+	        // Note that the Social.com has documented the format of this scope
+	        // as updateCalendar-x where x is a specific hour.
+	        // Social.com has also documented that a "readCalendar" scoped will be
+	        // allocated by default
+	        Map<String, String> extraParams = new HashMap<String, String>();
+	        extraParams.put(org.apache.cxf.rs.security.oauth.utils.OAuthConstants.X_OAUTH_SCOPE, 
+	                        OAuthConstants.UPDATE_CALENDAR_SCOPE + request.getHour());
+	       
+	        return OAuthClientUtils.getRequestToken(requestTokenService, consumer, callback, extraParams);
 	    } catch (OAuthServiceException ex) {
             return null;
         }    

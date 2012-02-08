@@ -131,12 +131,13 @@ public class RestaurantReservationService {
 		
 		LOG.info("Completing the reservation request for a user: " + request.getReserveName());
         
-		String authHeader = manager.createAuthorizationHeader(accessToken, "GET",
-				socialService.getCurrentURI().toString());
-		socialService.replaceHeader("Authorization", authHeader);
 		Calendar c = null;
 		try {
-		    c = socialService.get(Calendar.class);
+		    String authHeader = manager.createAuthorizationHeader(accessToken, "GET",
+	                socialService.getCurrentURI().toString());
+	        socialService.replaceHeader("Authorization", authHeader);
+	        
+	        c = socialService.get(Calendar.class);
 		} catch (ServerWebApplicationException ex) {
 		    return redirectToFailureHandler(CALENDAR_ACCESS_PROBLEM);
 		}
@@ -147,6 +148,15 @@ public class RestaurantReservationService {
 					                     .set("phone", request.getContactPhone()) 
 					                     .set("hour", request.getHour()),
 					                      String.class);
+			
+            // update the user's calendar
+			String authHeader = manager.createAuthorizationHeader(accessToken, "POST",
+                    socialService.getCurrentURI().toString());
+            socialService.replaceHeader("Authorization", authHeader);
+            
+			socialService.form(new Form().set("hour", request.getHour())
+			                             .set("description", "Table reserved at " + address));
+			
 			return Response.ok(new ReservationConfirmation(address, request.getHour())).build();
 		} else {
 		    return redirectToFailureHandler(NO_RESERVATION);
@@ -168,18 +178,21 @@ public class RestaurantReservationService {
 	    
 	    LOG.info("Requesting a temporarily token from the OAuth server");
 		URI callback = getBaseUriBuilder().path("complete").build();
-		Token requestToken = manager.getRequestToken(callback);
+		
+		ReservationRequest request = new ReservationRequest();
+        request.setReserveName(name);
+        request.setContactPhone(phone);
+        request.setHour(hour);
+        
+		
+		Token requestToken = manager.getRequestToken(callback, request);
 		if (requestToken == null) {
             return redirectToFailureHandler(NO_OAUTH_REQUEST_TOKEN);
         }
-		
-		String userName = sc.getUserPrincipal().getName();
-		ReservationRequest request = new ReservationRequest();
-		request.setReserveName(name);
-		request.setContactPhone(phone);
-		request.setHour(hour);
 		request.setRequestToken(requestToken);
 	
+		String userName = sc.getUserPrincipal().getName();
+        
 		synchronized (requests) {
 			Map<String, ReservationRequest> userRequests = requests.get(userName);
 			if (userRequests == null) {
