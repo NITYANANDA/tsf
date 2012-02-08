@@ -1,4 +1,4 @@
-<%@ page import="javax.servlet.http.HttpServletRequest, org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" %>
+<%@ page import="javax.servlet.http.HttpServletRequest,org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData,org.apache.cxf.rs.security.oauth.data.Permission" %>
 
 <%
     OAuthAuthorizationData data = (OAuthAuthorizationData)request.getAttribute("data");
@@ -22,8 +22,15 @@
                                    .AUTHENTICITY_TOKEN %>"
                                value="<%= data.getAuthenticityToken() %>"/>
 
-                        <p>The application <b><%= data.getApplicationName() %></b> would like
-                            to be able to read your Calendar at Social.com
+                        <p>The application <b><%= data.getApplicationName() %></b> would like to
+                            <%
+                               for (Permission perm : data.getPermissions()) {
+                            %>
+                               <p/><%= perm.getDescription() %><p/>
+                            <%   
+                               }
+                            %> 
+                            at Social.com
                             <br/></p>
                         <br/>
                         <button name="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants

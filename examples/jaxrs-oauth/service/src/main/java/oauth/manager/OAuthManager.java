@@ -3,11 +3,15 @@
  */
 package oauth.manager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import oauth.common.OAuthConstants;
+
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
+import org.apache.cxf.rs.security.oauth.data.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth.data.Client;
 import org.apache.cxf.rs.security.oauth.data.OAuthPermission;
 import org.apache.cxf.rs.security.oauth.data.RequestToken;
@@ -18,6 +22,11 @@ import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
 public class OAuthManager implements OAuthDataProvider {
 
+    private static OAuthPermission READ_CALENDAR_PERMISSION = new OAuthPermission(
+            OAuthConstants.READ_CALENDAR_SCOPE, 
+            OAuthConstants.READ_CALENDAR_DESCRIPTION, 
+            Collections.<String>emptyList());
+    
 	private Client client;
 	private RequestToken rt;
 	private AccessToken at;
@@ -26,11 +35,13 @@ public class OAuthManager implements OAuthDataProvider {
 	    this.client = c;
 	}
 	
-	public AccessToken createAccessToken(RequestToken rt) throws OAuthServiceException {
+	public AccessToken createAccessToken(AccessTokenRegistration reg) throws OAuthServiceException {
+	    RequestToken rt = reg.getRequestToken();
 		String tokenId = UUID.randomUUID().toString();
 		String tokenSecret = UUID.randomUUID().toString();
 		at = new AccessToken(rt.getClient(), tokenId, tokenSecret);
 		at.setSubject(rt.getSubject());
+		at.setScopes(rt.getScopes());
 		rt = null;
 		return at;
 	}
@@ -40,6 +51,8 @@ public class OAuthManager implements OAuthDataProvider {
 		String tokenId = UUID.randomUUID().toString();
 		String tokenSecret = UUID.randomUUID().toString();
 		rt = new RequestToken(reg.getClient(), tokenId, tokenSecret);
+		
+		rt.setScopes(getPermissionsInfo(reg.getScopes()));
 		rt.setCallback(reg.getCallback());
 		return rt;
 	}
@@ -59,8 +72,22 @@ public class OAuthManager implements OAuthDataProvider {
 		return client == null || !client.getConsumerKey().equals(clientId) ? null : client;
 	}
 
-	public List<OAuthPermission> getPermissionsInfo(List<String> permissions) {
-		return Collections.emptyList();
+	private List<OAuthPermission> getPermissionsInfo(List<String> scopes) {
+		List<OAuthPermission> list = new ArrayList<OAuthPermission>();
+		for (String scope : scopes) {
+		    if (scope.equals(OAuthConstants.READ_CALENDAR_SCOPE)) {
+		        list.add(READ_CALENDAR_PERMISSION); 
+		    } else if (scope.startsWith(OAuthConstants.UPDATE_CALENDAR_SCOPE)) {
+		        String hourValue = scope.substring(OAuthConstants.UPDATE_CALENDAR_SCOPE.length());
+		        list.add(new OAuthPermission(scope, 
+		                OAuthConstants.UPDATE_CALENDAR_DESCRIPTION + hourValue + " o'clock",
+		                Collections.<String>emptyList()));
+		    }
+		}
+		if (!scopes.contains(OAuthConstants.READ_CALENDAR_SCOPE)) {
+		    list.add(READ_CALENDAR_PERMISSION);
+        }
+		return list;
 	}
 
 	public RequestToken getRequestToken(String tokenId)
