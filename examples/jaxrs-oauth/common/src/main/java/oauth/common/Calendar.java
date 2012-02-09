@@ -14,7 +14,7 @@ public class Calendar {
     
     public Calendar() {
     	for (int i = 0; i < 24; i++) {
-    		entries.add(new CalendarEntry(i, null));
+    		entries.add(new CalendarEntry(i, ""));
     	}
     }
     
