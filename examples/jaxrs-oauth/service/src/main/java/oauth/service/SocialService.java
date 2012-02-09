@@ -44,7 +44,9 @@ public class SocialService {
 		return account.getCalendar();
 	}
 	
-	private UserAccount getAccount() {
+	
+	@GET
+	public UserAccount getAccount() {
 		String userName = context.getUserPrincipal().getName();
 		return accounts.getAccount(userName);
 	}

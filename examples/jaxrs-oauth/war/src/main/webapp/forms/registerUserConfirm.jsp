@@ -13,11 +13,7 @@
 Congratulations! You have successfully registered with Social.com</p>
 </p>
 <p>
-Our partner, Restaurant Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant.
-</p>
-<br/>
-<p>
-Please follow this <a href="<%= basePath %>forms/reservation.jsp">link</a> to find out more.
+Please check your personal <a href="<%= basePath %>social/accounts">page</a> next.
 </p>
 </body>
 </html>

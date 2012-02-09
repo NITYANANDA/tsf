@@ -9,7 +9,7 @@
     <title>Restaurant Failure</title>
 </head>
 <body>
-<h1>Restaurant Failure Report</h1>
+<h1>Restaurant Reservation Failure Report</h1>
 <em></em>
 <p>
 <%= reserve.getMessage() %>

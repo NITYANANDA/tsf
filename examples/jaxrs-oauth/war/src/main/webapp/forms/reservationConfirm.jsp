@@ -23,9 +23,15 @@ Here are the reservation details:
 <td><%= reserve.getHour() %> p.m</td>
 <tr>
 </table>
+<br/>
+<p>
+Please verify your personal <a href="<%= basePath %>social/accounts">calendar</a> has been updated.
+</p>
+<br/>
 <p>
 Back to <a href="<%= basePath %>forms/reservation.jsp">reservations</a>. 
 </p>
+
 
 </body>
 </html>

@@ -61,11 +61,13 @@
             <map>
               <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="/forms/oauthAuthorize.jsp"/>
               <entry key="oauth.common.UserRegistration" value="/forms/registerUserConfirm.jsp"/>
+              <entry key="oauth.service.UserAccount" value="/forms/userAccount.jsp"/>
             </map>
          </property>
          <property name="beanNames">
             <map>
               <entry key="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" value="data"/>
+              <entry key="oauth.service.UserAccount" value="account"/>
             </map>
          </property>
          <!--

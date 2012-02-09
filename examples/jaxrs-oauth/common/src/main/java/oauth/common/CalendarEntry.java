@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class CalendarEntry {
 	private int hour;
-	private String eventDescription;
+	private String eventDescription = "";
 	
 	public CalendarEntry() {
 		
