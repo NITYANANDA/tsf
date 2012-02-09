@@ -7,7 +7,9 @@
 <em></em>
 <p>
  <table>
-     <form action="/services/oauth/registerProvider" method="POST">
+     <form action="/services/oauth/registerProvider"
+           enctype="multipart/form-data" 
+           method="POST">
         <tr>
             <td>Application Name:</td>
             <td>
@@ -15,9 +17,22 @@
             </td>
         </tr>
         <tr>
-            <td>Application Domain:</td>
+            <td>Application Description:</td>
+            <td>
+              <input type="text" name="appDescription" 
+                     value="The online service for booking a table at the favourite restaurant"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Application URI:</td>
             <td>
               <input type="text" name="appURI" value="http://localhost:${http.port}/services/reservations"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Application Logo:</td>
+            <td>
+               <input id="appLogo" name="appLogo" type="file" accept="image/gif,image/jpeg,image/png"/>
             </td>
         </tr>
         <tr>

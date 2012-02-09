@@ -8,8 +8,7 @@
     <title>Third Party Authorization Form</title>
 </head>
 <body>
-<h1>Third Party Authorization Form</h1>
-<em></em>
+<title align="center">Third Party Authorization Form</title>
 <table align="center">
        <tr align="center">
                 <td>
@@ -22,31 +21,38 @@
                                    .AUTHENTICITY_TOKEN %>"
                                value="<%= data.getAuthenticityToken() %>"/>
 
-                        <p>The application <b><%= data.getApplicationName() %></b> would like to
+                        <p><b><%= data.getApplicationName() %></b> (<%= data.getApplicationDescription() %>)
+                        
+                        <br/> 
+                        <img src="<%= data.getRelativeLogoPath() %>" alt="Application Logo" width="30" height="30">
+                        <br/></p>
+                        requests the following permissions:
+                        <p/>
+                        <table> 
                             <%
                                for (Permission perm : data.getPermissions()) {
                             %>
-                               <p/><%= perm.getDescription() %><p/>
+                               <tr><td><%= perm.getDescription() %></td></tr>
                             <%   
                                }
                             %> 
-                            at Social.com
-                            <br/></p>
-                        <br/>
-                        <button name="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
-                            .AUTHORIZATION_DECISION_KEY %>"
-                                type="submit"
-                                value="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
-                                    .AUTHORIZATION_DECISION_DENY %>">
-                            Deny
-                        </button>
+                        </table>    
+                        <br/></p><br/>
                         <button name="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
                             .AUTHORIZATION_DECISION_KEY %>"
                                 type="submit"
                                 value="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
                                     .AUTHORIZATION_DECISION_ALLOW %>">
-                            Allow
+                            OK
                         </button>
+                        <button name="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
+                            .AUTHORIZATION_DECISION_KEY %>"
+                                type="submit"
+                                value="<%= org.apache.cxf.rs.security.oauth.utils.OAuthConstants
+                                    .AUTHORIZATION_DECISION_DENY %>">
+                            No,thanks
+                        </button>
+                        
                     </form>
                 </td>
             </tr>

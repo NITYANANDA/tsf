@@ -19,6 +19,7 @@
 
     <properties>
         <http.port>8080</http.port>
+        <spring.version>3.0.6.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -27,6 +28,26 @@
             <artifactId>jaxrs-oauth-service</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency> 
     </dependencies>
 
     <build>
