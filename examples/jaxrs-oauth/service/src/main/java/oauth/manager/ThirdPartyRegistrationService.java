@@ -80,7 +80,7 @@ public class ThirdPartyRegistrationService {
 		Client newClient = new Client(clientId, clientSecret, appName, appURI);
 		
 		newClient.setApplicationDescription(appDesc);
-		newClient.setRelativeLogoPath(logoURI.toString());
+		newClient.setLogoUri(logoURI.toString());
 		
 		manager.registerClient(newClient);
 		return new ConsumerRegistration(clientId, clientSecret);

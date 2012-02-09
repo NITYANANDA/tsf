@@ -24,7 +24,7 @@
                         <p><b><%= data.getApplicationName() %></b> (<%= data.getApplicationDescription() %>)
                         
                         <br/> 
-                        <img src="<%= data.getRelativeLogoPath() %>" alt="Application Logo" width="30" height="30">
+                        <img src="<%= data.getLogoUri() %>" alt="Application Logo" width="30" height="30">
                         <br/></p>
                         requests the following permissions:
                         <p/>
