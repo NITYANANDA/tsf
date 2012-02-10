@@ -17,7 +17,27 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <properties>
+        <http.port>8080</http.port>
+        <spring.version>3.0.6.RELEASE</spring.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency> 
         <dependency>
             <groupId>com.talend.sf.examples.jaxrs-intro-example</groupId>
             <artifactId>jaxrs-intro-service-bundle</artifactId>
