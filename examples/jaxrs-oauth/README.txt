@@ -105,7 +105,7 @@ file. If the server is listening on an alternative port then you can use an
 - The Restaurant Reservations Form offers an option to book a restaurant 
   table at a specific hour, press Reserve to start the process.  
 - When asked please authenticate with the service using the 
-  "barry@social.com" and "5678" pair.
+  "barry@restaurant.com" and "5678" pair.
 - The Restaurant Reservations will redirect to the Authorization service
   protecting Social.com, it will challenge the end user with the authorization form.
 - The Third Party Authorization Form will ask if the Restaurant 
