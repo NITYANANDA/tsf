@@ -143,7 +143,7 @@ public class RestaurantReservationService {
 		}
 		
     	CalendarEntry entry = c.getEntry(request.getHour());
-		if (entry.getEventDescription() == null || entry.getEventDescription().isEmpty()) { 
+		if (entry.getEventDescription() == null || entry.getEventDescription().trim().isEmpty()) { 
 			String address = restaurantService.post(new Form().set("name", request.getReserveName()) 
 					                     .set("phone", request.getContactPhone()) 
 					                     .set("hour", request.getHour()),
