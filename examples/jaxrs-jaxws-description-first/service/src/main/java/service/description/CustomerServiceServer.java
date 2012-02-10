@@ -25,11 +25,11 @@ public class CustomerServiceServer {
         Bus bus = BusFactory.getDefaultBus();
         System.out.println("Starting Server");
         CustomerService implementor = new CustomerServiceImpl();
-        Endpoint.publish("http://localhost:8080/services/soap", implementor);
+        Endpoint.publish("http://localhost:8080/services/jaxws", implementor);
 
         JAXRSServerFactoryBean jaxrsFactory = new JAXRSServerFactoryBean();
         jaxrsFactory.setBus(bus);
-        jaxrsFactory.setAddress("http://localhost:8080/services/rest");
+        jaxrsFactory.setAddress("http://localhost:8080/services/jaxrs");
         jaxrsFactory.setModelRef("classpath:/data/model/CustomerService-jaxrs.xml");
         jaxrsFactory.setServiceBean(implementor);
 
