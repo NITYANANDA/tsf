@@ -8,9 +8,10 @@ import java.util.List;
 
 import javax.xml.ws.Endpoint;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.BusFactory;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
-
 import org.example.customers.CustomerService;
 
 public class CustomerServiceServer {
@@ -20,14 +21,16 @@ public class CustomerServiceServer {
     }
 
     public static void main(String args[]) throws Exception {
-
+        
+        Bus bus = BusFactory.getDefaultBus();
         System.out.println("Starting Server");
         CustomerService implementor = new CustomerServiceImpl();
         Endpoint.publish("http://localhost:8080/services/soap", implementor);
 
         JAXRSServerFactoryBean jaxrsFactory = new JAXRSServerFactoryBean();
+        jaxrsFactory.setBus(bus);
         jaxrsFactory.setAddress("http://localhost:8080/services/rest");
-        jaxrsFactory.setModelRef("classpath:/model/CustomerService-jaxrs.xml");
+        jaxrsFactory.setModelRef("classpath:/data/model/CustomerService-jaxrs.xml");
         jaxrsFactory.setServiceBean(implementor);
 
         List<Object> providers = new ArrayList<Object>();

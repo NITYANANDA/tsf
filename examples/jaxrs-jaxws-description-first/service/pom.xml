@@ -30,6 +30,11 @@
             <version>${cxf.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.talend.sf.examples.jaxrs-jaxws-description-first</groupId>
             <artifactId>jaxrs-jaxws-description-first-common</artifactId>
             <version>1.0</version>
