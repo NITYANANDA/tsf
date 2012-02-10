@@ -96,28 +96,29 @@ file. If the server is listening on an alternative port then you can use an
 - The Social.com User Registration Form asks for a user name and password.  
   At the moment only a user name "barry@social.com" with the "1234" password 
   is supported 
-- press "Register With Social.com" to complete the 
-  reservation.  
+- Press "Register With Social.com" to complete the reservation.  
 - Follow the link in the bottom of the returned User Registration 
-  Confirmation page in order to try the online Restaurant Reservations 
-  service.  
+  Confirmation page in order to view the personal UserAccount page, 
+  note that the Calendar has no reserved events.
+- Follow the link in the bottom of the User Account page in order to try
+  the online Restaurant Reservations service.  
 - The Restaurant Reservations Form offers an option to book a restaurant 
   table at a specific hour, press Reserve to start the process.  
 - When asked please authenticate with the service using the 
-  "barry@social.com" and "5678" pair.  See the demo description for more 
-  information about this authentication step.
+  "barry@social.com" and "5678" pair.
 - The Restaurant Reservations will redirect to the Authorization service
-  protecting Social.com; when asked please authenticate with the service using the 
-  "barry@social.com" and "1234" pair.
+  protecting Social.com, it will challenge the end user with the authorization form.
 - The Third Party Authorization Form will ask if the Restaurant 
-  Reservations can read the calendar of its owner, "barry@social.com".  
+  Reservations can read the calendar and update it for a specific hour slot (7 in this demo)
+  on behalf of its owner, "barry@social.com".  
 - Press "Deny", and after receiving the Restaurant Failure Report page, 
   please follow the link at the bottom of the page to start the reservation 
   again.  
 - Press Reserve at The Restaurant Reservations Form and this time choose 
   "Allow" at the The Third Party Authorization Form.  
 - The Restaurant Reservation Confirmation form will be returned confirming 
-  the reservation at the required hour.  
+  the reservation at the required hour. Follow the link in the bottom of the page
+  to confirm that the calendar has been updated accordingly.  
 
 
 Demo Desciption
@@ -298,7 +299,5 @@ Note the oauth.thirdparty.OAuthClientManager uses CXF OAuth client utility
 code to completely encapsulate the complexities of OAuth from the 
 implementation of the Restaurant Reservations application.  
 
-With OAuth 2.0 the process will become even simpler.  Effectively, the 
-steps involving the temporarily request and access token keys will be 
-dropped and only the user authorization step will be needed.  
+With OAuth 2.0 the process will become even simpler.  
 

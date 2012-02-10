@@ -7,6 +7,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>User Account</title>
+    <STYLE TYPE="text/css">
+	<!--
+	  table { empty-cells: show; }
+	-->
+</STYLE>
 </head>
 <body>
 <h1>User Account</h2>
@@ -43,7 +48,6 @@
 <p>
 Our partner, Restaurant Reservations, is offering an online service which you can use to reserve a dinner at your favourite restaurant.
 </p>
-<br/>
 <p>
 Please follow this <a href="<%= basePath %>forms/reservation.jsp">link</a> to find out more.
 </p>
