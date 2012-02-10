@@ -62,11 +62,13 @@
     </feature>
 
     <feature name='tsf-example-jaxrs-jaxws-description-first' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:org.apache.cxf.xjc-utils/cxf-xjc-runtime/2.4.1-SNAPSHOT</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-description-first/jaxrs-jaxws-description-first-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-description-first/jaxrs-jaxws-description-first-service/${project.version}</bundle>
     </feature>
 
-     <feature name='tsf-example-jaxrs-jaxws-transformations' version='${project.version}' resolver='(obr)'>
+    <feature name='tsf-example-jaxrs-jaxws-transformations' version='${project.version}' resolver='(obr)'>
+        <bundle>mvn:org.codehaus.jettison/jettison/1.3.1</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-common/${project.version}</bundle>
         <bundle>mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-service/${project.version}</bundle>
         <bundle>webbundle:mvn:com.talend.sf.examples.jaxrs-jaxws-transformations/jaxrs-jaxws-transformations-war-bundle/${project.version}</bundle>
