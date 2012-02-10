@@ -23,10 +23,14 @@ import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 
 public class OAuthManager implements OAuthDataProvider {
 
-    private static OAuthPermission READ_CALENDAR_PERMISSION = new OAuthPermission(
-            OAuthConstants.READ_CALENDAR_SCOPE, 
-            OAuthConstants.READ_CALENDAR_DESCRIPTION, 
-            Collections.<String>emptyList());
+    private static final OAuthPermission READ_CALENDAR_PERMISSION;
+    static {
+        READ_CALENDAR_PERMISSION = new OAuthPermission(
+                OAuthConstants.READ_CALENDAR_SCOPE, 
+                OAuthConstants.READ_CALENDAR_DESCRIPTION, 
+                Collections.<String>emptyList());
+        READ_CALENDAR_PERMISSION.setDefault(true);
+    }
     
 	private Client client;
 	private RequestToken rt;

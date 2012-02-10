@@ -32,7 +32,29 @@
                             <%
                                for (Permission perm : data.getPermissions()) {
                             %>
-                               <tr><td><%= perm.getDescription() %></td></tr>
+                               <tr>
+                                <td>
+                                  <input type="checkbox" 
+                                    <%
+                                      if (perm.isDefault()) {
+                                    %>
+                                    disabled="disabled"
+                                    <%
+                                      }
+                                    %> 
+                                    checked="checked"
+                                    name="<%= perm.getPermission()%>_status" 
+                                    value="allow"
+                                  ><%= perm.getDescription() %></input>
+                                    <%
+                                      if (perm.isDefault()) {
+                                    %>
+                                    <input type="hidden" name="<%= perm.getPermission()%>_status" value="allow" />
+                                    <%
+                                      }
+                                    %>
+                                </td>
+                               </tr>
                             <%   
                                }
                             %> 
