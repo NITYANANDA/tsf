@@ -12,6 +12,7 @@ import oauth.common.OAuthConstants;
 
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
 import org.apache.cxf.rs.security.oauth.data.AccessTokenRegistration;
+import org.apache.cxf.rs.security.oauth.data.AuthorizationInput;
 import org.apache.cxf.rs.security.oauth.data.Client;
 import org.apache.cxf.rs.security.oauth.data.OAuthPermission;
 import org.apache.cxf.rs.security.oauth.data.RequestToken;
@@ -57,8 +58,9 @@ public class OAuthManager implements OAuthDataProvider {
 		return rt;
 	}
 
-	public String setRequestTokenVerifier(RequestToken rt)
+	public String finalizeAuthorization(AuthorizationInput input)
 			throws OAuthServiceException {
+                RequestToken rt = input.getToken();  
 		String verifier = UUID.randomUUID().toString();
 		rt.setVerifier(verifier);
 		return verifier;
