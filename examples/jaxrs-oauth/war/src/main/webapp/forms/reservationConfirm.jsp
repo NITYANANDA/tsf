@@ -25,7 +25,19 @@ Here are the reservation details:
 </table>
 <br/>
 <p>
+<%
+  if (reserve.isCalendarUpdated()) {
+%>
 Please verify your personal <a href="<%= basePath %>social/accounts">calendar</a> has been updated.
+<%
+  } else {
+%> 
+We have not been able to update your <a href="<%= basePath %>social/accounts">calendar</a>
+<p/> with the reservation details. Please record them yourself.
+ 
+<%
+  }
+%> 
 </p>
 <br/>
 <p>

@@ -88,8 +88,9 @@ file. If the server is listening on an alternative port then you can use an
 * From the browser
 
 - Go to "http://localhost:8080/services/forms/registerApp.jsp".  It is a 
-  Consumer Application Registration Form.  Press "Register Your Application" 
-  button.  
+  Consumer Application Registration Form. Select a 'smiley-face.jpg' located in
+  the 'war/resources' folder of this example as an Application logo.
+  Press "Register Your Application" button once you are ready.  
 - Follow the link in the bottom of the returned Consumer Application 
   Registration Confirmation page in order to register a user with 
   Social.com.  

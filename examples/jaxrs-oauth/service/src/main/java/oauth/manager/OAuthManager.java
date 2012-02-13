@@ -64,7 +64,10 @@ public class OAuthManager implements OAuthDataProvider {
 
 	public String finalizeAuthorization(AuthorizationInput input)
 			throws OAuthServiceException {
-                RequestToken rt = input.getToken();  
+        RequestToken rt = input.getToken();
+        if (rt.getScopes().containsAll(input.getApprovedScopes())) {
+            rt.setScopes(input.getApprovedScopes());
+        }
 		String verifier = UUID.randomUUID().toString();
 		rt.setVerifier(verifier);
 		return verifier;

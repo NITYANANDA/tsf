@@ -42,6 +42,7 @@ public class RestaurantReservationService {
     private static final String NO_OAUTH_REQUEST_TOKEN = "nooauthrequest";
     private static final String NO_OAUTH_ACCESS_TOKEN = "nooauthaccess";
     private static final String CALENDAR_ACCESS_PROBLEM = "calendar_forbidden";
+    private static final String CALENDAR_BUSY = "calendar_busy";
     
     private static final Map<String, String> ERROR_DESCRIPTIONS;
     static {
@@ -64,6 +65,8 @@ public class RestaurantReservationService {
                 + ", please report to Social.com admin");
         ERROR_DESCRIPTIONS.put(CALENDAR_ACCESS_PROBLEM, 
                                "Social.com refused to return a calendar, please try again");
+        ERROR_DESCRIPTIONS.put(CALENDAR_BUSY, 
+                         "You are busy at the requested hour, please check your calendar");
     }
     
     
@@ -148,18 +151,27 @@ public class RestaurantReservationService {
 					                     .set("phone", request.getContactPhone()) 
 					                     .set("hour", request.getHour()),
 					                      String.class);
+			if (address == null) {
+			    return redirectToFailureHandler(NO_RESERVATION);
+			}
 			
             // update the user's calendar
 			String authHeader = manager.createAuthorizationHeader(accessToken, "POST",
                     socialService.getCurrentURI().toString());
             socialService.replaceHeader("Authorization", authHeader);
             
-			socialService.form(new Form().set("hour", request.getHour())
+            boolean calendarUpdated = true;
+            try {
+			    socialService.form(new Form().set("hour", request.getHour())
 			                             .set("description", "Table reserved at " + address));
+            } catch (ServerWebApplicationException ex) {
+                calendarUpdated = false;
+            }
 			
-			return Response.ok(new ReservationConfirmation(address, request.getHour())).build();
+			return Response.ok(new ReservationConfirmation(address, request.getHour(), calendarUpdated))
+			               .build();
 		} else {
-		    return redirectToFailureHandler(NO_RESERVATION);
+		    return redirectToFailureHandler(CALENDAR_BUSY);
 		}
     }
 	

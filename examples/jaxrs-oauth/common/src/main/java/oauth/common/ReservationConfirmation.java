@@ -10,14 +10,16 @@ public class ReservationConfirmation {
 	
 	private String address;
     private int hour;
+    private boolean calendarUpdated;
 	
     public ReservationConfirmation() {
         
     }
     
-    public ReservationConfirmation(String address, int hour) {
+    public ReservationConfirmation(String address, int hour, boolean updated) {
         this.address = address;
         this.hour = hour;
+        this.calendarUpdated = updated;
     }
     
 	public void setHour(int hour) {
@@ -31,5 +33,13 @@ public class ReservationConfirmation {
     }
     public String getAddress() {
         return address;
+    }
+
+    public void setCalendarUpdated(boolean calendarUpdated) {
+        this.calendarUpdated = calendarUpdated;
+    }
+
+    public boolean isCalendarUpdated() {
+        return calendarUpdated;
     }
 }
